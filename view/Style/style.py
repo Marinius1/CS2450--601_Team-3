@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as xml
 import os
+from collections import namedtuple
+import math
 
 
 class Style:
@@ -25,28 +27,74 @@ class Style:
         self.tree = xml.parse(self.scheme_path)
         self.root = self.tree.getroot()
 
+        self.colors = self.load_color_config()
+
+    def load_color_config(self):
+        """
+        load itermcolor xml file, parse, convert to hex strings, and return
+        namedtuple with all color data from itermcolor file
+        """
+
         color_names = []
         count = 0
         for i in self.root.iter('key'):
-            if count % 6 == 0:
+            if not count % 6:
                 color_names.append(i.text)
             count += 1
 
-        self.color_values = []
+        color_values = []
         count = 0
         for i in self.root.iter('real'):
             if count % 4 != 0:
-                self.color_values.append(i.text)
+                color_values.append(math.floor(float(i.text) * 255))
             count += 1
 
-        count = 0
-        self.color_hash = dict()
-        for i in color_names:
-            self.color_hash[i] = [
-                self.color_values[count],
-                self.color_values[count + 1],
-                self.color_values[count + 2],
-            ]
+        color_values = [
+            color_values[x:x + 3] for x in range(0, len(color_values), 3)
+        ]
 
-            count += 3
+        color_hex = []
+        for i in color_values:
+            rgb_tuple = (int(i[0]), int(i[1]), int(i[2]))
+            hex_color = '#%02x%02x%02x' % rgb_tuple
+            color_hex.append(hex_color)
 
+        color_pairs = list(zip(color_names, color_values))
+
+        # TODO: handle 'not found' indice attempts
+        color_mux = {
+            'Ansi 0 Color': "a0",
+            'Ansi 1 Color': "a1",
+            'Ansi 2 Color': "a2",
+            'Ansi 3 Color': "a3",
+            'Ansi 4 Color': "a4",
+            'Ansi 5 Color': "a5",
+            'Ansi 6 Color': "a6",
+            'Ansi 7 Color': "a7",
+            'Ansi 8 Color': "a8",
+            'Ansi 9 Color': "a9",
+            'Ansi 10 Color': "a10",
+            'Ansi 11 Color': "a11",
+            'Ansi 12 Color': "a12",
+            'Ansi 13 Color': "a13",
+            'Ansi 14 Color': "a14",
+            'Ansi 15 Color': "a15",
+            'Background Color': "background",
+            'Badge Color': "badge",
+            'Bold Color': "bold",
+            'Cursor Color': "cursor",
+            'Cursor Guide Color': "cursor_guide",
+            'Cursor Text Color': "cursor_text",
+            'Foreground Color': "foreground",
+            'Link Color': "link",
+            'Selected Text Color': "selected_text",
+            'Selection Color': "selection"
+        }
+
+        color_keys = []
+        for i in color_pairs:
+            color_keys.append(color_mux[i[0]])
+
+        Colors = namedtuple('Colors', color_keys)
+
+        return Colors(*color_hex)
