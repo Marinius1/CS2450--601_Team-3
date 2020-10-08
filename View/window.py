@@ -71,4 +71,5 @@ class Window(tk.Frame):
         self.set_size()
 
     def set_size(self):
+        """manual window sizing event that can be called"""
         self.master.geometry(str(self.width) + "x" + str(self.height))

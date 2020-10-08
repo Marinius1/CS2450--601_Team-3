@@ -39,5 +39,6 @@ def test_window_set_size(empty_window):
 
 def test_window_mainloop(empty_window):
     """simple test to ensure mainloop works"""
-    # empty_window.after(100, empty_window.master.destroy)
+    # comment this line out if you want to not quit immediately
+    empty_window.after(100, empty_window.master.destroy)
     empty_window.mainloop()
