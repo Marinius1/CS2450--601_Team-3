@@ -4,7 +4,7 @@ from collections import namedtuple
 import math
 
 
-class Style:
+class Color:
     """
     class to encapsulate the color config data. will take a color scheme as input
     and populate the values based on what is in the file. will likely utilize
@@ -53,6 +53,7 @@ class Style:
             color_values[x:x + 3] for x in range(0, len(color_values), 3)
         ]
 
+        # convert rgb tuples to hex strings
         color_hex = []
         for i in color_values:
             rgb_tuple = (int(i[0]), int(i[1]), int(i[2]))
@@ -61,7 +62,6 @@ class Style:
 
         color_pairs = list(zip(color_names, color_values))
 
-        # TODO: handle 'not found' indice attempts
         color_mux = {
             'Ansi 0 Color': "a0",
             'Ansi 1 Color': "a1",
@@ -91,9 +91,13 @@ class Style:
             'Selection Color': "selection"
         }
 
+        # build shorter naming conventions using expanded names as a demux key
         color_keys = []
         for i in color_pairs:
-            color_keys.append(color_mux[i[0]])
+            try:
+                color_keys.append(color_mux[i[0]])
+            except KeyError as e:
+                print("::ERROR:: color demux failed")
 
         Colors = namedtuple('Colors', color_keys)
 

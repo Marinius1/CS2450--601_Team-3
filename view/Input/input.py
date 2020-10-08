@@ -5,7 +5,7 @@ input widgets.
 """
 
 '''
-init(name: str, children=[]: List<mixed>, style=default: Style): void
+init(name: str, children=[]: List<mixed>, style=default: Colors): void
 will likely be called using the super() method. Will also 
 initialize relevant data fields.
 '''
@@ -36,6 +36,6 @@ a list in Breadth First order.
 '''
 
 '''
-set_style(style: Style): void
+set_style(style: Colors): void
 override the default style previously set.
 '''

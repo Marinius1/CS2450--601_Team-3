@@ -6,6 +6,9 @@ On application init
 # TODO: implement singleton logic
 
 import tkinter as tk
+from tkinter import ttk
+
+from color import Color
 
 
 class Window(tk.Frame):
@@ -23,7 +26,6 @@ class Window(tk.Frame):
         """
 
         super().__init__(master)
-        self.pack()
 
         self.width = width
         self.height = height
@@ -31,13 +33,31 @@ class Window(tk.Frame):
 
         self.master.title(title)
 
-        self.nodes = []
+        self.colors = Color().colors
 
-    def add_node(self, node):
-        self.nodes.append(node)
+        self.style = ttk.Style()
+        self.style.theme_use('alt')
 
-    def get_nodes(self):
-        return self.nodes
+        self.master.configure(background=self.colors.background)
+        self.pack()
+
+
+        self.style.configure('TButton',
+                             background=self.colors.background,
+                             foreground=self.colors.foreground,
+                             width=20,
+                             borderwidth=2,
+                             bordercolor=self.colors.a0,
+                             focusthickness=3,
+                             focuscolor=self.colors.a10)
+
+        self.style.map('TButton', background=[('active', self.colors.a7)])
+        button1 = ttk.Button(self.master, text="1", style='TButton')
+        button2 = ttk.Button(self.master, text="2", style='TButton')
+        button3 = ttk.Button(self.master, text="3", style='TButton')
+        button1.pack(side=tk.LEFT)
+        button2.pack()
+        button3.pack()
 
     @property
     def size(self):

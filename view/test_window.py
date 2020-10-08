@@ -37,12 +37,12 @@ def test_window_set_size(empty_window):
     assert new_size == empty_window.size
 
 
-def test_window_get_nodes(empty_window):
-    """test get_nodes"""
-    pass
+def test_window_theme(empty_window):
+
+    assert empty_window.colors is not None
 
 
 def test_window_mainloop(empty_window):
     """simple test to ensure mainloop works"""
-    empty_window.after(500, empty_window.master.destroy)
+    # empty_window.after(3000, empty_window.master.destroy)
     empty_window.mainloop()
