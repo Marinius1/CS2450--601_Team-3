@@ -105,7 +105,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-view-debug/
+view/view-debug/
+view/view-debug-venv/
 .env
 .venv
 env/
