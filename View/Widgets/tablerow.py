@@ -1,5 +1,5 @@
 """
-table row view that is a part of a table. has indices to appropriate columns
+table row View that is a part of a table. has indices to appropriate columns
 and cells can have other widgets embedded, though it will usually be text
 """
 

@@ -11,7 +11,7 @@ call super(). set the text and initial value of the radio widget.
 '''
 click(): void
 click event handler. essentially toggles the truth value and updates the
-view appropriately.
+View appropriately.
 '''
 
 '''

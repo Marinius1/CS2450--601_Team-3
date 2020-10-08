@@ -1,7 +1,7 @@
 import ast
 import glob
 
-my_path = './view/*/*.py'
+my_path = 'View/*/*.py'
 
 files = glob.glob(my_path)
 

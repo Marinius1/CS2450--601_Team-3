@@ -19,10 +19,10 @@ class Window(tk.Frame):
     """
 
     def __init__(self, master=None, title: str = "Test Window",
-                 width: int = 800, height: int = 600):
+                 width: int = 800, height: int = 600, theme: str = "Gruvbox Dark"):
         """
         window class init function. Needs to create the window of course,
-        and set up any window-level logic data pertinent to the view.
+        and set up any window-level logic data pertinent to the View.
         """
 
         super().__init__(master)
@@ -33,7 +33,7 @@ class Window(tk.Frame):
 
         self.master.title(title)
 
-        self.colors = Color().colors
+        self.colors = Color(theme).colors
 
         self.style = ttk.Style()
         self.style.theme_use('alt')

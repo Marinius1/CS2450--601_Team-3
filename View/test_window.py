@@ -12,7 +12,7 @@ from window import Window
 @pytest.fixture(scope="module")
 def empty_window():
     """returns an empty window with bse size 800 x 600"""
-    app = Window(tk.Tk())
+    app = Window(tk.Tk(), theme="Brogrammer")
 
     return app
 
@@ -37,12 +37,7 @@ def test_window_set_size(empty_window):
     assert new_size == empty_window.size
 
 
-def test_window_theme(empty_window):
-
-    assert empty_window.colors is not None
-
-
 def test_window_mainloop(empty_window):
     """simple test to ensure mainloop works"""
-    # empty_window.after(3000, empty_window.master.destroy)
+    # empty_window.after(100, empty_window.master.destroy)
     empty_window.mainloop()
