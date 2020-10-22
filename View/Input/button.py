@@ -3,7 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 from color import Color
 
-class Button(tk.Button, UINode):
+
+class Button(tk.Frame, UINode):
     """
     button input widget. allows the user to execute a defined action on
     click. is configurable to either show text, show an image, or both. also
@@ -18,21 +19,29 @@ class Button(tk.Button, UINode):
         initialize all class data members. also calls appropriate class
         methods as needed.
         """
-        super().__init__()
+        super().__init__(master)
 
+        self.name = name
         self.colors = Color(theme).colors
         self.style = ttk.Style()
         self.style.theme_use('alt')
-        self.style.configure('TButton',
+
+        self.style.map(self.name + '.' + 'TButton', background=[('active', self.colors.a7)])
+        self.style.configure(self.name + '.' + 'TButton',
                              background=self.colors.background,
                              foreground=self.colors.foreground,
-                             width=20,
+                             width=width,
+                             height=height,
                              borderwidth=2,
                              bordercolor=self.colors.a0,
                              focusthickness=3,
-                             focuscolor=self.colors.a10)
+                             focuscolor=self.colors.a10
+                             )
+        self.master.configure(width=width, height=height, background=self.colors.background, border=0)
+        self.pack()
 
-
+        self.button = ttk.Button(self.master, text=text, style=self.name + '.' + 'TButton')
+        self.button.pack();
 
 
 '''

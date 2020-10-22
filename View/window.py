@@ -10,6 +10,7 @@ from tkinter import ttk
 
 from color import Color
 from ui_node import UINode
+from button import Button
 
 
 class Window(tk.Frame, UINode):
@@ -41,22 +42,18 @@ class Window(tk.Frame, UINode):
         self.style.theme_use('alt')
 
         self.master.configure(background=self.colors.background)
-        self.pack()
-
-
-
-        self.style.map('TButton', background=[('active', self.colors.a7)])
-        # button1 = ttk.Button(self.master, text="1", style='TButton')
-        # button2 = ttk.Button(self.master, text="2", style='TButton')
-        # button3 = ttk.Button(self.master, text="3", style='TButton')
-        # button1.pack(side=tk.LEFT)
-        # button2.pack()
-        # button3.pack()
 
         self.nodes = [
-            ttk.Button(self.master, text="1", style='TButton')
+            Button(self, name="test0", width=45, height=15, text="test_button", theme=theme),
+            Button(self, name="test1", width=40, height=15, text="test_button", theme=theme),
+            Button(self, name="test2", width=35, height=15, text="test_button", theme=theme),
+            Button(self, name="test3", width=30, height=15, text="test_button", theme=theme),
+            Button(self, name="test4", width=25, height=15, text="test_button", theme=theme),
+            Button(self, name="test5", width=20, height=15, text="test_button", theme=theme),
         ]
-        self.nodes[0].pack()
+        # self.nodes[0].pack()
+
+        self.pack()
 
     @property
     def size(self):
