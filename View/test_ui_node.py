@@ -54,8 +54,6 @@ def test_node_composition():
         name="root"
     )
 
-    children = new_node.get_children()
-
     assert new_node.name == "root"
 
     assert new_node.nodes[0].name == "top-container"

@@ -9,9 +9,10 @@ import tkinter as tk
 from tkinter import ttk
 
 from color import Color
+from ui_node import UINode
 
 
-class Window(tk.Frame):
+class Window(tk.Frame, UINode):
     """
     Window class: responsible for being the 'root' component of all other
     widgets, layout, etc.. has properties like height, width, etc. will most
@@ -19,7 +20,8 @@ class Window(tk.Frame):
     """
 
     def __init__(self, master=None, title: str = "Test Window",
-                 width: int = 800, height: int = 600, theme: str = "Gruvbox Dark"):
+                 width: int = 800, height: int = 600,
+                 theme: str = "Gruvbox Dark"):
         """
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.
@@ -42,22 +44,19 @@ class Window(tk.Frame):
         self.pack()
 
 
-        self.style.configure('TButton',
-                             background=self.colors.background,
-                             foreground=self.colors.foreground,
-                             width=20,
-                             borderwidth=2,
-                             bordercolor=self.colors.a0,
-                             focusthickness=3,
-                             focuscolor=self.colors.a10)
 
         self.style.map('TButton', background=[('active', self.colors.a7)])
-        button1 = ttk.Button(self.master, text="1", style='TButton')
-        button2 = ttk.Button(self.master, text="2", style='TButton')
-        button3 = ttk.Button(self.master, text="3", style='TButton')
-        button1.pack(side=tk.LEFT)
-        button2.pack()
-        button3.pack()
+        # button1 = ttk.Button(self.master, text="1", style='TButton')
+        # button2 = ttk.Button(self.master, text="2", style='TButton')
+        # button3 = ttk.Button(self.master, text="3", style='TButton')
+        # button1.pack(side=tk.LEFT)
+        # button2.pack()
+        # button3.pack()
+
+        self.nodes = [
+            ttk.Button(self.master, text="1", style='TButton')
+        ]
+        self.nodes[0].pack()
 
     @property
     def size(self):
