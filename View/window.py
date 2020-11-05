@@ -11,6 +11,9 @@ from tkinter import ttk
 from color import Color
 from ui_node import UINode
 from button import Button
+from label import Label
+from hstack import HStack
+from navbar import NavBar
 
 
 class Window(tk.Frame, UINode):
@@ -22,7 +25,7 @@ class Window(tk.Frame, UINode):
 
     def __init__(self, master=None, title: str = "Test Window",
                  width: int = 800, height: int = 600,
-                 theme: str = "Gruvbox Dark"):
+                 theme: str = "Ubuntu"):
         """
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.
@@ -30,8 +33,8 @@ class Window(tk.Frame, UINode):
 
         super().__init__(master)
 
-        self.width = width
-        self.height = height
+        self.width = self.master.winfo_screenwidth()
+        self.height = self.master.winfo_screenheight()
         self.set_size()
 
         self.master.title(title)
@@ -43,17 +46,17 @@ class Window(tk.Frame, UINode):
 
         self.master.configure(background=self.colors.background)
 
+        self.master.config(menu=NavBar(self, name="nav", width=50, height=35, theme=theme))
+
+        self.configure(background=self.colors.background)
+
         self.nodes = [
-            Button(self, name="test0", width=45, height=15, text="test_button", theme=theme),
-            Button(self, name="test1", width=40, height=15, text="test_button", theme=theme),
-            Button(self, name="test2", width=35, height=15, text="test_button", theme=theme),
-            Button(self, name="test3", width=30, height=15, text="test_button", theme=theme),
-            Button(self, name="test4", width=25, height=15, text="test_button", theme=theme),
-            Button(self, name="test5", width=20, height=15, text="test_button", theme=theme),
+            HStack(self, name="navbar", width=50, height=25, theme=theme),
+            HStack(self, name="navbar", width=50, height=25, theme=theme),
         ]
         # self.nodes[0].pack()
 
-        self.pack()
+        self.pack(fill=tk.BOTH, expand=1)
 
     @property
     def size(self):

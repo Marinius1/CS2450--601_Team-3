@@ -12,7 +12,7 @@ from window import Window
 @pytest.fixture(scope="module")
 def empty_window():
     """returns an empty window with bse size 800 x 600"""
-    app = Window(tk.Tk(), theme="Gruvbox Dark")
+    app = Window(tk.Tk())
 
     return app
 

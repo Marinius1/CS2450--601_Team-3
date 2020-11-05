@@ -1,10 +1,10 @@
+from window import *
 
 """ Controller module.
 used to control information between the module and View.
 Working "Main" module."""
 
 """Open View start window"""
-
 """Call authenticator"""
 
 """Control user input from View to authenticator, 
@@ -133,3 +133,7 @@ on load event
     on event trigger,
     send available document choices to View
 """
+
+if __name__=="__main__":
+    window = Window(tk.Tk())
+    window.mainloop()
