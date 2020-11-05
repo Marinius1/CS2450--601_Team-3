@@ -5,7 +5,13 @@ from color import Color
 from label import Label
 from hstack import HStack
 from button import Button
+from PIL import Image, ImageTk
+import os
 
+# change working directory to local file location
+# os.chdir(os.path.dirname(os.path.abspath(__file__)))
+global img
+img = Image.open('View/Widgets/logo.png')
 
 class NavBar(tk.Frame, UINode):
     """
@@ -24,14 +30,12 @@ class NavBar(tk.Frame, UINode):
         """
         super().__init__(master)
 
-
         self.name = name
 
-        '''
         self.colors = Color(theme).colors
         self.style = ttk.Style()
         self.style.theme_use('alt')
-
+        '''
         self.style.map(self.name + '.' + 'TNavBar',
                        background=[('active', self.colors.a7)])
         self.style.configure(self.name + '.' + 'TNavBar',
@@ -49,6 +53,7 @@ class NavBar(tk.Frame, UINode):
         self.configure(style=self.name + '.' + 'TNavBar')
         '''
 
+
         menubar = tk.Menu(self.master)
         self.fileMenu = tk.Menu(self.master, tearoff=0)
         self.fileMenu.add_command(label="Exit")
@@ -56,11 +61,22 @@ class NavBar(tk.Frame, UINode):
 
         toolbar = tk.Frame(self.master, bd=0)
 
-        Button(toolbar, text="Test", theme="Ubuntu", side=tk.LEFT)
-        Button(toolbar, text="Test", theme="Ubuntu", side=tk.LEFT)
-        Button(toolbar, text="Test", theme="Ubuntu", side=tk.LEFT)
+        '''
+        self.eimg = ImageTk.PhotoImage(image=img)
+        self.img_label = tk.Label(toolbar, image=self.eimg, background="black")
+
+        self.img_label.pack(side=tk.LEFT)
+        '''
+
+        self.title = tk.Label(toolbar, text="AnyEmployee", font=('Roboto', 26), background=self.colors.background, foreground=self.colors.foreground)
+        self.title.pack(side=tk.LEFT, padx=(25, 25))
 
 
+        Button(toolbar, text="Home", theme="Ubuntu", side=tk.LEFT)
+        Button(toolbar, text="People", theme="Ubuntu", side=tk.LEFT)
+        Button(toolbar, text="Time Cards", theme="Ubuntu", side=tk.LEFT)
+        Button(toolbar, text="Payroll", theme="Ubuntu", side=tk.LEFT)
+        Button(toolbar, text="Admin", theme="Ubuntu", side=tk.LEFT)
 
         self.nodes = [
             '''
