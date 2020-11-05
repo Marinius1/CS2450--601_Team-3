@@ -15,6 +15,7 @@ from label import Label
 from hstack import HStack
 from menu import Menu
 from navbar import NavBar
+from homepage import Homepage
 
 
 class Window(tk.Frame, UINode):
@@ -53,7 +54,7 @@ class Window(tk.Frame, UINode):
 
         self.nodes = [
             NavBar(self.master, name="nav", theme=theme),
-
+            Homepage(self, name="homepage", theme=theme)
         ]
 
         # set app toolbar

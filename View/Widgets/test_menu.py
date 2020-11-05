@@ -1,5 +1,5 @@
 from tkinter import *
-from button import Button as Btn
+
 
 class Example(Frame):
 
@@ -17,11 +17,15 @@ class Example(Frame):
         self.fileMenu.add_command(label="Exit", command=self.onExit)
         menubar.add_cascade(label="File", menu=self.fileMenu)
 
-        toolbar = Frame(self.master, bd=1, relief=RAISED)
 
-        btn_0 = Btn(toolbar, text="Test", theme="Ubuntu", side=LEFT)
-        btn_1 = Btn(toolbar, text="Test", theme="Ubuntu", side=LEFT)
-        btn_2 = Btn(toolbar, text="Test", theme="Ubuntu", side=LEFT)
+        toolbar = Frame(self.master, bd=1, relief=RAISED)
+        photo = PhotoImage(file="logo.gif")
+        label = Label(toolbar, image=photo, background="red")
+        label.image = photo
+        label.pack(side=LEFT, padx=2, pady=2)
+        exitButton = Button(toolbar, relief=FLAT,
+                            command=self.quit)
+        exitButton.pack(side=LEFT, padx=2, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
         self.master.config(menu=menubar)
@@ -33,8 +37,7 @@ class Example(Frame):
 def main():
 
     root = Tk()
-    root.geometry("800x600+300+300")
-    root.configure(background="purple")
+    root.geometry("250x150+300+300")
     app = Example()
     root.mainloop()
 
