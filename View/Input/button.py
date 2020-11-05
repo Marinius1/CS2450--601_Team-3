@@ -32,7 +32,7 @@ class Button(ttk.Button, UINode):
                              foreground=self.colors.foreground,
                              width=width,
                              height=height,
-                             borderwidth=2,
+                             borderwidth=0,
                              bordercolor=self.colors.a0,
                              focusthickness=3,
                              focuscolor=self.colors.a10
@@ -41,7 +41,7 @@ class Button(ttk.Button, UINode):
 
         self.configure(text=text, style=self.name + '.' + 'TButton')
 
-        self.pack(side=side, padx=padx, pady=pady)
+        self.pack(side=side, padx=padx, pady=pady, fill=tk.Y)
 
         # self.button = ttk.Button(self.master, text=text, style=self.name + '.' + 'TButton')
 

@@ -46,11 +46,24 @@ class Homepage(tk.Frame, UINode):
 
         self.pack(fill=tk.BOTH, expand=1)
 
-        self.left_panel = tk.Frame(self, width=400)
+        window_width = self.winfo_screenwidth() * 0.3
+        print(window_width)
+
+        self.left_panel = tk.Frame(self, width=window_width, background=self.colors.background)
         self.left_panel.pack(side=tk.LEFT, fill=tk.Y, expand=1)
 
-        self.right_panel = tk.Frame(self, background="pink")
-        self.right_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        # self.listbox_title = tk.Label(self.left_panel, text="")
+
+        self.listbox = tk.Listbox(self.left_panel, width=40, background=self.colors.background, foreground=self.colors.foreground)
+        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH, anchor=tk.NW, expand=1, pady=(10,0))
+
+
+        for i in range(8):
+            tmp_label = tk.Label(self, text=i)
+            self.listbox.insert(tk.END, tmp_label)
+
+        self.right_panel = tk.Frame(self, background=self.colors.background)
+        self.right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
 
 
 
