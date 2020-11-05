@@ -11,7 +11,7 @@ class Label(ttk.Label, UINode):
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, text="", theme=None, side=tk.TOP):
+                 height: int = 10, text="", theme=None, side=tk.TOP, padx=0, pady=0):
         """
         init(name: str, children: List<varied>): void
         call super(). initially this is not visible, set the desired message text if
@@ -33,10 +33,11 @@ class Label(ttk.Label, UINode):
                              borderwidth=2,
                              bordercolor=self.colors.a0,
                              focusthickness=3,
-                             focuscolor=self.colors.a10
+                             focuscolor=self.colors.a10,
+                             font=('Roboto', 24)
                              )
         self.master.configure(width=width, height=height, background=self.colors.background, border=0)
 
         self.configure(text=text, style=self.name + '.' + 'TLabel')
-        self.pack(side=side)
+        self.pack(side=side, padx=padx, pady=pady)
 

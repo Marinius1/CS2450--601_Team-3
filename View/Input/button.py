@@ -12,7 +12,7 @@ class Button(ttk.Button, UINode):
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, text="", theme=None, side=tk.TOP):
+                 height: int = 10, text="", theme=None, side=tk.TOP, padx=0, pady=0):
         """
         init(name: str, text: str, image_path: str, children=[]:
         List<mixed>, type: int): void init method. calls super() to properly
@@ -41,7 +41,7 @@ class Button(ttk.Button, UINode):
 
         self.configure(text=text, style=self.name + '.' + 'TButton')
 
-        self.pack(side=side, padx=1, pady=1)
+        self.pack(side=side, padx=padx, pady=pady)
 
         # self.button = ttk.Button(self.master, text=text, style=self.name + '.' + 'TButton')
 

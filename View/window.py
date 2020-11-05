@@ -13,6 +13,7 @@ from ui_node import UINode
 from button import Button
 from label import Label
 from hstack import HStack
+from menu import Menu
 from navbar import NavBar
 
 
@@ -46,14 +47,17 @@ class Window(tk.Frame, UINode):
 
         self.master.configure(background=self.colors.background)
 
-        self.master.config(menu=NavBar(self, name="nav", width=50, height=35, theme=theme))
+        self.master.config(menu=Menu(self, name="nav", width=50, height=35, theme=theme))
 
         self.configure(background=self.colors.background)
 
         self.nodes = [
-            HStack(self, name="navbar", width=50, height=25, theme=theme),
-            HStack(self, name="navbar", width=50, height=25, theme=theme),
+            NavBar(self.master, name="nav", theme=theme),
+
         ]
+
+        # set app toolbar
+        self.master.configure(menu=self.nodes[0])
         # self.nodes[0].pack()
 
         self.pack(fill=tk.BOTH, expand=1)
