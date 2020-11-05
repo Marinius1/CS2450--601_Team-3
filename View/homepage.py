@@ -2,11 +2,9 @@ from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
 from color import Color
-from label import Label
-from button import Button
 
 
-class HStack(tk.Frame, UINode):
+class Homepage(tk.Frame, UINode):
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -14,7 +12,7 @@ class HStack(tk.Frame, UINode):
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, theme=None, nodes=None):
+                 height: int = 10, theme=None):
         """
         init(name: str, children[]: List<varies>): void
         calls super(). needs to populate the horizontal View. also needs to bind either
@@ -40,13 +38,29 @@ class HStack(tk.Frame, UINode):
                              focusthickness=3,
                              focuscolor=self.colors.a10
                              )
-        # self.master.configure(background="blue", border=0)
-        # self.pack()
+        self.master.configure(background="blue")
+        self.configure(background="red")
 
-        self.pack(side=tk.TOP, anchor=tk.NW, fill=tk.X, expand=False)
+        self.pack(fill=tk.BOTH, expand=1)
 
-        self.nodes = nodes
+        window_width = self.winfo_screenwidth() * 0.3
+        print(window_width)
 
+        self.left_panel = tk.Frame(self, width=window_width, background=self.colors.background)
+        self.left_panel.pack(side=tk.LEFT, fill=tk.Y, expand=1)
+
+        # self.listbox_title = tk.Label(self.left_panel, text="")
+
+        self.listbox = tk.Listbox(self.left_panel, width=40, background=self.colors.background, foreground=self.colors.foreground)
+        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH, anchor=tk.NW, expand=1, pady=(10,0))
+
+
+        for i in range(8):
+            tmp_label = tk.Label(self, text=i)
+            self.listbox.insert(tk.END, tmp_label)
+
+        self.right_panel = tk.Frame(self, background=self.colors.background)
+        self.right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=1)
 
 
 

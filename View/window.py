@@ -10,9 +10,6 @@ from tkinter import ttk
 
 from color import Color
 from ui_node import UINode
-from button import Button
-from label import Label
-from hstack import HStack
 from menu import Menu
 from navbar import NavBar
 from homepage import Homepage
@@ -48,20 +45,10 @@ class Window(tk.Frame, UINode):
 
         self.master.configure(background=self.colors.background)
 
-        self.master.config(menu=Menu(self, name="nav", width=50, height=35, theme=theme))
-
         self.configure(background=self.colors.background)
 
-        self.nodes = [
-            NavBar(self.master, name="nav", theme=theme),
-            Homepage(self, name="homepage", theme=theme)
-        ]
-
-        # set app toolbar
-        self.master.configure(menu=self.nodes[0])
-        # self.nodes[0].pack()
-
-        self.pack(fill=tk.BOTH, expand=1)
+        self.nav = NavBar(self.master, name="nav", theme=theme),
+        # self.page_home = Homepage(self, name="homepage", theme=theme)
 
     @property
     def size(self):
