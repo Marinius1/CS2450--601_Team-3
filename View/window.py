@@ -13,6 +13,7 @@ from ui_node import UINode
 from menu import Menu
 from navbar import NavBar
 from homepage import Homepage
+from people import People
 
 
 class Window(UINode):
@@ -52,7 +53,8 @@ class Window(UINode):
         self.master.columnconfigure(0, weight=1)
 
         self.nav = NavBar(self.master, name="nav", theme=theme),
-        self.page_home = Homepage(self.master, name="homepage", theme=theme)
+        # self.page_home = Homepage(self.master, name="homepage", theme=theme)
+        self.page_people = People(self.master, name="people", theme=theme)
 
     @property
     def size(self):

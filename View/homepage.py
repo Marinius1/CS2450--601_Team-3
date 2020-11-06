@@ -91,7 +91,7 @@ class Homepage(UINode):
         self.summary_1 = self.create_summary_frame(parent=self.right_frame, title="Employees", content="42", row=0, column=1)
         self.summary_2 = self.create_summary_frame(parent=self.right_frame, title="Average Wage", content="$3.50", row=0, column=2)
         self.summary_3 = self.create_summary_frame(parent=self.right_frame, title="Next Payout", content="$2500", row=1, column=0)
-        self.summary_4 = self.create_summary_frame(parent=self.right_frame, title="Next^2 Payout", content="$5000", row=1, column=1)
+        self.summary_4 = self.create_summary_frame(parent=self.right_frame, title="Deductibles", content="$5000", row=1, column=1)
         self.summary_5 = self.create_summary_frame(parent=self.right_frame, title="Quarterly Overtime", content="$18", row=1, column=2)
 
     def create_summary_frame(self, parent, title, content, row, column):
