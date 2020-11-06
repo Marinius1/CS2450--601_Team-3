@@ -69,10 +69,16 @@ class Homepage(UINode):
                                                  selectforeground=self.colors.background,
                                                  background=self.colors.background,
                                                  relief=tk.FLAT)
-        self.recent_actions_listbox.grid(row=1, sticky=tk.NSEW, padx=(15, 15))
+        self.recent_actions_listbox.grid(row=1, column=0, sticky=tk.NSEW, padx=(15, 15))
 
-        for i in range(50):
+        for i in range(500):
             self.recent_actions_listbox.insert(tk.END, "Jacob Jenson was fired - 2020-11-05")
+
+        self.recent_actions_scrollbar = tk.Scrollbar(self.left_frame)
+        self.recent_actions_scrollbar.grid(row=1, column=1, sticky=tk.NS)
+
+        self.recent_actions_listbox.configure(yscrollcommand=self.recent_actions_scrollbar.set)
+        self.recent_actions_scrollbar.configure(command=self.recent_actions_listbox.yview)
 
         self.right_frame = tk.Frame(self.home_frame)
         self.right_frame.configure(background=self.colors.background, border=3,relief=tk.RIDGE)
@@ -81,37 +87,29 @@ class Homepage(UINode):
         self.right_frame.columnconfigure((0, 1, 2), weight=1)
         self.right_frame.rowconfigure((0, 1), weight=1)
 
-        self.summary_frame_0 = tk.Frame(self.right_frame)
-        self.summary_frame_0.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame_0.grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
+        self.create_summary_frame(parent=self.right_frame, title="Weekly Hours Worked", content="153", row=0, column=0)
+        self.create_summary_frame(parent=self.right_frame, title="Employees", content="42", row=0, column=1)
+        self.create_summary_frame(parent=self.right_frame, title="Average Wage", content="$3.50", row=0, column=2)
+        self.create_summary_frame(parent=self.right_frame, title="Next Payout", content="$2500", row=1, column=0)
+        self.create_summary_frame(parent=self.right_frame, title="Next^2 Payout", content="$5000", row=1, column=1)
+        self.create_summary_frame(parent=self.right_frame, title="Quarterly Overtime", content="$18", row=1, column=2)
 
-        self.summary_frame_0.rowconfigure(0, weight=1)
-        self.summary_frame_0.rowconfigure(1, weight=5)
-        self.summary_frame_0.columnconfigure(0, weight=1)
-        #
-        # self.summary_frame_0_title = ttk.Label(self.summary_frame_0, text="Weekly Hours Worked", style='Recent.TLabel')
-        # self.summary_frame_0_title.grid(row=0, column=0)
-        #
-        # self.summary_frame_0_content = ttk.Label(self.summary_frame_0, text="153", style='Recent.TLabel')
-        # self.summary_frame_0_content.configure(font=('Roboto', 152))
-        # self.summary_frame_0_content.grid(row=1, column=0)
+    def create_summary_frame(self, parent, title, content, row, column):
+        self.summary_frame = tk.Frame(parent)
+        self.summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
+        self.summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
 
-        self.summary_frame_1 = tk.Frame(self.right_frame)
-        self.summary_frame_1.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame_1.grid(row=0, column=1, sticky=tk.NSEW, padx=10, pady=10)
+        self.summary_frame.rowconfigure(0, weight=1)
+        self.summary_frame.rowconfigure(1, weight=3)
+        self.summary_frame.columnconfigure(0, weight=1)
 
-        self.summary_frame_2 = tk.Frame(self.right_frame)
-        self.summary_frame_2.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame_2.grid(row=0, column=2, sticky=tk.NSEW, padx=10, pady=10)
+        self.summary_frame.grid_propagate(0)
 
-        self.summary_frame_3 = tk.Frame(self.right_frame)
-        self.summary_frame_3.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame_3.grid(row=1, column=0, sticky=tk.NSEW, padx=10, pady=10)
+        self.summary_frame_title = ttk.Label(self.summary_frame, text=title, style='Recent.TLabel')
+        self.summary_frame_title.configure(font=('Roboto', 40))
+        self.summary_frame_title.grid(row=0, column=0)
 
-        self.summary_frame_4 = tk.Frame(self.right_frame)
-        self.summary_frame_4.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame_4.grid(row=1, column=1, sticky=tk.NSEW, padx=10, pady=10)
+        self.summary_frame_content = ttk.Label(self.summary_frame, text=content, style='Recent.TLabel')
+        self.summary_frame_content.configure(font=('Roboto', 150, 'bold'))
+        self.summary_frame_content.grid(row=1, column=0)
 
-        self.summary_frame_5 = tk.Frame(self.right_frame)
-        self.summary_frame_5.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame_5.grid(row=1, column=2, sticky=tk.NSEW, padx=10, pady=10)
