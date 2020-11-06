@@ -58,21 +58,22 @@ class People(UINode):
 
         self.home_frame.rowconfigure(0, weight=0)
         self.home_frame.rowconfigure(1, weight=1)
+        # self.home_frame.columnconfigure(1, weight=1)
 
-        self.header = tk.Frame(self.home_frame)
-        self.header.configure(background=self.colors.background, border=3,
-                              relief=tk.FLAT)
-        self.header.grid(row=0, column=0, sticky=tk.N + tk.E + tk.W)
+        # self.header = tk.Frame(self.home_frame)
+        # self.header.configure(background=self.colors.background, border=3,
+        #                       relief=tk.FLAT)
+        # self.header.grid(row=0, column=0, sticky=tk.N + tk.E + tk.W)
 
         # self.recent_actions_label = ttk.Label(self.header,
         #                                       text="First Name",
         #                                       style='Recent.TLabel')
         # self.recent_actions_label.grid(row=0, column=0, sticky=tk.NW, padx=15)
 
-        self.table = tk.Frame(self.home_frame)
-        self.table.configure(background=self.colors.background, border=3,
-                             relief=tk.FLAT)
-        self.table.grid(row=1, column=0, sticky=tk.NSEW)
+        # self.table = tk.Frame(self.home_frame)
+        # self.table.configure(background='red', border=3,
+        #                      relief=tk.FLAT)
+        # self.table.grid(row=1, column=0, sticky=tk.NSEW)
         '''
         self.column = tk.Listbox(self.table,
                                                  foreground=self.colors.foreground,
@@ -92,14 +93,33 @@ class People(UINode):
         '''
 
         model_example = [
-            ['bob', 'cindy', 'lue', 'greg'],
-            ['Jones', 'Lue', 'Suong', 'Borgerstrom'],
-            ['$11.00', '$12.00', 'More than you', 'Less than you']
+            # ['bob', 'cindy', 'lue', 'greg'],
+            [i for i in range(1000)],
+            [i for i in range(1000)],
+            [i for i in range(1000)]
+            # ['Jones', 'Lue', 'Suong', 'Borgerstrom'],
+            # ['$11.00', '$12.00', 'More than you', 'Less than you']
         ]
 
         headers_example = ['First Name', 'Last Name', 'Wage']
 
+        self.listboxes = []
+
+
+        self.scrollbar = tk.Scrollbar(self.home_frame)
+        # self.b1 = Listbox(master, yscrollcommand=scrollbar.set)
+        # self.b2 = Listbox(master, yscrollcommand=scrollbar.set)
+        self.scrollbar.config(command=self.yview)
+        # self.b1.pack(side=LEFT, fill=BOTH, expand=1)
+        # self.b2.pack(side=LEFT, fill=BOTH, expand=1)
+
         self.create_table(headers_example, model_example)
+        self.scrollbar.grid(row=0, column=5)
+
+    def yview(self, *args):
+
+        for i in self.listboxes:
+            i.yview()
 
     def create_table(self, lyst1, lyst2):
 
@@ -107,20 +127,20 @@ class People(UINode):
 
             self.home_frame.columnconfigure(i, weight=0)
 
-            grid_frame = tk.Frame(self.home_frame, background='red')
-            grid_frame.rowconfigure(1, weight=1)
+            grid_frame = tk.Frame(self.home_frame, background=self.colors.background)
             grid_frame.grid(row=0, column=i, sticky=tk.NS)
 
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
-            button.grid(row=0, column=i, sticky=tk.EW)
+            button.grid(row=0, column=0, sticky=tk.EW)
 
             column = tk.Listbox(grid_frame,
                                 foreground=self.colors.foreground,
                                 selectforeground=self.colors.background,
                                 background=self.colors.background,
-                                relief=tk.FLAT)
-            column.grid(row=1, column=i, sticky=tk.NS)
+                                relief=tk.FLAT,
+                                yscrollcommand=self.scrollbar.set)
+            column.grid(row=1, column=0, sticky=tk.NS)
 
             for j in range(len(lyst2[i])):
                 column.insert(tk.END, lyst2[i][j])
@@ -131,6 +151,10 @@ class People(UINode):
                     background = self.colors.a7
 
                 column.itemconfigure(j, background=background)
+            column.configure(height=len(lyst2[i]))
+
+            self.listboxes.append(column)
+
 
     def resize_summary_frame(self, event, title, content):
         title.configure(font=('Roboto', int(event.height * .1)))
