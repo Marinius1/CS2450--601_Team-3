@@ -87,29 +87,36 @@ class Homepage(UINode):
         self.right_frame.columnconfigure((0, 1, 2), weight=1)
         self.right_frame.rowconfigure((0, 1), weight=1)
 
-        self.create_summary_frame(parent=self.right_frame, title="Weekly Hours Worked", content="153", row=0, column=0)
-        self.create_summary_frame(parent=self.right_frame, title="Employees", content="42", row=0, column=1)
-        self.create_summary_frame(parent=self.right_frame, title="Average Wage", content="$3.50", row=0, column=2)
-        self.create_summary_frame(parent=self.right_frame, title="Next Payout", content="$2500", row=1, column=0)
-        self.create_summary_frame(parent=self.right_frame, title="Next^2 Payout", content="$5000", row=1, column=1)
-        self.create_summary_frame(parent=self.right_frame, title="Quarterly Overtime", content="$18", row=1, column=2)
+        self.summary_0 = self.create_summary_frame(parent=self.right_frame, title="Weekly Hours Worked", content="153", row=0, column=0)
+        self.summary_1 = self.create_summary_frame(parent=self.right_frame, title="Employees", content="42", row=0, column=1)
+        self.summary_2 = self.create_summary_frame(parent=self.right_frame, title="Average Wage", content="$3.50", row=0, column=2)
+        self.summary_3 = self.create_summary_frame(parent=self.right_frame, title="Next Payout", content="$2500", row=1, column=0)
+        self.summary_4 = self.create_summary_frame(parent=self.right_frame, title="Next^2 Payout", content="$5000", row=1, column=1)
+        self.summary_5 = self.create_summary_frame(parent=self.right_frame, title="Quarterly Overtime", content="$18", row=1, column=2)
 
     def create_summary_frame(self, parent, title, content, row, column):
-        self.summary_frame = tk.Frame(parent)
-        self.summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        self.summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
+        summary_frame = tk.Frame(parent)
+        summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
+        summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
 
-        self.summary_frame.rowconfigure(0, weight=1)
-        self.summary_frame.rowconfigure(1, weight=3)
-        self.summary_frame.columnconfigure(0, weight=1)
+        summary_frame.rowconfigure(0, weight=1)
+        summary_frame.rowconfigure(1, weight=3)
+        summary_frame.columnconfigure(0, weight=1)
 
-        self.summary_frame.grid_propagate(0)
+        summary_frame.grid_propagate(0)
 
-        self.summary_frame_title = ttk.Label(self.summary_frame, text=title, style='Recent.TLabel')
-        self.summary_frame_title.configure(font=('Roboto', 40))
-        self.summary_frame_title.grid(row=0, column=0)
+        summary_frame_title = ttk.Label(summary_frame, text=title, style='Recent.TLabel')
+        summary_frame_title.configure(font=('Roboto', 40))
+        summary_frame_title.grid(row=0, column=0)
 
-        self.summary_frame_content = ttk.Label(self.summary_frame, text=content, style='Recent.TLabel')
-        self.summary_frame_content.configure(font=('Roboto', 150, 'bold'))
-        self.summary_frame_content.grid(row=1, column=0)
+        summary_frame_content = ttk.Label(summary_frame, text=content, style='Recent.TLabel')
+        summary_frame_content.configure(font=('Roboto', 150, 'bold'))
+        summary_frame_content.grid(row=1, column=0)
 
+        summary_frame.bind('<Configure>', lambda event: self.resize_summary_frame(event=event, title=summary_frame_title, content=summary_frame_content))
+
+        return [summary_frame, summary_frame_title, summary_frame_content]
+
+    def resize_summary_frame(self, event, title, content):
+        title.configure(font=('Roboto', int(event.height * .1)))
+        content.configure(font=('Roboto', int(event.height * .2), 'bold'))
