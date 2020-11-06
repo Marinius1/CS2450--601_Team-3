@@ -51,7 +51,7 @@ class Homepage(UINode):
 
         self.left_frame = tk.Frame(self.home_frame)
         self.left_frame.configure(background=self.colors.background, border=3,
-                                  relief=tk.GROOVE)
+                                  relief=tk.RIDGE)
         self.left_frame.grid(column=0, sticky=tk.NSEW)
 
         self.left_frame.rowconfigure(0, weight=1)
@@ -69,13 +69,13 @@ class Homepage(UINode):
                                                  selectforeground=self.colors.background,
                                                  background=self.colors.background,
                                                  relief=tk.FLAT)
-        self.recent_actions_listbox.grid(row=1, sticky=tk.NSEW, padx=(15, 0))
+        self.recent_actions_listbox.grid(row=1, sticky=tk.NSEW, padx=(15, 15))
 
         for i in range(50):
-            self.recent_actions_listbox.insert(tk.END, "Jacob was fired - 2020-11-05")
+            self.recent_actions_listbox.insert(tk.END, "Jacob Jenson was fired - 2020-11-05")
 
         self.right_frame = tk.Frame(self.home_frame)
-        self.right_frame.configure(background=self.colors.background, border=3,relief=tk.FLAT)
+        self.right_frame.configure(background=self.colors.background, border=3,relief=tk.RIDGE)
         self.right_frame.grid(row=0, column=1, sticky=tk.NSEW)
 
         self.right_frame.columnconfigure((0, 1, 2), weight=1)
@@ -84,6 +84,17 @@ class Homepage(UINode):
         self.summary_frame_0 = tk.Frame(self.right_frame)
         self.summary_frame_0.configure(background=self.colors.background, border=3, relief=tk.RAISED)
         self.summary_frame_0.grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
+
+        self.summary_frame_0.rowconfigure(0, weight=1)
+        self.summary_frame_0.rowconfigure(1, weight=5)
+        self.summary_frame_0.columnconfigure(0, weight=1)
+        #
+        # self.summary_frame_0_title = ttk.Label(self.summary_frame_0, text="Weekly Hours Worked", style='Recent.TLabel')
+        # self.summary_frame_0_title.grid(row=0, column=0)
+        #
+        # self.summary_frame_0_content = ttk.Label(self.summary_frame_0, text="153", style='Recent.TLabel')
+        # self.summary_frame_0_content.configure(font=('Roboto', 152))
+        # self.summary_frame_0_content.grid(row=1, column=0)
 
         self.summary_frame_1 = tk.Frame(self.right_frame)
         self.summary_frame_1.configure(background=self.colors.background, border=3, relief=tk.RAISED)

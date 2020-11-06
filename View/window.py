@@ -24,7 +24,7 @@ class Window(UINode):
 
     def __init__(self, master=None, title: str = "Test Window",
                  width: int = 800, height: int = 600,
-                 theme: str = "Gruvbox Dark"):
+                 theme: str = "Builtin Light"):
         """
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.

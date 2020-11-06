@@ -48,7 +48,7 @@ class NavBar(UINode):
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
         # setup logo
-        self.eimg = tk.PhotoImage(file='logo.gif')
+        self.eimg = tk.PhotoImage(file='AnyEmployee.gif')
         self.eimg.subsample(100, 100)
         self.img_label = tk.Label(self.nav_frame, image=self.eimg,
                                   background=self.colors.background)
