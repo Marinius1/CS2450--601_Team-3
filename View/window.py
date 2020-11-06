@@ -15,7 +15,7 @@ from navbar import NavBar
 from homepage import Homepage
 
 
-class Window(tk.Frame, UINode):
+class Window(UINode):
     """
     Window class: responsible for being the 'root' component of all other
     widgets, layout, etc.. has properties like height, width, etc. will most
@@ -24,13 +24,14 @@ class Window(tk.Frame, UINode):
 
     def __init__(self, master=None, title: str = "Test Window",
                  width: int = 800, height: int = 600,
-                 theme: str = "Ubuntu"):
+                 theme: str = "Gruvbox Dark"):
         """
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.
         """
 
-        super().__init__(master)
+        super().__init__()
+        self.master = master
 
         self.width = self.master.winfo_screenwidth()
         self.height = self.master.winfo_screenheight()
@@ -45,10 +46,13 @@ class Window(tk.Frame, UINode):
 
         self.master.configure(background=self.colors.background)
 
-        self.configure(background=self.colors.background)
+        self.master.rowconfigure(0, weight=0)
+        self.master.rowconfigure(1, weight=1)
+
+        self.master.columnconfigure(0, weight=1)
 
         self.nav = NavBar(self.master, name="nav", theme=theme),
-        # self.page_home = Homepage(self, name="homepage", theme=theme)
+        self.page_home = Homepage(self.master, name="homepage", theme=theme)
 
     @property
     def size(self):

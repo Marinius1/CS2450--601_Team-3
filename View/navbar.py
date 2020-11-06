@@ -6,8 +6,7 @@ from button import Button
 import os
 
 
-
-class NavBar(tk.Frame, UINode):
+class NavBar(UINode):
     """
     button input widget. allows the user to execute a defined action on
     click. is configurable to either show text, show an image, or both. also
@@ -22,13 +21,19 @@ class NavBar(tk.Frame, UINode):
         initialize all class data members. also calls appropriate class
         methods as needed.
         """
-        super().__init__(master)
+        super().__init__()
+        self.master = master
 
         self.name = name
 
         self.colors = Color(theme).colors
         self.style = ttk.Style()
         self.style.theme_use('alt')
+
+        self.nav_frame = tk.Frame(self.master)
+        self.nav_frame.configure(background=self.colors.background, border=3, relief=tk.RIDGE)
+        self.nav_frame.grid(row=0, column=0, sticky=tk.EW)
+
 
         menubar = tk.Menu(self.master)
         self.fileMenu = tk.Menu(self.master, tearoff=0)
@@ -44,54 +49,40 @@ class NavBar(tk.Frame, UINode):
 
         # setup logo
         self.eimg = tk.PhotoImage(file='logo.gif')
-        self.eimg.subsample(100,100)
-        self.img_label = tk.Label(self.master, image=self.eimg, background=self.colors.background)
-        self.img_label.grid(row=0, column=0)
-        # self.img_label.pack(side=tk.LEFT)
-
-        # Button(toolbar, text="Home", theme="Ubuntu", side=tk.LEFT)
-        # Button(toolbar, text="People", theme="Ubuntu", side=tk.LEFT)
-        # Button(toolbar, text="Time Cards", theme="Ubuntu", side=tk.LEFT)
-        # Button(toolbar, text="Payroll", theme="Ubuntu", side=tk.LEFT)
-        # Button(toolbar, text="Admin", theme="Ubuntu", side=tk.LEFT)
-
-        self.style.map('Nav.TButton', background=[('active', self.colors.a7)], foreground=[('active', self.colors.background)])
+        self.eimg.subsample(100, 100)
+        self.img_label = tk.Label(self.nav_frame, image=self.eimg,
+                                  background=self.colors.background)
+        self.img_label.grid(row=0, column=0, sticky=tk.W)
+        self.style.map('Nav.TButton', background=[('active', self.colors.a7)],
+                       foreground=[('active', self.colors.background)])
         self.style.configure('Nav.TButton',
-                         background=self.colors.background,
-                         foreground=self.colors.foreground,
-                         width=width,
-                         height=100,
-                         borderwidth=0,
-                         bordercolor=self.colors.a0,
-                         focusthickness=3,
-                         focuscolor=self.colors.a10
-                         )
-
-        self.nav_home = ttk.Button(self.master, text="Home")
+                             background=self.colors.background,
+                             foreground=self.colors.foreground,
+                             borderwidth=0,
+                             bordercolor=self.colors.a0,
+                             focusthickness=3,
+                             focuscolor=self.colors.a10
+                             )
+        
+        self.nav_home = ttk.Button(self.nav_frame, text="Home")
         self.nav_home.configure(style='Nav.TButton')
         self.nav_home.grid(row=0, column=1, sticky=tk.NS)
 
-        self.nav_people = ttk.Button(self.master, text="People")
+        self.nav_people = ttk.Button(self.nav_frame, text="People")
         self.nav_people.configure(style='Nav.TButton')
         self.nav_people.grid(row=0, column=2, sticky=tk.NS)
 
-        self.nav_time = ttk.Button(self.master, text="Time Cards")
+        self.nav_time = ttk.Button(self.nav_frame, text="Time Cards")
         self.nav_time.configure(style='Nav.TButton')
         self.nav_time.grid(row=0, column=3, sticky=tk.NS)
 
-        self.nav_pay = ttk.Button(self.master, text="Payroll")
+        self.nav_pay = ttk.Button(self.nav_frame, text="Payroll")
         self.nav_pay.configure(style='Nav.TButton')
         self.nav_pay.grid(row=0, column=4, sticky=tk.NS)
 
-        self.nav_admin = ttk.Button(self.master, text="Admin")
+        self.nav_admin = ttk.Button(self.nav_frame, text="Admin")
         self.nav_admin.configure(style='Nav.TButton')
         self.nav_admin.grid(row=0, column=5, sticky=tk.NS)
-
-        # toolbar.pack(side=tk.TOP, fill=tk.X)
-        # self.master.config(menu=menubar)
-
-        # self.button = ttk.Button(self.master, text=text, style=self.name + '.' + 'TNavBar')
-
 
 '''
 @abstract method implementation

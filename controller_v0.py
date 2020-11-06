@@ -135,5 +135,6 @@ on load event
 """
 
 if __name__=="__main__":
-    window = Window(tk.Tk())
-    window.mainloop()
+    root = tk.Tk()
+    window = Window(root)
+    root.mainloop()
