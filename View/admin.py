@@ -122,12 +122,37 @@ class Admin(UINode):
         self.create_text_entry(self.info_identity_frame, 'Address', '123 Sesame St.', 2)
         self.create_text_entry(self.info_identity_frame, 'City', 'Las Vegas', 3)
 
-        self.options = ['NV', 'UT', 'AZ']
-
-        self.create_dropdown_menu(self.info_identity_frame, 'State', self.options, 4)
-
+        self.states = ['NV', 'UT', 'AZ']
+        self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
         self.create_text_entry(self.info_identity_frame, 'Phone Number', '123-456-7890', 5)
-        self.create_text_entry(self.info_identity_frame, 'Date Of Birth', 'Today', 6)
+
+        self.days = [i for i in range(1, 32)]
+        self.create_dropdown_menu(self.info_identity_frame, 'Day', self.days, 6)
+
+        self.months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ]
+        self.create_dropdown_menu(self.info_identity_frame, 'Month', self.months, 7)
+
+        self.years = [i for i in range(1950, 2005)]
+        self.create_dropdown_menu(self.info_identity_frame, 'Year', self.years, 8)
+
+        self.create_text_entry(self.info_identity_frame, 'SSN', 'XXX-XX-XXXX', 9)
+
+        self.create_text_entry(self.info_identity_frame, 'Job Title', 'Peasant', 10)
+        self.create_text_entry(self.info_identity_frame, 'Team', 'Executive', 11)
+        self.create_text_entry(self.info_identity_frame, 'Role', 'Top Dawg', 12)
 
     def populate_people(self, lyst):
 
