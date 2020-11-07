@@ -1,4 +1,4 @@
-"""Model Module To communicate with control, and get data to display for the view."""
+"""Model Module To communicate with control, and get data to display for the View."""
 
 """---Import employee file class"""
 """

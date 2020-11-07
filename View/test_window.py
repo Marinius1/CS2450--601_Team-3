@@ -37,12 +37,8 @@ def test_window_set_size(empty_window):
     assert new_size == empty_window.size
 
 
-def test_window_theme(empty_window):
-
-    assert empty_window.colors is not None
-
-
 def test_window_mainloop(empty_window):
     """simple test to ensure mainloop works"""
-    # empty_window.after(3000, empty_window.master.destroy)
+    # comment this line out if you want to not quit immediately
+    # empty_window.after(100, empty_window.master.destroy)
     empty_window.mainloop()

@@ -35,19 +35,29 @@ class Color:
         namedtuple with all color data from itermcolor file
         """
 
+        self.tree = xml.parse(self.scheme_path)
+        self.root = self.tree.getroot()
+
         color_names = []
         count = 0
-        for i in self.root.iter('key'):
-            if not count % 6:
-                color_names.append(i.text)
+        for i in self.root.findall('./dict/key'):
+            color_names.append(i.text)
             count += 1
 
+        color_data = []
+        for i in self.root.findall('./dict/dict/'):
+            color_data.append(i.text)
+
+        valid_color_strings = [
+            "Red Component",
+            "Blue Component",
+            "Green Component"
+        ]
+
         color_values = []
-        count = 0
-        for i in self.root.iter('real'):
-            if count % 4 != 0:
-                color_values.append(math.floor(float(i.text) * 255))
-            count += 1
+        for i in range(0, len(color_data), 2):
+            if color_data[i] in valid_color_strings:
+                color_values.append(math.floor(float(color_data[i + 1]) * 255))
 
         color_values = [
             color_values[x:x + 3] for x in range(0, len(color_values), 3)
@@ -88,7 +98,9 @@ class Color:
             'Foreground Color': "foreground",
             'Link Color': "link",
             'Selected Text Color': "selected_text",
-            'Selection Color': "selection"
+            'Selection Color': "selection",
+            'Tab Color': "tab",
+            "Underline Color": "underline"
         }
 
         # build shorter naming conventions using expanded names as a demux key
@@ -98,7 +110,17 @@ class Color:
                 color_keys.append(color_mux[i[0]])
             except KeyError as e:
                 print("::ERROR:: color demux failed")
+                for i in color_names:
+                    print(i)
+                for i in color_values:
+                    print(i)
+
+
 
         Colors = namedtuple('Colors', color_keys)
 
         return Colors(*color_hex)
+
+
+if __name__ == '__main__':
+    c = Color("Chalk")

@@ -1,13 +1,13 @@
+from window import *
 
 """ Controller module.
-used to control information between the module and view.
+used to control information between the module and View.
 Working "Main" module."""
 
-"""Open view start window"""
-
+"""Open View start window"""
 """Call authenticator"""
 
-"""Control user input from view to authenticator, 
+"""Control user input from View to authenticator, 
 when response from authenticator module
 is reciever, log account type.
 
@@ -15,21 +15,21 @@ is reciever, log account type.
 If account = admin, call view_admin.
     initiate model pipe
     load employees list into memory
-    send success message to view
-    call view admin_home
-    initialize event listeners "admin-home-events" (sustained in view module)
+    send success message to View
+    call View admin_home
+    initialize event listeners "admin-home-events" (sustained in View module)
 
 --employee module
 If account type == employee, 
     initiate model pipe
     if employee == user
         load employee into memory
-        send success message to view
-        call view employee_home
-        call event listeners "home-events" (sustained in view module)
+        send success message to View
+        call View employee_home
+        call event listeners "home-events" (sustained in View module)
 
 else
-    issue login fail attempt to view
+    issue login fail attempt to View
     call button event handler
     on response from user, restart authenticator process.
 """
@@ -41,49 +41,49 @@ else
 
     pay-
         on event trigger,
-        pull string input from view field
+        pull string input from View field
         if string
             parse input to correct data type
             call model pay method with parsed data type
             check edit (if employee pay == new employee pay then good, else bad)
             update employee list in memory
-            send success to view
-            send updated employee list to view
+            send success to View
+            send updated employee list to View
 
         else
-            call view input error module
+            call View input error module
             restart event handler
 
     permissions-
     on load event;
-        send employee permissions list to view
+        send employee permissions list to View
      on change event;
-        pull string input from view field
+        pull string input from View field
         if string
             parse input to correct data type
             call updater update-permissions method with parsed data type
             check edit (if employee pay == new employee pay then good, else bad)
             update employee list in memory
-            send success to view
-            send updated employee list to view
+            send success to View
+            send updated employee list to View
 
         else
-            call view input error module
+            call View input error module
             restart event handler
 
     PTO-
     on event trigger,
-        pull string input from view field
+        pull string input from View field
         if string
             parse input to correct data type
             call model PTO method with parsed data type
             check edit (if employee pay == new employee pay then good, else bad)
             update employee list in memory
-            send success to view
-            send updated employee list to view
+            send success to View
+            send updated employee list to View
 
         else
-            call view input error module
+            call View input error module
             restart event handler
 """
 
@@ -91,14 +91,14 @@ else
 --Company info--
  On load event
     open company info txt file
-    send to view
+    send to View
 
 -Directory
     on event trigger,
     parse employee name, emp_number, emp_phone to list of list of strings
     [["Jack", "Employeeson", "123654789", "(***) 111-2222"], ["Jill", "ManagerLady", "987654321", "(***)333-4444"]]
     for element in list,
-        call row maker from view with list element as var
+        call row maker from View with list element as var
     
 
 -Metrics
@@ -118,18 +118,23 @@ on load event
     if current user == employee in list employees
         load employee data
     else
-        call view error response
+        call View error response
 
 -pay
     same info as metrics, but for single employee only.
 
 -PTO
     on event trigger,
-    send accrued PTO time to view
+    send accrued PTO time to View
 """
 
 """
 --Docs/Help--
     on event trigger,
-    send available document choices to view
+    send available document choices to View
 """
+
+if __name__=="__main__":
+    root = tk.Tk()
+    window = Window(root)
+    root.mainloop()
