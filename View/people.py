@@ -51,23 +51,13 @@ class People(UINode):
                              focuscolor=self.colors.a10
                              )
 
-        self.style.map('People.Vertical.TScrollbar')
-        self.style.configure('People.Vertical.TScrollbar',
-                             background=self.colors.a7,
-                             activebackground=self.colors.a8,
-                             troughcolor=self.colors.background,
-                             borderwidth=0,
-                             relief=tk.FLAT,
-                             activerelief=tk.FLAT,
-                             )
-
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3, relief=tk.RIDGE)
         self.home_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
         self.home_frame.rowconfigure(0, weight=1)
 
-        self.scrollbar = ttk.Scrollbar(self.home_frame, style='People.Vertical.TScrollbar')
+        self.scrollbar = tk.Scrollbar(self.home_frame)
 
         self.data_columns = []
 
