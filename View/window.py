@@ -14,6 +14,7 @@ from menu import Menu
 from navbar import NavBar
 from homepage import Homepage
 from people import People
+from admin import Admin
 
 
 class Window(UINode):
@@ -23,7 +24,7 @@ class Window(UINode):
     likely handle resize events as well.
     """
 
-    def __init__(self, master=None, title: str = "Test Window",
+    def __init__(self, master=None, title: str = "AnyEmployee",
                  width: int = 800, height: int = 600,
                  theme: str = "Builtin Light"):
         """
@@ -54,7 +55,8 @@ class Window(UINode):
 
         self.nav = NavBar(self.master, name="nav", theme=theme),
         # self.page_home = Homepage(self.master, name="homepage", theme=theme)
-        self.page_people = People(self.master, name="people", theme=theme)
+        # self.page_people = People(self.master, name="people", theme=theme)
+        self.page_admin = Admin(self.master, name="admin", theme=theme)
 
     @property
     def size(self):
