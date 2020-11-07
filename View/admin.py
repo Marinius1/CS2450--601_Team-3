@@ -59,7 +59,7 @@ class Admin(UINode):
         self.home_frame.rowconfigure(0, weight=1)
 
         self.home_frame.columnconfigure(0, weight=0)
-        self.home_frame.columnconfigure(1, weight=0)
+        self.home_frame.columnconfigure(1, weight=1)
 
         self.left_frame = tk.Frame(self.home_frame)
         self.left_frame.configure(background=self.colors.background, border=3,
@@ -103,10 +103,31 @@ class Admin(UINode):
         self.right_frame = tk.Frame(self.home_frame)
         self.right_frame.configure(background=self.colors.background, border=3,
                                    relief=tk.RIDGE)
-        self.right_frame.grid(row=0, column=1, sticky=tk.NS + tk.W)
+        self.right_frame.grid(row=0, column=1, sticky=tk.NSEW)
 
-        self.right_frame.columnconfigure((0, 1, 2), weight=1)
-        self.right_frame.rowconfigure((0, 1), weight=1)
+        self.right_frame.rowconfigure(tuple(i for i in range(4)), weight=0)
+        self.right_frame.columnconfigure(0, weight=1)
+
+        self.field_name = ttk.Label(self.right_frame, text='Iron Man', style='Recent.TLabel')
+        self.field_name.configure(font=('Roboto', 48))
+        self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
+
+        self.info_identity_frame = tk.Frame(self.right_frame)
+        self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
+
+        self.info_identity_frame.rowconfigure(0, weight=1)
+
+        self.create_text_entry(self.info_identity_frame, 'First Name', 'Iron', 0)
+        self.create_text_entry(self.info_identity_frame, 'Last Name', 'Man', 1)
+        self.create_text_entry(self.info_identity_frame, 'Address', '123 Sesame St.', 2)
+        self.create_text_entry(self.info_identity_frame, 'City', 'Las Vegas', 3)
+
+        self.options = ['NV', 'UT', 'AZ']
+
+        self.create_dropdown_menu(self.info_identity_frame, 'State', self.options, 4)
+
+        self.create_text_entry(self.info_identity_frame, 'Phone Number', '123-456-7890', 5)
+        self.create_text_entry(self.info_identity_frame, 'Date Of Birth', 'Today', 6)
 
     def populate_people(self, lyst):
 
@@ -119,3 +140,24 @@ class Admin(UINode):
                 background = self.colors.a7
 
             self.people_listbox.itemconfigure(i, background=background)
+
+    def create_text_entry(self, master, label, placeholder, row):
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=0, sticky=tk.E)
+
+        entry = ttk.Entry(master)
+        entry.insert(0, placeholder)
+        entry.grid(row=row, column=1, sticky=tk.E, padx=(10, 0), pady=5)
+
+    def create_dropdown_menu(self, master, label, options, row):
+
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=0, sticky=tk.E)
+
+        value = tk.StringVar(self.master)
+        value.set(options[0])
+        menu = ttk.OptionMenu(master, value, options[0], *options)
+        menu.grid(row=row, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+
