@@ -112,6 +112,14 @@ class Admin(UINode):
         self.field_name.configure(font=('Roboto', 48))
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
+        self.people_save = ttk.Button(self.right_frame, text="Save",
+                                         style='Header.TButton')
+        self.people_save.grid(row=0, column=2, sticky=tk.E)
+
+        self.people_options = ttk.Button(self.right_frame, text="Options",
+                                     style='Header.TButton')
+        self.people_options.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
+
         self.info_identity_frame = tk.Frame(self.right_frame)
         self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
 
@@ -126,8 +134,12 @@ class Admin(UINode):
         self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
         self.create_text_entry(self.info_identity_frame, 'Phone Number', '123-456-7890', 5)
 
+        self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth')
+        self.birthday_label.configure(background=self.colors.background)
+        self.birthday_label.grid(row=6, column=1, sticky=tk.W, padx=(10))
+
         self.days = [i for i in range(1, 32)]
-        self.create_dropdown_menu(self.info_identity_frame, 'Day', self.days, 6)
+        self.create_dropdown_menu(self.info_identity_frame, 'Day', self.days, 7)
 
         self.months = [
             "January",
@@ -143,15 +155,15 @@ class Admin(UINode):
             "November",
             "December",
         ]
-        self.create_dropdown_menu(self.info_identity_frame, 'Month', self.months, 7)
+        self.create_dropdown_menu(self.info_identity_frame, 'Month', self.months, 8)
 
         self.years = [i for i in range(1950, 2005)]
-        self.create_dropdown_menu(self.info_identity_frame, 'Year', self.years, 8)
+        self.create_dropdown_menu(self.info_identity_frame, 'Year', self.years, 9)
 
-        self.create_text_entry(self.info_identity_frame, 'SSN', 'XXX-XX-XXXX', 9)
+        self.create_text_entry(self.info_identity_frame, 'SSN', 'XXX-XX-XXXX', 10)
 
-        self.create_text_entry(self.info_identity_frame, 'Job Title', 'Peasant', 10)
-        self.create_text_entry(self.info_identity_frame, 'Team', 'Executive', 11)
+        self.create_text_entry(self.info_identity_frame, 'Job Title', 'Peasant', 11)
+        self.create_text_entry(self.info_identity_frame, 'Team', 'Executive', 12)
         self.create_text_entry(self.info_identity_frame, 'Role', 'Top Dawg', 12)
 
     def populate_people(self, lyst):
