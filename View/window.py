@@ -15,6 +15,8 @@ from .homepage import Homepage
 from .people import People
 from .admin import Admin
 from .login import Login
+from .timecard import Timecard
+from .payroll import Payroll
 
 
 class Window():
@@ -84,3 +86,8 @@ class Window():
     def admin(self):
         self.page_home = Admin(self.master, name="people", theme=self.theme)
 
+    def timecard(self):
+        self.page_home = Timecard(self.master, theme=self.theme)
+
+    def pay(self):
+        self.page_home = Payroll(self.master, theme=self.theme)

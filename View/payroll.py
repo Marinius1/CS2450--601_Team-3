@@ -1,9 +1,12 @@
+
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
 
+import random
 
-class People():
+
+class Payroll():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -60,16 +63,118 @@ class People():
 
         self.data_columns = []
 
-        model_example = [
-            # ['bob', 'cindy', 'lue', 'greg'],
-            [i for i in range(50)],
-            [i for i in range(50)],
-            [i for i in range(50)]
-            # ['Jones', 'Lue', 'Suong', 'Borgerstrom'],
-            # ['$11.00', '$12.00', 'More than you', 'Less than you']
+        self.names_example = [
+            "Cathrine Turek",
+            "Danette Strachan",
+            "Teodoro Schamber",
+            "Johanne Sidener",
+            "Willette Kirch",
+            "Amal Gupton",
+            "Leonor Slifer",
+            "Olive Tesch",
+            "Beulah Doby",
+            "Desirae Twellman",
+            "Roman Rippeon",
+            "Juliann Mascorro",
+            "Wynell Westbury",
+            "Glen Overmyer",
+            "Ilse Hoggard",
+            "Leta Presson",
+            "Kenya Lizaola",
+            "Carmelina Kollman",
+            "Mae Cherry",
+            "Jimmie Felker",
+            "Mia Wahl",
+            "Joanie Stillwell",
+            "Leonard Littlefield",
+            "Meghan Tignor",
+            "Candi Diangelo",
+            "Zita Mangrum",
+            "Bibi Campbell",
+            "Jacalyn Cox",
+            "Corrinne Glymph",
+            "Norberto Stilwell",
+            "Lashanda Alligood",
+            "Josphine Atienza",
+            "Krystina Breedlove",
+            "Verlene Dye",
+            "Hee Bugarin",
+            "Fredia Mckinnie",
+            "Marisha Ricci",
+            "Jackie Slaugh",
+            "Santina Suydam",
+            "Leonora Gathings",
+            "Rashad Ousley",
+            "Reena Gitlin",
+            "Loyd Vivas",
+            "Astrid Pop",
+            "Millard Allan",
+            "Marianna Heisler",
+            "Divina Barrus",
+            "Jasmin Selke",
+            "Petra Dahl",
+            "Wilburn Agrawal",
+            "Kimiko Digby",
+            "Larisa Rouillard",
+            "Allene Sprau",
+            "Emma Duncan",
+            "Brittani Paz",
+            "Alvera Curlin",
+            "Karrie Kovats",
+            "Jacinta Cash",
+            "Fatimah Ecker",
+            "Rosann Valenti",
+            "Christoper Greenhaw",
+            "Myrtice Dorsey",
+            "Vanessa Toland",
+            "Cathi Cone",
+            "Theodore Neiss",
+            "Guadalupe Knittel",
+            "Winnie Durham",
+            "Tiny Tabares",
+            "Rochell Garr",
+            "Shandra Gillison",
+            "Georgie Clinton",
+            "Minta Battista",
+            "Fatima Lauber",
+            "Lyndia Burbridge",
+            "Bari Alleyne",
+            "Jacalyn Migues",
+            "Katlyn Riess",
+            "Annabell Mcfate",
+            "Debroah Graffam",
+            "Xavier Bodie",
+            "Claud Locke",
+            "Deandrea Pozo",
+            "Crysta Fritch",
+            "Janey Wendland",
+            "Love Muriel",
+            "Mozelle Kroenke",
+            "Mckinley Chancy",
+            "Cira Mace",
+            "Milda Stamant",
+            "Karl Levis",
+            "Bettina Merlo",
+            "Jong Fritts",
+            "Elma Khang",
+            "Magdalena Elzey",
+            "Loreta Dole",
+            "Beverlee Mota",
+            "Manuel Link",
+            "Michaela Ferrante",
+            "Oswaldo Scriber "
         ]
 
-        headers_example = ['First Name', 'Last Name', 'Wage']
+        pay_types_example = ["Salary", "Hourly", "Commissioned"]
+
+        model_example = [
+            self.names_example,
+            [pay_types_example[random.randint(0,2)] for i in range(100)],
+            [random.randint(0,3000) for i in range(100)],
+            [random.randint(0,3000) for i in range(100)]
+        ]
+
+        headers_example = ['Employee', 'Pay Type', 'Current Pay', 'Last Pay']
 
         self.create_table(headers_example, model_example)
         self.scrollbar.configure(command=self.yview)
@@ -135,5 +240,7 @@ class People():
 
             self.data_columns.append(column)
 
-        self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
+        # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, sticky=tk.N+tk.S+tk.E)
+
+
