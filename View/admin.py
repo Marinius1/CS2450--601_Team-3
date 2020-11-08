@@ -105,15 +105,6 @@ class Admin():
                                          relief=tk.FLAT)
         self.people_listbox.grid(row=1, column=0, columnspan=2, sticky=tk.NSEW)
 
-        # populate test data
-        people_example = [
-            {"name_amalgamated": "Iron Man"},
-            {"name_amalgamated": "Steel Man"},
-            {"name_amalgamated": "Wood Man"},
-            {"name_amalgamated": "Quartz Man"},
-            {"name_amalgamated": "Helium Man"}
-        ]
-
         self.populate_people(people_example)
 
         self.right_frame = tk.Frame(self.home_frame)
