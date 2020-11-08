@@ -143,11 +143,11 @@ class Admin():
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
         self.people_save = ttk.Button(self.right_frame, text="Save",
-                                         style='Header.TButton', command=self.save_employee)
+                                         style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_employee))
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
         self.people_delete = ttk.Button(self.right_frame, text="Delete",
-                                     style='Header.TButton', command=self.delete_employee)
+                                     style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.delete_employee))
         self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
         self.info_identity_frame = tk.Frame(self.right_frame)
@@ -309,3 +309,37 @@ class Admin():
             "month": {"label": months_dropdown["label"], "dropdown": months_dropdown["menu"], "value": months_dropdown["value"]},
             "year": {"label": years_dropdown["label"], "dropdown": years_dropdown["menu"], "value": years_dropdown["value"]},
         }
+
+    def create_are_you_sure(self, message, on_success):
+        top = tk.Toplevel(self.master)
+
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        width = screen_width / 6
+        height = screen_height / 6
+
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
+
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
+
+        top.title("Are You Sure?")
+
+        top.rowconfigure((0,1), weight=1)
+        top.columnconfigure((0,1,2), weight=1)
+
+        question = ttk.Label(top, text=message, background=self.colors.background)
+        question.grid(row=0, column=1)
+
+        button_frame = tk.Frame(top)
+        button_frame.grid(row=1, column=0, columnspan=3, sticky=tk.NSEW, pady=(height / 10, 0))
+        button_frame.columnconfigure((0,1), weight=1)
+
+        yes_button = ttk.Button(button_frame, text="Yes", style='Header.TButton', command=lambda:[on_success(), top.destroy()])
+        yes_button.grid(row=0, column=0, sticky=tk.W, padx=(width / 10, 0))
+
+        cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
+        cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
