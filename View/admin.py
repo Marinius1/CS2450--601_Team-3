@@ -20,20 +20,43 @@ class Admin():
         """
 
         # populate test data
-        people_example = [
+        self.people_example = [
             {
-                "name_amalgamated": "Helium Man",
+                "name": "Helium Man",
                 "first_name": "Helium",
                 "last_name": "Man",
                 "address": "123 Sesame St.",
                 "city": "Las Vegas",
                 "state": "NV",
+                "birthday": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
                 "phone": "123-456-7890",
                 "ssn": "111-111-1111",
                 "job_title": "Peasant",
                 "team": "Executive",
                 "role": "Top Dawg"
             },
+            {
+                "name": "Carbon Man",
+                "first_name": "Carbon",
+                "last_name": "Man",
+                "address": "Google Rd.",
+                "city": "Sacramento",
+                "state": "NV",
+                "birthday": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "phone": "123-456-7890",
+                "ssn": "111-111-1111",
+                "job_title": "Peasant",
+                "team": "Executive",
+                "role": "Top Dawg"
+            }
         ]
 
         self.master = master
@@ -95,7 +118,7 @@ class Admin():
         self.people_label.grid(row=0, column=0, sticky=tk.W, padx=15)
 
         self.people_add = ttk.Button(self.left_frame, text="Add",
-                                     style='Header.TButton', command=self.set_default_values)
+                                     style='Header.TButton', command=self.add_employee)
         self.people_add.grid(row=0, column=1, sticky=tk.E, padx=(0, 15))
 
         self.people_listbox = tk.Listbox(self.left_frame,
@@ -105,7 +128,7 @@ class Admin():
                                          relief=tk.FLAT)
         self.people_listbox.grid(row=1, column=0, columnspan=2, sticky=tk.NSEW)
 
-        self.populate_people(people_example)
+        self.populate_people(self.people_example)
 
         self.right_frame = tk.Frame(self.home_frame)
         self.right_frame.configure(background=self.colors.background, border=3,
@@ -115,7 +138,7 @@ class Admin():
         self.right_frame.rowconfigure(tuple(i for i in range(4)), weight=0)
         self.right_frame.columnconfigure(0, weight=1)
 
-        self.field_name = ttk.Label(self.right_frame, text=people_example[0]["name_amalgamated"], style='Recent.TLabel')
+        self.field_name = ttk.Label(self.right_frame, text='', style='Recent.TLabel')
         self.field_name.configure(font=('Roboto', 48))
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
@@ -132,46 +155,48 @@ class Admin():
 
         self.info_identity_frame.rowconfigure(0, weight=1)
 
-        self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', people_example[0]["first_name"], 0)
-        self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', people_example[0]["last_name"], 1)
-        self.field_address = self.create_text_entry(self.info_identity_frame, 'Address', people_example[0]["address"], 2)
-        self.field_city = self.create_text_entry(self.info_identity_frame, 'City', people_example[0]["city"], 3)
+        self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', '', 0)
+        self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', '', 1)
+        self.field_address = self.create_text_entry(self.info_identity_frame, 'Address', '', 2)
+        self.field_city = self.create_text_entry(self.info_identity_frame, 'City', '', 3)
 
         self.states = ['NV', 'UT', 'AZ']
         self.drowdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
-        self.field_phone = self.create_text_entry(self.info_identity_frame, 'Phone Number', people_example[0]["phone"], 5)
+        self.field_phone = self.create_text_entry(self.info_identity_frame, 'Phone Number', '', 5)
 
         self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth', background=self.colors.background)
         self.birthday_label.grid(row=6, column=0, sticky=tk.E)
         self.date_birthday = self.create_date_selector(self.info_identity_frame, 6)
 
-        self.field_ssn = self.create_text_entry(self.info_identity_frame, 'SSN', people_example[0]["ssn"], 7)
+        self.field_ssn = self.create_text_entry(self.info_identity_frame, 'SSN', '', 7)
 
-        self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', people_example[0]["job_title"], 8)
-        self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', people_example[0]["team"], 9)
-        self.field_role = self.create_text_entry(self.info_identity_frame, 'Role', people_example[0]["role"], 10)
+        self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 8)
+        self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9)
+        self.field_role = self.create_text_entry(self.info_identity_frame, 'Role', '', 10)
 
-    def set_default_values(self):
-        self.field_name.configure(text="Default Name")
+        self.set_values(self.people_example[0])
 
-        self.set_default_text_field(self.field_first_name, "First Name")
-        self.set_default_text_field(self.field_last_name, "Last Name")
-        self.set_default_text_field(self.field_address, "123 Example St.")
-        self.set_default_text_field(self.field_city, "Example City")
+    def set_values(self, data):
+        self.field_name.configure(text=data["name"])
+
+        self.set_default_text_field(self.field_first_name, data["first_name"])
+        self.set_default_text_field(self.field_last_name, data["last_name"])
+        self.set_default_text_field(self.field_address, data["address"])
+        self.set_default_text_field(self.field_city, data["city"])
 
         # state
-        self.drowdown_state["value"].set('UT')
+        self.drowdown_state["value"].set(data["state"])
 
         # birthday
-        self.date_birthday["day"]["value"].set('1')
-        self.date_birthday["month"]["value"].set('December')
-        self.date_birthday["year"]["value"].set('2000')
+        self.date_birthday["day"]["value"].set(data["birthday"]["day"])
+        self.date_birthday["month"]["value"].set(data["birthday"]["month"])
+        self.date_birthday["year"]["value"].set(data["birthday"]["year"])
 
-        self.set_default_text_field(self.field_phone, "000-000-0000")
-        self.set_default_text_field(self.field_ssn, "XXX-XX-XXXX")
-        self.set_default_text_field(self.field_job_title, "Default Job Title")
-        self.set_default_text_field(self.field_team, "Default Team")
-        self.set_default_text_field(self.field_role, "Default Role")
+        self.set_default_text_field(self.field_phone, data["phone"])
+        self.set_default_text_field(self.field_ssn, data["ssn"])
+        self.set_default_text_field(self.field_job_title, data["job_title"])
+        self.set_default_text_field(self.field_team, data["team"])
+        self.set_default_text_field(self.field_role, data["role"])
 
     def get_values(self):
         return {
@@ -201,16 +226,27 @@ class Admin():
         print("delete employee method")
 
     def add_employee(self):
-        self.set_default_text_field()
+        self.set_values(self.people_example[0])
 
     def save_employee(self):
         data = self.get_values()
         print(data)
 
+    def listbox_select(self, event):
+        widget = event.widget
+        selection = widget.curselection()
+        value = widget.get(tk.ACTIVE)
+        # print("selection:", selection[0], ": '%s'" % value)
+
+        self.set_values(self.people_example[selection[0]])
+
     def populate_people(self, lyst):
 
+        #setup listbox click evnets
+        self.people_listbox.bind("<Double-Button-1>", self.listbox_select)
+
         for i in range(len(lyst)):
-            self.people_listbox.insert(tk.END, lyst[i]["name_amalgamated"])
+            self.people_listbox.insert(tk.END, lyst[i]["name"])
 
             if i % 2 == 0:
                 background = self.colors.background
