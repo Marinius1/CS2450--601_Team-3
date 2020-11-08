@@ -77,10 +77,13 @@ def load_employees():
             empClass = "Commission"
             empClassification = (str(commission))
 
+        print((str(empId), str(firstName), str(lastName),str(empClass),str(empClassification),
+                                str(address),str(state),str(city),str(empZip), str(birth()), str(social()),str(phone())))
 
+''''
         i = addToEmployeeFile(str(empId), str(firstName), str(lastName),str(empClass),str(empClassification),
                                 str(address),str(state),str(city),str(empZip), str(birth()), str(social()),str(phone()))
         i.add_to_employee_file()
-
+'''
 
 load_employees()
