@@ -179,6 +179,9 @@ class Admin():
         field["entry"].delete(0, 'end')
         field["entry"].insert(0, value)
 
+    def save_callback(self):
+        pass
+
     def populate_people(self, lyst):
 
         for i in range(len(lyst)):
