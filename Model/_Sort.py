@@ -62,5 +62,5 @@ class _sort:
 s = _sort("data.json")
 
 
-for i in s.d_last_name_sort():
+for i in s.a_pay_type_sort():
     print (i)
