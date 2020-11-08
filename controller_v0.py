@@ -1,6 +1,5 @@
-
-from window import *
-
+from view.window import Window
+import tkinter as tk
 
 """ Controller module.
 used to control information between the module and View.

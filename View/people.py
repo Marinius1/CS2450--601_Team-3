@@ -1,7 +1,6 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
-from color import Color
+from .Colors.color import Color
 
 
 class People():
@@ -19,6 +18,7 @@ class People():
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
+
         self.master = master
 
         self.name = name

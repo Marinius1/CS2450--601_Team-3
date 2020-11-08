@@ -8,11 +8,12 @@ On application init
 import tkinter as tk
 from tkinter import ttk
 
-from color import Color
-from navbar import NavBar
-from homepage import Homepage
-from people import People
-from admin import Admin
+from .Colors.color import Color
+from .menu import Menu
+from .navbar import NavBar
+from .homepage import Homepage
+from .people import People
+from .admin import Admin
 
 
 class Window():
@@ -50,10 +51,10 @@ class Window():
 
         self.master.columnconfigure(0, weight=1)
 
-        self.nav = NavBar(self.master, name="nav", theme=theme),
+        self.nav = NavBar(self.master, name="nav", theme=theme, window=self)
         # self.page_home = Homepage(self.master, name="homepage", theme=theme)
         # self.page_people = People(self.master, name="people", theme=theme)
-        self.page_admin = Admin(self.master, name="admin", theme=theme)
+        self.page_home = Homepage(self.master, name="Home", theme=theme)
 
     @property
     def size(self):
@@ -69,3 +70,13 @@ class Window():
     def set_size(self):
         """manual window sizing event that can be called"""
         self.master.geometry(str(self.width) + "x" + str(self.height))
+
+    def home(self):
+        self.page_home = Homepage(self.master, name="Home", theme=self.theme)
+
+    def people(self):
+        self.page_home = People(self.master, name="people", theme=self.theme)
+
+    def admin(self):
+        self.page_home = Admin(self.master, name="people", theme=self.theme)
+

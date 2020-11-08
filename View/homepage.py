@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from color import Color
+from .Colors.color import Color
 
 
 class Homepage():
@@ -18,6 +18,7 @@ class Homepage():
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
+
         self.master = master
 
         self.name = name
@@ -69,7 +70,7 @@ class Homepage():
                                                  relief=tk.FLAT)
         self.recent_actions_listbox.grid(row=1, column=0, sticky=tk.NSEW, padx=(15, 15))
 
-        for i in range(500):
+        for i in range(50):
             self.recent_actions_listbox.insert(tk.END, "Jacob Jenson was fired - 2020-11-05")
 
         self.recent_actions_scrollbar = tk.Scrollbar(self.left_frame)

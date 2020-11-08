@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from color import Color
-from button import Button
+from .Colors.color import Color
+from .button import Button
 import os
 
 
@@ -13,7 +13,7 @@ class NavBar():
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, theme=None):
+                 height: int = 10, theme=None, window=None):
         """
         init(name: str, text: str, image_path: str, children=[]:
         List<mixed>, type: int): void init method. calls super() to properly
@@ -62,11 +62,11 @@ class NavBar():
                              focuscolor=self.colors.a10
                              )
         
-        self.nav_home = ttk.Button(self.nav_frame, text="Home")
+        self.nav_home = ttk.Button(self.nav_frame, text="Home", command=window.home)
         self.nav_home.configure(style='Nav.TButton')
         self.nav_home.grid(row=0, column=1, sticky=tk.NS)
 
-        self.nav_people = ttk.Button(self.nav_frame, text="People")
+        self.nav_people = ttk.Button(self.nav_frame, text="People", command=window.people)
         self.nav_people.configure(style='Nav.TButton')
         self.nav_people.grid(row=0, column=2, sticky=tk.NS)
 
@@ -78,7 +78,7 @@ class NavBar():
         self.nav_pay.configure(style='Nav.TButton')
         self.nav_pay.grid(row=0, column=4, sticky=tk.NS)
 
-        self.nav_admin = ttk.Button(self.nav_frame, text="Admin")
+        self.nav_admin = ttk.Button(self.nav_frame, text="Admin", command=window.admin)
         self.nav_admin.configure(style='Nav.TButton')
         self.nav_admin.grid(row=0, column=5, sticky=tk.NS)
 

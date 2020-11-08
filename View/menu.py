@@ -1,8 +1,7 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
-from color import Color
-from button import Button
+from .Colors.color import Color
+from .button import Button
 
 
 class Menu():
