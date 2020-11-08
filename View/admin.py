@@ -122,7 +122,7 @@ class Admin():
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
         self.people_save = ttk.Button(self.right_frame, text="Save",
-                                         style='Header.TButton', command=self.save_employee())
+                                         style='Header.TButton', command=self.save_employee)
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
         self.people_options = ttk.Button(self.right_frame, text="Options",
@@ -166,7 +166,7 @@ class Admin():
 
         # birthday
         self.date_birthday["day"]["value"].set('1')
-        self.date_birthday["month"]["value"].set('1')
+        self.date_birthday["month"]["value"].set('December')
         self.date_birthday["year"]["value"].set('2000')
 
         self.set_default_text_field(self.field_phone, "000-000-0000")
@@ -179,15 +179,20 @@ class Admin():
         return {
             "name_amalgamated": self.field_name.cget("text"),
             "first_name": self.field_first_name["entry"].get(),
-            "last_name": "Man",
-            "address": "123 Sesame St.",
-            "city": "Las Vegas",
-            "state": "NV",
-            "phone": "123-456-7890",
-            "ssn": "111-111-1111",
-            "job_title": "Peasant",
-            "team": "Executive",
-            "role": "Top Dawg"
+            "last_name": self.field_last_name["entry"].get(),
+            "address": self.field_address["entry"].get(),
+            "city": self.field_city["entry"].get(),
+            "state": self.drowdown_state["value"].get(),
+            "birthday": {
+                "day": self.date_birthday["day"]["value"].get(),
+                "month": self.date_birthday["month"]["value"].get(),
+                "year": self.date_birthday["year"]["value"].get(),
+            },
+            "phone": self.field_phone["entry"].get(),
+            "ssn": self.field_ssn["entry"].get(),
+            "job_title": self.field_job_title["entry"].get(),
+            "team": self.field_team["entry"].get(),
+            "role": self.field_role["entry"].get()
         }
 
     def set_default_text_field(self, field, value):
