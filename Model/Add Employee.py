@@ -4,7 +4,8 @@ Adds a new employee to the employee data.json file.
 '''
 class add_employee:
 
-    def __init__(self, first, last, type, amount, birthday, address, state, city, social, phone):
+    def __init__(self, first, last, type, amount, birthday, address, state, city, social, phone, start):
+        self.start = start
         self.first = first
         self.last = last
         self.type = type
@@ -27,11 +28,11 @@ class add_employee:
             if len(data1) > 0:
                 data1.append({"Employee number": num,"First name": self.first, "Last name": self.last, "Phone": self.phone,
                               "Address": self.address, "City": self.city, "State": self.state, "Social security": self.social,
-                              "Birth date": self.birthday, "Pay type": self.type, "Pay amount": self.amount})
+                              "Birth date": self.birthday, "Pay type": self.type, "Pay amount": self.amount,"Start date": self.start})
             else:
                 data.append({"Employee number": num, "First name": self.first, "Last name": self.last, "Phone": self.phone,
                              "Address": self.address, "City": self.city, "State": self.state, "Social security": self.social,
-                             "Birth date": self.birthday, "Pay type": self.type, "Pay amount": self.amount})
+                             "Birth date": self.birthday, "Pay type": self.type, "Pay amount": self.amount, "Start date": self.start})
 
             with open("employee_number.txt", "w") as f1:
                 for _ in line:
@@ -51,7 +52,8 @@ address = "62 N. 50 S."
 city = "Orem"
 state =  "UT"
 social = "385-111-3380"
+start = "11/08/2019"
 
-a = add_employee(first, last, pay_type, pay_amount, birth_date, address, state, city, social, phone)
+a = add_employee(first, last, pay_type, pay_amount, birth_date, address, state, city, social, phone, start)
 
 a.add_to_employee_file()
