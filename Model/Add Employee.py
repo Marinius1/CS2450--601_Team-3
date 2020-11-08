@@ -1,5 +1,7 @@
 import json
-
+'''
+Adds a new employee to the employee data.json file.
+'''
 class add_employee:
 
     def __init__(self, first, last, type, amount, birthday, address, state, city, social, phone):
@@ -39,16 +41,16 @@ class add_employee:
         with open('data.json', 'w') as outfile:
             json.dump(data1,outfile)
 
-first = "Jacob"
-last = "Jensen"
-phone = "801-252-9562"
-pay_type = "Commission"
-pay_amount = "35.00"
-birth_date = "06/01/1990"
-address = "150 N. 1200 W."
-city = "Lehi"
+first = "Isaac"
+last = "Dobbins"
+phone = "385-225-8880"
+pay_type = "Salary"
+pay_amount = "3.00"
+birth_date = "06/06/1997"
+address = "62 N. 50 S."
+city = "Orem"
 state =  "UT"
-social = "966-89-1452"
+social = "385-111-3380"
 
 a = add_employee(first, last, pay_type, pay_amount, birth_date, address, state, city, social, phone)
 
