@@ -125,9 +125,9 @@ class Admin():
                                          style='Header.TButton', command=self.save_employee)
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
-        self.people_options = ttk.Button(self.right_frame, text="Options",
-                                     style='Header.TButton')
-        self.people_options.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
+        self.people_delete = ttk.Button(self.right_frame, text="Delete",
+                                     style='Header.TButton', command=self.delete_employee)
+        self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
         self.info_identity_frame = tk.Frame(self.right_frame)
         self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
@@ -198,6 +198,9 @@ class Admin():
     def set_default_text_field(self, field, value):
         field["entry"].delete(0, 'end')
         field["entry"].insert(0, value)
+
+    def delete_employee(self):
+        print("delete employee method")
 
     def add_employee(self):
         self.set_default_text_field()
