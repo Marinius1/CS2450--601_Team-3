@@ -97,17 +97,14 @@ class getData:
                     empClass = "Commission"
                     empClassification = (str(commission))
 
-                print(str(empId), str(firstName), str(lastName),
-                                  str(address), str(state), str(city),
-                                  str(empClass), str(empClassification), str(birth()),
-                                  str(social()), str(phone()), str(start_date()), str(empZip))
-                '''
+
+
                 i = addToEmployeeFile(str(empId), str(firstName), str(lastName), 
                                       str(address), str(state), str(city), 
                                       str(empClass), str(empClassification), str(birth()),
                                       str(social()), str(phone()), str(start_date()), str(empZip))
                 i.add_to_employee_file()
-                '''
+
 
 a = getData(EMPLOYEE_FILE)
 
