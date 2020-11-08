@@ -1,5 +1,6 @@
 from window import *
 
+
 """ Controller module.
 used to control information between the module and View.
 Working "Main" module."""

@@ -19,6 +19,7 @@ class Admin(UINode):
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
+
         super().__init__(master)
         self.master = master
 
