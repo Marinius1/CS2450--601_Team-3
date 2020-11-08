@@ -4,7 +4,7 @@ from tkinter import ttk
 from color import Color
 
 
-class Admin(UINode):
+class Admin():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -20,7 +20,6 @@ class Admin(UINode):
         bounds.
         """
 
-        super().__init__(master)
         self.master = master
 
         self.name = name
