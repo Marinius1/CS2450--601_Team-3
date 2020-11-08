@@ -103,7 +103,7 @@ class Login():
     def login(self):
 
         login_data = self.get_data()
-        print(login_data)
+        # print(login_data)
 
         self.window.create_nav()
         self.window.home()

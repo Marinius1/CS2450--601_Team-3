@@ -41,16 +41,17 @@ class Payroll():
                              font=('Roboto', 24)
                              )
 
-        self.style.map('Header.TButton',
-                       background=[('active', self.colors.a7)],
+        self.style.map('Pay.TButton',
+                       background=[('active', self.colors.a2)],
                        foreground=[('active', self.colors.background)])
-        self.style.configure('Header.TButton',
-                             background=self.colors.background,
-                             foreground=self.colors.foreground,
+        self.style.configure('Pay.TButton',
+                             background=self.colors.a7,
+                             foreground=self.colors.background,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
                              focusthickness=3,
-                             focuscolor=self.colors.a10
+                             focuscolor=self.colors.a11,
+                             font=('Roboto', 24)
                              )
 
         self.home_frame = tk.Frame(self.master)
@@ -58,6 +59,7 @@ class Payroll():
         self.home_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
         self.home_frame.rowconfigure(0, weight=1)
+        self.home_frame.rowconfigure(1, weight=1)
 
         self.scrollbar = tk.Scrollbar(self.home_frame)
 
@@ -179,6 +181,22 @@ class Payroll():
         self.create_table(headers_example, model_example)
         self.scrollbar.configure(command=self.yview)
 
+        self.home_frame.columnconfigure(len(self.data_columns) + 2, weight=1)
+        self.current_payroll = self.create_summary_frame(self.home_frame, "Current Payroll", self.sum_pay(model_example[2]), 0, len(self.data_columns) + 2)
+
+        self.home_frame.columnconfigure(len(self.data_columns) + 3, weight=1)
+        self.last_payroll = self.create_summary_frame(self.home_frame, "Last Payroll", self.sum_pay(model_example[3]), 0, len(self.data_columns) + 3)
+
+        self.button_pay = ttk.Button(self.home_frame, text="Pay", style='Pay.TButton', command=self.pay)
+        self.button_pay.grid(row=1, column=len(self.data_columns) + 2, columnspan=2, sticky=tk.N+tk.EW, padx=10, pady=10)
+
+    def sum_pay(self, data):
+        return "$" + "{:,}".format(sum(data))
+
+    def pay(self):
+        amount = self.current_payroll[2].cget("text")
+        print(amount)
+
     def yview(self, *args):
 
         for i in self.data_columns:
@@ -210,7 +228,7 @@ class Payroll():
             self.home_frame.columnconfigure(i, weight=0)
 
             grid_frame = tk.Frame(self.home_frame, background='red')
-            grid_frame.grid(row=0, column=i, sticky=tk.NS)
+            grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NS)
 
             grid_frame.rowconfigure(0, weight=0)
             grid_frame.rowconfigure(1, weight=1)
@@ -241,6 +259,34 @@ class Payroll():
             self.data_columns.append(column)
 
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
-        self.scrollbar.grid(row=0, column=lyst1_size + 1, sticky=tk.N+tk.S+tk.E)
+        self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
+
+
+    def create_summary_frame(self, parent, title, content, row, column):
+        summary_frame = tk.Frame(parent)
+        summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
+        summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
+
+        summary_frame.rowconfigure(0, weight=1)
+        summary_frame.rowconfigure(1, weight=3)
+        summary_frame.columnconfigure(0, weight=1)
+
+        summary_frame.grid_propagate(0)
+
+        summary_frame_title = ttk.Label(summary_frame, text=title, style='Recent.TLabel')
+        summary_frame_title.configure(font=('Roboto', 40))
+        summary_frame_title.grid(row=0, column=0)
+
+        summary_frame_content = ttk.Label(summary_frame, text=content, style='Recent.TLabel')
+        summary_frame_content.configure(font=('Roboto', 150, 'bold'))
+        summary_frame_content.grid(row=1, column=0)
+
+        summary_frame.bind('<Configure>', lambda event: self.resize_summary_frame(event=event, title=summary_frame_title, content=summary_frame_content))
+
+        return [summary_frame, summary_frame_title, summary_frame_content]
+
+    def resize_summary_frame(self, event, title, content):
+        title.configure(font=('Roboto', int(event.height * .1)))
+        content.configure(font=('Roboto', int(event.height * .2), 'bold'))
 
 
