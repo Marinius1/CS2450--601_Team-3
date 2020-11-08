@@ -24,7 +24,6 @@ class Window():
     """
 
     def __init__(self, master=None, title: str = "AnyEmployee",
-                 width: int = 800, height: int = 600,
                  theme: str = "Builtin Light"):
         """
         window class init function. Needs to create the window of course,

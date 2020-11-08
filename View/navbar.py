@@ -20,7 +20,6 @@ class NavBar():
         initialize all class data members. also calls appropriate class
         methods as needed.
         """
-        super().__init__()
         self.master = master
 
         self.name = name

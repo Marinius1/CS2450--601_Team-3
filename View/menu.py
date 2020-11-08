@@ -19,7 +19,6 @@ class Menu():
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
-        super().__init__(master)
         '''
         self.name = name
         self.colors = Color(theme).colors

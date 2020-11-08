@@ -62,9 +62,9 @@ class People():
 
         model_example = [
             # ['bob', 'cindy', 'lue', 'greg'],
-            [i for i in range(1000)],
-            [i for i in range(1000)],
-            [i for i in range(1000)]
+            [i for i in range(50)],
+            [i for i in range(50)],
+            [i for i in range(50)]
             # ['Jones', 'Lue', 'Suong', 'Borgerstrom'],
             # ['$11.00', '$12.00', 'More than you', 'Less than you']
         ]

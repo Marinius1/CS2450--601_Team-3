@@ -19,6 +19,68 @@ class Admin():
         bounds.
         """
 
+        # populate test data
+        self.people_example = [
+            {
+                "name": "Helium Man",
+                "first_name": "Helium",
+                "last_name": "Man",
+                "address": "123 Sesame St.",
+                "city": "Las Vegas",
+                "state": "NV",
+                "birthday": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "phone": "123-456-7890",
+                "ssn": "111-111-1111",
+                "job_title": "Peasant",
+                "team": "Executive",
+                "role": "Top Dawg",
+                "id": "12345",
+                "start_employment": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "total_time": "52",
+                "total_pto": "32",
+                "used_pto": "7",
+                "pay_type": "Salary",
+                "pay_rate": "$32,000"
+            },
+            {
+                "name": "Carbon Man",
+                "first_name": "Carbon",
+                "last_name": "Man",
+                "address": "Google Rd.",
+                "city": "Sacramento",
+                "state": "NV",
+                "birthday": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "phone": "123-456-7890",
+                "ssn": "111-111-1111",
+                "job_title": "Peasant",
+                "team": "Executive",
+                "role": "Top Dawg",
+                "id": "56789",
+                "start_employment": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "total_time": "52",
+                "total_pto": "32",
+                "used_pto": "7",
+                "pay_type": "Hourly",
+                "pay_rate": "$32,000"
+            }
+        ]
+
         self.master = master
 
         self.name = name
@@ -78,7 +140,7 @@ class Admin():
         self.people_label.grid(row=0, column=0, sticky=tk.W, padx=15)
 
         self.people_add = ttk.Button(self.left_frame, text="Add",
-                                     style='Header.TButton')
+                                     style='Header.TButton', command=self.add_employee)
         self.people_add.grid(row=0, column=1, sticky=tk.E, padx=(0, 15))
 
         self.people_listbox = tk.Listbox(self.left_frame,
@@ -88,16 +150,7 @@ class Admin():
                                          relief=tk.FLAT)
         self.people_listbox.grid(row=1, column=0, columnspan=2, sticky=tk.NSEW)
 
-        # populate test data
-        people_example = [
-            {"name_amalgamated": "Iron Man"},
-            {"name_amalgamated": "Steel Man"},
-            {"name_amalgamated": "Wood Man"},
-            {"name_amalgamated": "Quartz Man"},
-            {"name_amalgamated": "Helium Man"}
-        ]
-
-        self.populate_people(people_example)
+        self.populate_people(self.people_example)
 
         self.right_frame = tk.Frame(self.home_frame)
         self.right_frame.configure(background=self.colors.background, border=3,
@@ -107,40 +160,197 @@ class Admin():
         self.right_frame.rowconfigure(tuple(i for i in range(4)), weight=0)
         self.right_frame.columnconfigure(0, weight=1)
 
-        self.field_name = ttk.Label(self.right_frame, text='Iron Man', style='Recent.TLabel')
+        self.field_name = ttk.Label(self.right_frame, text='', style='Recent.TLabel')
         self.field_name.configure(font=('Roboto', 48))
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
         self.people_save = ttk.Button(self.right_frame, text="Save",
-                                         style='Header.TButton')
+                                         style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_employee))
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
-        self.people_options = ttk.Button(self.right_frame, text="Options",
-                                     style='Header.TButton')
-        self.people_options.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
+        self.people_delete = ttk.Button(self.right_frame, text="Delete",
+                                     style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.delete_employee))
+        self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
         self.info_identity_frame = tk.Frame(self.right_frame)
         self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
 
         self.info_identity_frame.rowconfigure(0, weight=1)
 
-        self.create_text_entry(self.info_identity_frame, 'First Name', 'Iron', 0)
-        self.create_text_entry(self.info_identity_frame, 'Last Name', 'Man', 1)
-        self.create_text_entry(self.info_identity_frame, 'Address', '123 Sesame St.', 2)
-        self.create_text_entry(self.info_identity_frame, 'City', 'Las Vegas', 3)
+        self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', '', 0)
+        self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', '', 1)
+        self.field_address = self.create_text_entry(self.info_identity_frame, 'Address', '', 2)
+        self.field_city = self.create_text_entry(self.info_identity_frame, 'City', '', 3)
 
         self.states = ['NV', 'UT', 'AZ']
-        self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
-        self.create_text_entry(self.info_identity_frame, 'Phone Number', '123-456-7890', 5)
+        self.dropdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
+        self.field_phone = self.create_text_entry(self.info_identity_frame, 'Phone Number', '', 5)
 
-        self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth')
-        self.birthday_label.configure(background=self.colors.background)
-        self.birthday_label.grid(row=6, column=1, sticky=tk.W, padx=(10))
+        self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth', background=self.colors.background)
+        self.birthday_label.grid(row=6, column=0, sticky=tk.E)
+        self.date_birthday = self.create_date_selector(self.info_identity_frame, 6)
 
-        self.days = [i for i in range(1, 32)]
-        self.create_dropdown_menu(self.info_identity_frame, 'Day', self.days, 7)
+        self.field_ssn = self.create_text_entry(self.info_identity_frame, 'SSN', '', 7)
 
-        self.months = [
+        self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 8)
+        self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9)
+        self.field_role = self.create_text_entry(self.info_identity_frame, 'Role', '', 10)
+        self.field_id = self.create_text_entry(self.info_identity_frame, 'Employee ID', '', 11)
+
+        self.start_employment_label = ttk.Label(self.info_identity_frame, text='Start Date', background=self.colors.background)
+        self.start_employment_label.grid(row=12, column=0, sticky=tk.E)
+        self.date_start_employment = self.create_date_selector(self.info_identity_frame, 12)
+
+        self.info_start_employment_label = tk.Label(self.info_identity_frame, text='Total months with company: ')
+        self.info_start_employment_label.grid(row=12, column=5, sticky=tk.E)
+
+        self.info_start_employment_data = tk.Label(self.info_identity_frame, text='')
+        self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
+
+
+        self.field_pto_total = self.create_text_entry(self.info_identity_frame, 'Total PTO', '', 13)
+        self.field_pto_used = self.create_text_entry(self.info_identity_frame, 'Used PTO', '', 14)
+
+        self.pay_types = ["Salary", "Hourly", "Commission"]
+        self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
+        self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
+
+        self.set_values(self.people_example[0])
+
+    def set_values(self, data):
+        self.field_name.configure(text=data["name"])
+
+        self.set_default_text_field(self.field_first_name, data["first_name"])
+        self.set_default_text_field(self.field_last_name, data["last_name"])
+        self.set_default_text_field(self.field_address, data["address"])
+        self.set_default_text_field(self.field_city, data["city"])
+
+        # state
+        self.dropdown_state["value"].set(data["state"])
+
+        # birthday
+        self.date_birthday["day"]["value"].set(data["birthday"]["day"])
+        self.date_birthday["month"]["value"].set(data["birthday"]["month"])
+        self.date_birthday["year"]["value"].set(data["birthday"]["year"])
+
+        self.set_default_text_field(self.field_phone, data["phone"])
+        self.set_default_text_field(self.field_ssn, data["ssn"])
+        self.set_default_text_field(self.field_job_title, data["job_title"])
+        self.set_default_text_field(self.field_team, data["team"])
+        self.set_default_text_field(self.field_role, data["role"])
+        self.set_default_text_field(self.field_id, data["id"])
+
+        self.date_start_employment["day"]["value"].set(data["start_employment"]["day"])
+        self.date_start_employment["month"]["value"].set(data["start_employment"]["month"])
+        self.date_start_employment["year"]["value"].set(data["start_employment"]["year"])
+
+        self.info_start_employment_data.config(text=data["total_time"])
+
+        self.set_default_text_field(self.field_pto_total, data["total_pto"])
+        self.set_default_text_field(self.field_pto_used, data["used_pto"])
+
+        self.dropdown_pay_type["value"].set(data["pay_type"])
+        self.set_default_text_field(self.field_pay_rate, data["pay_rate"])
+
+    def get_values(self):
+        return {
+            "name_amalgamated": self.field_name.cget("text"),
+            "first_name": self.field_first_name["entry"].get(),
+            "last_name": self.field_last_name["entry"].get(),
+            "address": self.field_address["entry"].get(),
+            "city": self.field_city["entry"].get(),
+            "state": self.dropdown_state["value"].get(),
+            "birthday": {
+                "day": self.date_birthday["day"]["value"].get(),
+                "month": self.date_birthday["month"]["value"].get(),
+                "year": self.date_birthday["year"]["value"].get(),
+            },
+            "phone": self.field_phone["entry"].get(),
+            "ssn": self.field_ssn["entry"].get(),
+            "job_title": self.field_job_title["entry"].get(),
+            "team": self.field_team["entry"].get(),
+            "role": self.field_role["entry"].get(),
+            "id": self.field_id["entry"].get(),
+            "start_employment": {
+                "day": self.date_start_employment["day"]["value"].get(),
+                "month": self.date_start_employment["month"]["value"].get(),
+                "year": self.date_start_employment["year"]["value"].get(),
+            },
+            "total_time": self.info_start_employment_data.cget("text"),
+            "total_pto": self.field_pto_total["entry"].get(),
+            "used_pto": self.field_pto_used["entry"].get(),
+            "pay_type": self.dropdown_pay_type["value"].get(),
+            "pay_rate": self.field_pay_rate["entry"].get(),
+        }
+
+    def set_default_text_field(self, field, value):
+        field["entry"].delete(0, 'end')
+        field["entry"].insert(0, value)
+
+    def delete_employee(self):
+        print("delete employee method")
+
+    def add_employee(self):
+        self.set_values(self.people_example[0])
+
+    def save_employee(self):
+        data = self.get_values()
+        print(data)
+
+    def listbox_select(self, event):
+        widget = event.widget
+        selection = widget.curselection()
+        value = widget.get(tk.ACTIVE)
+        # print("selection:", selection[0], ": '%s'" % value)
+
+        self.set_values(self.people_example[selection[0]])
+
+    def populate_people(self, lyst):
+
+        #setup listbox click evnets
+        self.people_listbox.bind("<Double-Button-1>", self.listbox_select)
+
+        for i in range(len(lyst)):
+            self.people_listbox.insert(tk.END, lyst[i]["name"])
+
+            if i % 2 == 0:
+                background = self.colors.background
+            else:
+                background = self.colors.a7
+
+            self.people_listbox.itemconfigure(i, background=background)
+
+    def create_text_entry(self, master, label, placeholder, row, column_start=0):
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=column_start, sticky=tk.E)
+
+        entry = ttk.Entry(master)
+        entry.insert(0, placeholder)
+        entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
+        return {"label": label, "entry": entry}
+
+    def create_dropdown_menu(self, master, label, options, row, column_start=0):
+
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=column_start, sticky=tk.E)
+
+        value = tk.StringVar(self.master)
+        value.set(options[0])
+        menu = ttk.OptionMenu(master, value, options[0], *options)
+        menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
+        return {"label": label, "menu": menu, "value": value}
+
+    def create_date_selector(self, master, row):
+        frame = tk.Frame(master, background=self.colors.background)
+        frame.grid(row=row, column=1, columnspan=4, sticky=tk.W, padx=(10))
+        frame.columnconfigure((0,1,2,3), weight=1)
+
+        days = [i for i in range(1, 32)]
+        day_dropdown = self.create_dropdown_menu(frame, 'Day', days, 0, 0)
+
+        months = [
             "January",
             "February",
             "March",
@@ -154,46 +364,47 @@ class Admin():
             "November",
             "December",
         ]
-        self.create_dropdown_menu(self.info_identity_frame, 'Month', self.months, 8)
+        months_dropdown= self.create_dropdown_menu(frame, 'Month', months, 0, 2)
 
-        self.years = [i for i in range(1950, 2005)]
-        self.create_dropdown_menu(self.info_identity_frame, 'Year', self.years, 9)
+        years = [i for i in range(1950, 2005)]
+        years_dropdown= self.create_dropdown_menu(frame, 'Year', years, 0, 4)
 
-        self.create_text_entry(self.info_identity_frame, 'SSN', 'XXX-XX-XXXX', 10)
+        return {
+            "day": {"label": day_dropdown["label"], "dropdown": day_dropdown["menu"], "value": day_dropdown["value"]},
+            "month": {"label": months_dropdown["label"], "dropdown": months_dropdown["menu"], "value": months_dropdown["value"]},
+            "year": {"label": years_dropdown["label"], "dropdown": years_dropdown["menu"], "value": years_dropdown["value"]},
+        }
 
-        self.create_text_entry(self.info_identity_frame, 'Job Title', 'Peasant', 11)
-        self.create_text_entry(self.info_identity_frame, 'Team', 'Executive', 12)
-        self.create_text_entry(self.info_identity_frame, 'Role', 'Top Dawg', 12)
+    def create_are_you_sure(self, message, on_success):
+        top = tk.Toplevel(self.master)
 
-    def populate_people(self, lyst):
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
 
-        for i in range(len(lyst)):
-            self.people_listbox.insert(tk.END, lyst[i]["name_amalgamated"])
+        width = screen_width / 6
+        height = screen_height / 6
 
-            if i % 2 == 0:
-                background = self.colors.background
-            else:
-                background = self.colors.a7
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
 
-            self.people_listbox.itemconfigure(i, background=background)
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
 
-    def create_text_entry(self, master, label, placeholder, row):
-        label = ttk.Label(master, text=label)
-        label.configure(background=self.colors.background)
-        label.grid(row=row, column=0, sticky=tk.E)
+        top.title("Are You Sure?")
 
-        entry = ttk.Entry(master)
-        entry.insert(0, placeholder)
-        entry.grid(row=row, column=1, sticky=tk.E, padx=(10, 0), pady=5)
+        top.rowconfigure((0,1), weight=1)
+        top.columnconfigure((0,1,2), weight=1)
 
-    def create_dropdown_menu(self, master, label, options, row):
+        question = ttk.Label(top, text=message, background=self.colors.background)
+        question.grid(row=0, column=1)
 
-        label = ttk.Label(master, text=label)
-        label.configure(background=self.colors.background)
-        label.grid(row=row, column=0, sticky=tk.E)
+        button_frame = tk.Frame(top)
+        button_frame.grid(row=1, column=0, columnspan=3, sticky=tk.NSEW, pady=(height / 10, 0))
+        button_frame.columnconfigure((0,1), weight=1)
 
-        value = tk.StringVar(self.master)
-        value.set(options[0])
-        menu = ttk.OptionMenu(master, value, options[0], *options)
-        menu.grid(row=row, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        yes_button = ttk.Button(button_frame, text="Yes", style='Header.TButton', command=lambda:[on_success(), top.destroy()])
+        yes_button.grid(row=0, column=0, sticky=tk.W, padx=(width / 10, 0))
 
+        cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
+        cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
