@@ -3,6 +3,8 @@ import os
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
+from .navbar import NavBar
+from .homepage import Homepage
 
 
 class Login():
@@ -13,7 +15,7 @@ class Login():
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, theme=None):
+                 height: int = 10, theme=None, window=None):
         """
         init(name: str, children[]: List<varies>): void
         calls super(). needs to populate the horizontal View. also needs to bind either
@@ -22,6 +24,8 @@ class Login():
         """
 
         self.master = master
+        self.window = window
+        self.theme = theme
 
         self.name = name
         self.colors = Color(theme).colors
@@ -91,17 +95,31 @@ class Login():
         self.frame_login_data.columnconfigure((0,1), weight=1)
 
         self.field_username = self.create_text_entry(self.frame_login_data, "Username", "username", 0)
-        self.field_password = self.create_text_entry(self.frame_login_data, "Password", "password", 1)
+        self.field_password = self.create_text_entry(self.frame_login_data, "Password", "password", 1, password=True)
 
-        self.button_login = ttk.Button(self.frame_login_data, text="Login", style='Header.TButton')
+        self.button_login = ttk.Button(self.frame_login_data, text="Login", style='Header.TButton', command=self.login)
         self.button_login.grid(row=2, columnspan=2, sticky=tk.EW, padx=(self.screen_width / 10), pady=(self.screen_height / 42, 0))
 
-    def create_text_entry(self, master, label, placeholder, row, column_start=0):
+    def login(self):
+
+        login_data = self.get_data()
+        print(login_data)
+
+        self.window.create_nav()
+        self.window.home()
+
+    def get_data(self):
+        return {
+            "username": self.field_username["entry"].get(),
+            "password": self.field_password["entry"].get(),
+        }
+
+    def create_text_entry(self, master, label, placeholder, row, column_start=0, password=False):
         label = ttk.Label(master, text=label)
         label.configure(background=self.colors.background)
         label.grid(row=row, column=column_start, sticky=tk.E)
 
-        entry = ttk.Entry(master)
+        entry = ttk.Entry(master, show='*' if password else '')
         entry.insert(0, placeholder)
         entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
         return {"label": label, "entry": entry}

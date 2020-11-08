@@ -52,7 +52,8 @@ class Window():
 
         self.master.columnconfigure(0, weight=1)
 
-        self.page_login = Login(self.master, theme=theme)
+        self.nav = None
+        self.page_home = Login(self.master, theme=theme, window=self)
         # self.nav = NavBar(self.master, name="nav", theme=theme, window=self)
         # self.page_home = Homepage(self.master, name="homepage", theme=theme)
 
@@ -70,6 +71,9 @@ class Window():
     def set_size(self):
         """manual window sizing event that can be called"""
         self.master.geometry(str(self.width) + "x" + str(self.height))
+
+    def create_nav(self):
+        self.nav = NavBar(self.master, name="nav", theme=self.theme, window=self)
 
     def home(self):
         self.page_home = Homepage(self.master, name="Home", theme=self.theme)
