@@ -13,20 +13,26 @@ class time_commissions:
         total_pay = []
         for i in self.data:
             if i["Pay type"] == "Hourly":
-                print("hello")
-
                 p = i["Employee number"]
                 with open('timecards.csv','r') as f:
-                    for item in f:
-                        item.rstrip().split(',')
-                        if item[0] == p:
-                            for j in item:
+                    for line in f:
+                        strippedLine = line.strip()
+                        line_list = strippedLine.split(',')
+                        if line_list[0] == p:
+                            for j in str(line_list):
+                                print (j)
+
+
+                '''
                                 #addin up pay not working
-                                z = j * int(i["Pay amount"])
+                                z = int(j) * int(i["Pay amount"])
+                                print(z)
+            
                                 total_pay.append(z)
             data1.append({"Employee number":i["Employee number"], "Total pay": str(sum(total_pay))})
             with open('dataFile.json', 'w') as outfile:
                 json.dump(data1, outfile)
+            '''
 
 t = time_commissions("data.json")
 t.hourly()

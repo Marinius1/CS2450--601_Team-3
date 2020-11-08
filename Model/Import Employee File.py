@@ -28,7 +28,7 @@ class addToEmployeeFile:
                 {"Employee number": self.number, "First name": self.first, "Last name": self.last,
                      "Address": self.address, "City": self.city, "State": self.state,
                       "Pay type": self.type, "Pay amount": self.amount, "Birth date": self.bDay,
-                 "Social security": self.social, "Phone": self.pNumber, "Start date": self.start})
+                 "Social security": self.social, "Phone": self.pNumber, "Start date": self.start, "Zip": self.zip})
 
 
         with open('data.json', 'w') as outfile:
@@ -97,10 +97,17 @@ class getData:
                     empClass = "Commission"
                     empClassification = (str(commission))
 
-                i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification),
-                                      str(address), str(state), str(city), str(empZip), str(birth()),
-                                      str(social()), str(phone()), str(start_date()))
+                print(str(empId), str(firstName), str(lastName),
+                                  str(address), str(state), str(city),
+                                  str(empClass), str(empClassification), str(birth()),
+                                  str(social()), str(phone()), str(start_date()), str(empZip))
+                '''
+                i = addToEmployeeFile(str(empId), str(firstName), str(lastName), 
+                                      str(address), str(state), str(city), 
+                                      str(empClass), str(empClassification), str(birth()),
+                                      str(social()), str(phone()), str(start_date()), str(empZip))
                 i.add_to_employee_file()
+                '''
 
 a = getData(EMPLOYEE_FILE)
 
