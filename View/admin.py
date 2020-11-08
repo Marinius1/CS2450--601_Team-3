@@ -37,7 +37,18 @@ class Admin():
                 "ssn": "111-111-1111",
                 "job_title": "Peasant",
                 "team": "Executive",
-                "role": "Top Dawg"
+                "role": "Top Dawg",
+                "id": "12345",
+                "start_employment": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "total_time": "52",
+                "total_pto": "32",
+                "used_pto": "7",
+                "pay_type": "Salary",
+                "pay_rate": "$32,000"
             },
             {
                 "name": "Carbon Man",
@@ -55,7 +66,18 @@ class Admin():
                 "ssn": "111-111-1111",
                 "job_title": "Peasant",
                 "team": "Executive",
-                "role": "Top Dawg"
+                "role": "Top Dawg",
+                "id": "56789",
+                "start_employment": {
+                    "day": "12",
+                    "month": "March",
+                    "year": "1999"
+                },
+                "total_time": "52",
+                "total_pto": "32",
+                "used_pto": "7",
+                "pay_type": "Hourly",
+                "pay_rate": "$32,000"
             }
         ]
 
@@ -161,7 +183,7 @@ class Admin():
         self.field_city = self.create_text_entry(self.info_identity_frame, 'City', '', 3)
 
         self.states = ['NV', 'UT', 'AZ']
-        self.drowdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
+        self.dropdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
         self.field_phone = self.create_text_entry(self.info_identity_frame, 'Phone Number', '', 5)
 
         self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth', background=self.colors.background)
@@ -173,6 +195,25 @@ class Admin():
         self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 8)
         self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9)
         self.field_role = self.create_text_entry(self.info_identity_frame, 'Role', '', 10)
+        self.field_id = self.create_text_entry(self.info_identity_frame, 'Employee ID', '', 11)
+
+        self.start_employment_label = ttk.Label(self.info_identity_frame, text='Start Date', background=self.colors.background)
+        self.start_employment_label.grid(row=12, column=0, sticky=tk.E)
+        self.date_start_employment = self.create_date_selector(self.info_identity_frame, 12)
+
+        self.info_start_employment_label = tk.Label(self.info_identity_frame, text='Total months with company: ')
+        self.info_start_employment_label.grid(row=12, column=5, sticky=tk.E)
+
+        self.info_start_employment_data = tk.Label(self.info_identity_frame, text='')
+        self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
+
+
+        self.field_pto_total = self.create_text_entry(self.info_identity_frame, 'Total PTO', '', 13)
+        self.field_pto_used = self.create_text_entry(self.info_identity_frame, 'Used PTO', '', 14)
+
+        self.pay_types = ["Salary", "Hourly", "Commission"]
+        self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
+        self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
 
         self.set_values(self.people_example[0])
 
@@ -185,7 +226,7 @@ class Admin():
         self.set_default_text_field(self.field_city, data["city"])
 
         # state
-        self.drowdown_state["value"].set(data["state"])
+        self.dropdown_state["value"].set(data["state"])
 
         # birthday
         self.date_birthday["day"]["value"].set(data["birthday"]["day"])
@@ -197,6 +238,19 @@ class Admin():
         self.set_default_text_field(self.field_job_title, data["job_title"])
         self.set_default_text_field(self.field_team, data["team"])
         self.set_default_text_field(self.field_role, data["role"])
+        self.set_default_text_field(self.field_id, data["id"])
+
+        self.date_start_employment["day"]["value"].set(data["start_employment"]["day"])
+        self.date_start_employment["month"]["value"].set(data["start_employment"]["month"])
+        self.date_start_employment["year"]["value"].set(data["start_employment"]["year"])
+
+        self.info_start_employment_data.config(text=data["total_time"])
+
+        self.set_default_text_field(self.field_pto_total, data["total_pto"])
+        self.set_default_text_field(self.field_pto_used, data["used_pto"])
+
+        self.dropdown_pay_type["value"].set(data["pay_type"])
+        self.set_default_text_field(self.field_pay_rate, data["pay_rate"])
 
     def get_values(self):
         return {
@@ -205,7 +259,7 @@ class Admin():
             "last_name": self.field_last_name["entry"].get(),
             "address": self.field_address["entry"].get(),
             "city": self.field_city["entry"].get(),
-            "state": self.drowdown_state["value"].get(),
+            "state": self.dropdown_state["value"].get(),
             "birthday": {
                 "day": self.date_birthday["day"]["value"].get(),
                 "month": self.date_birthday["month"]["value"].get(),
@@ -215,7 +269,18 @@ class Admin():
             "ssn": self.field_ssn["entry"].get(),
             "job_title": self.field_job_title["entry"].get(),
             "team": self.field_team["entry"].get(),
-            "role": self.field_role["entry"].get()
+            "role": self.field_role["entry"].get(),
+            "id": self.field_id["entry"].get(),
+            "start_employment": {
+                "day": self.date_start_employment["day"]["value"].get(),
+                "month": self.date_start_employment["month"]["value"].get(),
+                "year": self.date_start_employment["year"]["value"].get(),
+            },
+            "total_time": self.info_start_employment_data.cget("text"),
+            "total_pto": self.field_pto_total["entry"].get(),
+            "used_pto": self.field_pto_used["entry"].get(),
+            "pay_type": self.dropdown_pay_type["value"].get(),
+            "pay_rate": self.field_pay_rate["entry"].get(),
         }
 
     def set_default_text_field(self, field, value):
