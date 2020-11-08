@@ -1,11 +1,10 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
-from color import Color
-from button import Button
+from .Colors.color import Color
+from .button import Button
 
 
-class Menu(tk.Menu, UINode):
+class Menu():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
