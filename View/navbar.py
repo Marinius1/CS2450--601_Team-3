@@ -42,11 +42,8 @@ class NavBar():
         # self.toolbar.rowconfigure(0, weight=1)
         # self.toolbar.grid(row=0, sticky=tk.W)
 
-        # change working directory to local file location
-        os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
         # setup logo
-        self.eimg = tk.PhotoImage(file='AnyEmployee.gif')
+        self.eimg = tk.PhotoImage(file='./View/AnyEmployee.gif')
         self.eimg.subsample(100, 100)
         self.img_label = tk.Label(self.nav_frame, image=self.eimg,
                                   background=self.colors.background)
