@@ -1,10 +1,9 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
-from color import Color
+from .Colors.color import Color
 
 
-class Button(ttk.Button, UINode):
+class Button(ttk.Button):
     """
     button input widget. allows the user to execute a defined action on
     click. is configurable to either show text, show an image, or both. also

@@ -1,10 +1,9 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
-from color import Color
+from .Colors.color import Color
 
 
-class Homepage(UINode):
+class Homepage():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -19,7 +18,7 @@ class Homepage(UINode):
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
-        super().__init__(master)
+
         self.master = master
 
         self.name = name
@@ -71,7 +70,7 @@ class Homepage(UINode):
                                                  relief=tk.FLAT)
         self.recent_actions_listbox.grid(row=1, column=0, sticky=tk.NSEW, padx=(15, 15))
 
-        for i in range(500):
+        for i in range(50):
             self.recent_actions_listbox.insert(tk.END, "Jacob Jenson was fired - 2020-11-05")
 
         self.recent_actions_scrollbar = tk.Scrollbar(self.left_frame)
