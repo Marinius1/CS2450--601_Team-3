@@ -122,7 +122,7 @@ class Admin():
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
         self.people_save = ttk.Button(self.right_frame, text="Save",
-                                         style='Header.TButton')
+                                         style='Header.TButton', command=self.save_employee())
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
         self.people_options = ttk.Button(self.right_frame, text="Options",
@@ -175,12 +175,31 @@ class Admin():
         self.set_default_text_field(self.field_team, "Default Team")
         self.set_default_text_field(self.field_role, "Default Role")
 
+    def get_values(self):
+        return {
+            "name_amalgamated": self.field_name.cget("text"),
+            "first_name": self.field_first_name["entry"].get(),
+            "last_name": "Man",
+            "address": "123 Sesame St.",
+            "city": "Las Vegas",
+            "state": "NV",
+            "phone": "123-456-7890",
+            "ssn": "111-111-1111",
+            "job_title": "Peasant",
+            "team": "Executive",
+            "role": "Top Dawg"
+        }
+
     def set_default_text_field(self, field, value):
         field["entry"].delete(0, 'end')
         field["entry"].insert(0, value)
 
-    def save_callback(self):
-        pass
+    def add_employee(self):
+        self.set_default_text_field()
+
+    def save_employee(self):
+        data = self.get_values()
+        print(data)
 
     def populate_people(self, lyst):
 
