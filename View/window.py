@@ -9,15 +9,13 @@ import tkinter as tk
 from tkinter import ttk
 
 from color import Color
-from ui_node import UINode
-from menu import Menu
 from navbar import NavBar
 from homepage import Homepage
 from people import People
 from admin import Admin
 
 
-class Window(UINode):
+class Window():
     """
     Window class: responsible for being the 'root' component of all other
     widgets, layout, etc.. has properties like height, width, etc. will most
@@ -25,14 +23,12 @@ class Window(UINode):
     """
 
     def __init__(self, master=None, title: str = "AnyEmployee",
-                 width: int = 800, height: int = 600,
                  theme: str = "Builtin Light"):
         """
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.
         """
 
-        super().__init__()
         self.master = master
 
         self.width = self.master.winfo_screenwidth()
@@ -45,6 +41,7 @@ class Window(UINode):
 
         self.style = ttk.Style()
         self.style.theme_use('alt')
+        self.theme = theme
 
         self.master.configure(background=self.colors.background)
 

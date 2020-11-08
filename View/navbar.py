@@ -1,4 +1,3 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
 from color import Color
@@ -6,7 +5,7 @@ from button import Button
 import os
 
 
-class NavBar(UINode):
+class NavBar():
     """
     button input widget. allows the user to execute a defined action on
     click. is configurable to either show text, show an image, or both. also
@@ -21,7 +20,6 @@ class NavBar(UINode):
         initialize all class data members. also calls appropriate class
         methods as needed.
         """
-        super().__init__()
         self.master = master
 
         self.name = name

@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/View/Layout" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/View/Pages" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.pytest_cache" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (CS2450--601_Team-3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

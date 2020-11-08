@@ -124,6 +124,7 @@ class Admin():
         self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
 
         self.info_identity_frame.rowconfigure(0, weight=1)
+        # self.info_identity_frame.columnconfigure((0, 1, 2, 3), weight=1)
 
         self.create_text_entry(self.info_identity_frame, 'First Name', 'Iron', 0)
         self.create_text_entry(self.info_identity_frame, 'Last Name', 'Man', 1)
@@ -134,37 +135,15 @@ class Admin():
         self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
         self.create_text_entry(self.info_identity_frame, 'Phone Number', '123-456-7890', 5)
 
-        self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth')
-        self.birthday_label.configure(background=self.colors.background)
-        self.birthday_label.grid(row=6, column=1, sticky=tk.W, padx=(10))
+        self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth', background=self.colors.background)
+        self.birthday_label.grid(row=6, column=0, sticky=tk.E)
+        self.create_date_selector(self.info_identity_frame, 6)
 
-        self.days = [i for i in range(1, 32)]
-        self.create_dropdown_menu(self.info_identity_frame, 'Day', self.days, 7)
+        self.create_text_entry(self.info_identity_frame, 'SSN', 'XXX-XX-XXXX', 7)
 
-        self.months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ]
-        self.create_dropdown_menu(self.info_identity_frame, 'Month', self.months, 8)
-
-        self.years = [i for i in range(1950, 2005)]
-        self.create_dropdown_menu(self.info_identity_frame, 'Year', self.years, 9)
-
-        self.create_text_entry(self.info_identity_frame, 'SSN', 'XXX-XX-XXXX', 10)
-
-        self.create_text_entry(self.info_identity_frame, 'Job Title', 'Peasant', 11)
-        self.create_text_entry(self.info_identity_frame, 'Team', 'Executive', 12)
-        self.create_text_entry(self.info_identity_frame, 'Role', 'Top Dawg', 12)
+        self.create_text_entry(self.info_identity_frame, 'Job Title', 'Peasant', 8)
+        self.create_text_entry(self.info_identity_frame, 'Team', 'Executive', 9)
+        self.create_text_entry(self.info_identity_frame, 'Role', 'Top Dawg', 10)
 
     def populate_people(self, lyst):
 
@@ -178,23 +157,49 @@ class Admin():
 
             self.people_listbox.itemconfigure(i, background=background)
 
-    def create_text_entry(self, master, label, placeholder, row):
+    def create_text_entry(self, master, label, placeholder, row, column_start=0):
         label = ttk.Label(master, text=label)
         label.configure(background=self.colors.background)
-        label.grid(row=row, column=0, sticky=tk.E)
+        label.grid(row=row, column=column_start, sticky=tk.E)
 
         entry = ttk.Entry(master)
         entry.insert(0, placeholder)
-        entry.grid(row=row, column=1, sticky=tk.E, padx=(10, 0), pady=5)
+        entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
 
-    def create_dropdown_menu(self, master, label, options, row):
+    def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
         label = ttk.Label(master, text=label)
         label.configure(background=self.colors.background)
-        label.grid(row=row, column=0, sticky=tk.E)
+        label.grid(row=row, column=column_start, sticky=tk.E)
 
         value = tk.StringVar(self.master)
         value.set(options[0])
         menu = ttk.OptionMenu(master, value, options[0], *options)
-        menu.grid(row=row, column=1, sticky=tk.W, padx=(10, 0), pady=5)
+        menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
 
+    def create_date_selector(self, master, row):
+        frame = tk.Frame(master, background=self.colors.background)
+        frame.grid(row=row, column=1, columnspan=4, sticky=tk.W, padx=(10))
+        frame.columnconfigure((0,1,2,3), weight=1)
+
+        days = [i for i in range(1, 32)]
+        self.create_dropdown_menu(frame, 'Day', days, 0, 0)
+
+        months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ]
+        self.create_dropdown_menu(frame, 'Month', months, 0, 2)
+
+        years = [i for i in range(1950, 2005)]
+        self.create_dropdown_menu(frame, 'Year', years, 0, 4)

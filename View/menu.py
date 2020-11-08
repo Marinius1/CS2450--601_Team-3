@@ -5,7 +5,7 @@ from color import Color
 from button import Button
 
 
-class Menu(tk.Menu, UINode):
+class Menu():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -20,7 +20,6 @@ class Menu(tk.Menu, UINode):
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
-        super().__init__(master)
         '''
         self.name = name
         self.colors = Color(theme).colors

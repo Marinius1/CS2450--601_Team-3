@@ -1,10 +1,9 @@
-from ui_node import UINode
 import tkinter as tk
 from tkinter import ttk
 from color import Color
 
 
-class Homepage(UINode):
+class Homepage():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -19,7 +18,6 @@ class Homepage(UINode):
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
-        super().__init__(master)
         self.master = master
 
         self.name = name
