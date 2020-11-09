@@ -6,7 +6,7 @@ from .Colors.color import Color
 import random
 
 
-class Payroll():
+class PayRoll():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -172,20 +172,21 @@ class Payroll():
         model_example = [
             self.names_example,
             [pay_types_example[random.randint(0,2)] for i in range(100)],
+            [random.randint(25,50) for i in range(100)],
             [random.randint(0,3000) for i in range(100)],
             [random.randint(0,3000) for i in range(100)]
         ]
 
-        headers_example = ['Employee', 'Pay Type', 'Current Pay', 'Last Pay']
+        headers_example = ['Employee', 'Pay Type', 'Hours Worked', 'Current Pay', 'Last Pay']
 
         self.create_table(headers_example, model_example)
         self.scrollbar.configure(command=self.yview)
 
         self.home_frame.columnconfigure(len(self.data_columns) + 2, weight=1)
-        self.current_payroll = self.create_summary_frame(self.home_frame, "Current Payroll", self.sum_pay(model_example[2]), 0, len(self.data_columns) + 2)
+        self.current_payroll = self.create_summary_frame(self.home_frame, "Current Payroll", self.sum_pay(model_example[3]), 0, len(self.data_columns) + 2)
 
         self.home_frame.columnconfigure(len(self.data_columns) + 3, weight=1)
-        self.last_payroll = self.create_summary_frame(self.home_frame, "Last Payroll", self.sum_pay(model_example[3]), 0, len(self.data_columns) + 3)
+        self.last_payroll = self.create_summary_frame(self.home_frame, "Last Payroll", self.sum_pay(model_example[4]), 0, len(self.data_columns) + 3)
 
         self.button_pay = ttk.Button(self.home_frame, text="Pay", style='Pay.TButton', command=self.pay)
         self.button_pay.grid(row=1, column=len(self.data_columns) + 2, columnspan=2, sticky=tk.N+tk.EW, padx=10, pady=10)

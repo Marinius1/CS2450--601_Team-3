@@ -1,4 +1,4 @@
-from View.window import Window
+from window import Window
 import tkinter as tk
 
 """ Controller module.

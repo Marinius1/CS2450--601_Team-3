@@ -43,7 +43,7 @@ class NavBar():
         # self.toolbar.grid(row=0, sticky=tk.W)
 
         # setup logo
-        self.eimg = tk.PhotoImage(file='./View/AnyEmployee.gif')
+        self.eimg = tk.PhotoImage(file='./AnyEmployee.gif')
         self.eimg.subsample(100, 100)
         self.img_label = tk.Label(self.nav_frame, image=self.eimg,
                                   background=self.colors.background)
@@ -67,7 +67,7 @@ class NavBar():
         self.nav_people.configure(style='Nav.TButton')
         self.nav_people.grid(row=0, column=2, sticky=tk.NS)
 
-        self.nav_time = ttk.Button(self.nav_frame, text="Time Cards", command=window.timecard)
+        self.nav_time = ttk.Button(self.nav_frame, text="Time Card", command=window.timecard)
         self.nav_time.configure(style='Nav.TButton')
         self.nav_time.grid(row=0, column=3, sticky=tk.NS)
 

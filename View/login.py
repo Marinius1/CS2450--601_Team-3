@@ -75,7 +75,7 @@ class Login():
                 count += 1
 
         # setup logo
-        self.eimg = tk.PhotoImage(file='./View/AnyEmployee.gif')
+        self.eimg = tk.PhotoImage(file='./AnyEmployee.gif')
         self.eimg.subsample(100, 100)
         self.img_label = tk.Label(self.home_frame, image=self.eimg,
                                   background=self.colors.background)

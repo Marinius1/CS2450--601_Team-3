@@ -8,15 +8,14 @@ On application init
 import tkinter as tk
 from tkinter import ttk
 
-from .Colors.color import Color
-from .menu import Menu
-from .navbar import NavBar
-from .homepage import Homepage
-from .people import People
-from .admin import Admin
-from .login import Login
-from .timecard import Timecard
-from .payroll import Payroll
+from View.Colors.color import Color
+from View.navbar import NavBar
+from View.homepage import Homepage
+from View.people import People
+from View.admin import Admin
+from View.login import Login
+from View.timecard import TimeCard
+from View.payroll import PayRoll
 
 
 class Window():
@@ -87,7 +86,12 @@ class Window():
         self.page_home = Admin(self.master, name="people", theme=self.theme)
 
     def timecard(self):
-        self.page_home = Timecard(self.master, theme=self.theme)
+        self.page_home = TimeCard(self.master, theme=self.theme)
 
     def pay(self):
-        self.page_home = Payroll(self.master, theme=self.theme)
+        self.page_home = PayRoll(self.master, theme=self.theme)
+
+if __name__=="__main__":
+    root = tk.Tk()
+    window = Window(root)
+    root.mainloop()
