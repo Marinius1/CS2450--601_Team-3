@@ -3,7 +3,6 @@ test_window.py
 """
 
 import pytest
-import dummy
 
 import tkinter as tk
 from window import Window
