@@ -1,10 +1,12 @@
 import json
 '''
-Adds a new employee to the employee data.json file.
+Adds a new employee to the employee employee_file.json file.
 '''
 class add_employee:
 
-    def __init__(self, first, last, type, amount, birthday, address, state, city, social, phone, start):
+    def __init__(self, first, last, type, amount, birthday, address, state, city, social, phone, start, zip, hours_sales):
+        self.hours_sales = hours_sales
+        self.zip = zip
         self.start = start
         self.first = first
         self.last = last
@@ -19,7 +21,7 @@ class add_employee:
 
     def add_to_employee_file(self):
         data = []
-        with open('data.json') as infile:
+        with open('employee_file.json') as infile:
             data1 = json.load(infile)
             f = open('employee_number.txt', 'r')
             line = f.readlines()
@@ -28,18 +30,20 @@ class add_employee:
             if len(data1) > 0:
                 data1.append({"Employee number": num,"First name": self.first, "Last name": self.last, "Phone": self.phone,
                               "Address": self.address, "City": self.city, "State": self.state, "Social security": self.social,
-                              "Birth date": self.birthday, "Pay type": self.type, "Pay amount": self.amount,"Start date": self.start})
+                              "Birth date": self.birthday, "Pay type": self.type,
+                              "Pay amount": self.amount,"Start date": self.start, "Zip": self.zip, "Hours/sales": self.hours_sales})
             else:
                 data.append({"Employee number": num, "First name": self.first, "Last name": self.last, "Phone": self.phone,
                              "Address": self.address, "City": self.city, "State": self.state, "Social security": self.social,
-                             "Birth date": self.birthday, "Pay type": self.type, "Pay amount": self.amount, "Start date": self.start})
+                             "Birth date": self.birthday, "Pay type": self.type,
+                             "Pay amount": self.amount, "Start date": self.start, "Zip": self.zip, "Hours/sales": self.hours_sales})
 
             with open("employee_number.txt", "w") as f1:
                 for _ in line:
                     j = line.pop(0)
                     f1.write(j)
 
-        with open('data.json', 'w') as outfile:
+        with open('employee_file.json', 'w') as outfile:
             json.dump(data1,outfile)
 
 first = "Isaac"
@@ -53,7 +57,8 @@ city = "Orem"
 state =  "UT"
 social = "385-111-3380"
 start = "11/08/2019"
-
-a = add_employee(first, last, pay_type, pay_amount, birth_date, address, state, city, social, phone, start)
+zip = "84058"
+hours_sales = 82
+a = add_employee(first, last, pay_type, pay_amount, birth_date, address, state, city, social, phone, start, zip, hours_sales)
 
 a.add_to_employee_file()

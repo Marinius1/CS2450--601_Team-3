@@ -1,6 +1,6 @@
 import json
 
-with open('data.json') as file:
+with open('employee_file.json') as file:
     data = json.load(file)
 x = str(input("Enter name of employee:"))
 
