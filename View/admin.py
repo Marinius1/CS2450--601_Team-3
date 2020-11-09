@@ -401,8 +401,11 @@ class Admin():
     def save_employee(self):
         datax = self.get_values()
         Controller.Employee_Adder(datax)
-        self.L.reload
+        self.L.reload()
         self.people_example = self.L.data
+
+        self.clear_listbox()
+        self.populate_people(self.people_example)
 
     def listbox_select(self, event):
         widget = event.widget
@@ -411,6 +414,9 @@ class Admin():
         # print("selection:", selection[0], ": '%s'" % value)
 
         self.set_values(self.people_example[selection[0]])
+
+    def clear_listbox(self):
+        self.people_listbox.delete(0, tk.END)
 
     def populate_people(self, lyst):
 
