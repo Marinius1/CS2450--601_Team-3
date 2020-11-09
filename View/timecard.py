@@ -159,11 +159,30 @@ class TimeCard():
 
         self.display_hours_worked = self.create_text_display(self.info_identity_frame, 'Hours Worked', '', 5)
 
-        self.field_additional_hours = self.create_text_entry(self.info_identity_frame, 'Additional Hours', '0.00', 5, 2)
-        self.button_additional_hours = ttk.Button(self.info_identity_frame, text="Add", style='Header.TButton')
-        self.button_additional_hours.grid(row=5, column=4, padx=(10, 0))
+        self.field_hours_modifier = self.create_text_entry(self.info_identity_frame, 'Hours modifier', '0.00', 5, 2)
+
+        self.button_add_hours = ttk.Button(self.info_identity_frame, text="Add", style='Header.TButton', command=self.add_hours)
+        self.button_add_hours.grid(row=5, column=4, padx=(10, 0))
+
+        self.button_sub_hours = ttk.Button(self.info_identity_frame, text="Subtract", style='Header.TButton', command=self.sub_hours)
+        self.button_sub_hours.grid(row=5, column=5, padx=(10, 0))
 
         self.set_values(self.people_example[0])
+
+    def add_hours(self):
+        current = self.display_hours_worked["entry"].cget('text')
+        additional = self.field_hours_modifier["entry"].get()
+        self.set_default_display_field(self.display_hours_worked, str(float(current) + float(additional)))
+
+    def sub_hours(self):
+        current = self.display_hours_worked["entry"].cget('text')
+        additional = self.field_hours_modifier["entry"].get()
+
+        new_hours = float(current) - float(additional)
+        if new_hours < 0.0:
+            new_hours = 0.0
+
+        self.set_default_display_field(self.display_hours_worked, str(new_hours))
 
     def search(self, *args):
 
@@ -196,7 +215,7 @@ class TimeCard():
         self.set_default_display_field(self.display_employee, data["Employee number"])
         self.set_default_display_field(self.display_pay_type, data["Pay type"])
 
-        self.set_default_display_field(self.display_hours_worked, "TBD")
+        self.set_default_display_field(self.display_hours_worked, "10.0")
 
         thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
 
