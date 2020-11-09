@@ -1,5 +1,5 @@
 import json
-
+import random
 
 class previous_month_pay:
 
@@ -77,7 +77,8 @@ class upcoming_pay:
                 pto = 80
                 used_pto = pto // 3
                 unused_pto = pto - used_pto
-                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO total": unused_pto, "PTO used": used_pto})
+                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
+                              "PTO total": unused_pto, "PTO used": used_pto})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
@@ -87,13 +88,14 @@ class upcoming_pay:
         for i in self.data:
             if i["Pay type"] == "Commission":
                 p = i["Pay amount"]
-                t = i["Hours/sales"]
+                t = random.randint(40, 160)
                 paycheck = float(p) * float(t)
                 month_pay = round(paycheck,2)
                 pto = float(t) / 8
                 used_pto = pto//3
                 unused_pto = pto - used_pto
-                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO total": unused_pto, "PTO used": used_pto})
+                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
+                              "PTO total": unused_pto, "PTO used": used_pto, "Sales": t})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
@@ -104,13 +106,14 @@ class upcoming_pay:
         for i in self.data:
             if i["Pay type"] == "Hourly":
                 p = i["Pay amount"]
-                t = i["Hours/sales"]
+                t = random.randint(40, 160)
                 paycheck = float(t) * float(p)
                 month_pay = round(paycheck, 2)
                 pto = float(t)/8
                 used_pto = pto//3
                 unused_pto = pto - used_pto
-                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO total": unused_pto, "PTO used": used_pto})
+                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
+                              "PTO total": unused_pto, "PTO used": used_pto, "Hours": t})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 

@@ -23,10 +23,6 @@ class _sort:
         d = sorted(self.data, key=lambda i: i["Employee number"])
         return d
 
-    def a_birth_date_sort(self):
-        d = sorted(self.data, key=lambda i: i["Birth date"])
-        return d
-
     def a_pay_type_sort(self):
         d = sorted(self.data, key=lambda i: i["Pay type"])
         return d
@@ -45,10 +41,6 @@ class _sort:
 
     def d_employee_number_sort(self):
         d = sorted(self.data, key=lambda i: i["Employee number"], reverse=True)
-        return d
-
-    def d_birth_date_sort(self):
-        d = sorted(self.data, key=lambda i: i["Birth date"], reverse=True)
         return d
 
     def d_pay_type_sort(self):
