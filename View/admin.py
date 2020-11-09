@@ -307,9 +307,6 @@ class Admin():
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
 
-        self.field_pto_total = self.create_text_entry(self.info_identity_frame, 'Total PTO', '', 13)
-        self.field_pto_used = self.create_text_entry(self.info_identity_frame, 'Used PTO', '', 14)
-
         self.pay_types = ["Salary", "Hourly", "Commission"]
         self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
         self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
@@ -374,8 +371,7 @@ class Admin():
         if len(thing) == 0:
             thing.append(data)
 
-        self.set_default_text_field(self.field_pto_total, thing[0]["PTO total"])
-        self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
+   
 
         self.dropdown_pay_type["value"].set(data["Pay type"])
         self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
@@ -402,8 +398,6 @@ class Admin():
             "Start day": self.date_start_employment["day"]["value"].get(),
             "Start month": str(self.months.index(self.date_start_employment["month"]["value"].get()) + 1),
             "Start year": self.date_start_employment["year"]["value"].get(),
-            "PTO total": self.field_pto_total["entry"].get(),
-            "PTO used": self.field_pto_used["entry"].get(),
             "Pay type": self.dropdown_pay_type["value"].get(),
             "Pay amount": self.field_pay_rate["entry"].get()
         }
@@ -451,8 +445,6 @@ class Admin():
             "Role": "Example Role",
             "Position": "Example",
             "Team": "Example Team",
-            "PTO total": "0",
-            "PTO used": "0",
         }
 
         self.set_values(default_data)

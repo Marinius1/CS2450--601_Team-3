@@ -26,7 +26,7 @@ class timeCards:
         for i in self.data:
             if i["Employee number"] in lyst:
                 continue
-            if i["Pay type"] == "Commission" or i["Pay type"] == "Hourly":
+            if i["Pay type"] == "Commission" or i["Pay type"] == "Hourly" or i["Pay type"] == "Salary":
                 if i["Pay type"] == "Commission":
                     month = salary//2
                     data1.append({"Employee number": i["Employee number"],"Salary":month, "Sales/Hours": sales_hours})

@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\view",
-    "\\view\\Colors"
+    "\\Model",
+    "\\View",
+    "\\View\\Colors",
+    "\\View\\Colors\\thirdparty\\iTerm2-Color-Schemes"
   ],
-  "SelectedNode": "\\view\\people.py",
-  "PreviewInSolutionExplorer": false
+  "SelectedNode": "\\Model\\PTO & Upcoming Pay.py",
+  "PreviewInSolutionExplorer": true
 }
