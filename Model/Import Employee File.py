@@ -6,7 +6,8 @@ lyst = []
 
 class addToEmployeeFile:
 
-    def __init__(self, number, first, last, type, amount, address, state, city, zip, bDay, social, pNumber, start):
+    def __init__(self, number, first, last, type, amount, address, state, city, zip, bDay, social, pNumber, start, hours_sales):
+        self.hours_sales = hours_sales
         self.start = start
         self.pNumber = pNumber
         self.social = social
@@ -22,16 +23,17 @@ class addToEmployeeFile:
         self.zip = zip
 
     def add_to_employee_file(self):
-        with open('data.json') as infile:
+        with open('employee_file.json') as infile:
             data1 = json.load(infile)
             data1.append(
                 {"Employee number": self.number, "First name": self.first, "Last name": self.last,
                      "Address": self.address, "City": self.city, "State": self.state,
                       "Pay type": self.type, "Pay amount": self.amount, "Birth date": self.bDay,
-                 "Social security": self.social, "Phone": self.pNumber, "Start date": self.start, "Zip": self.zip})
+                 "Social security": self.social, "Phone": self.pNumber, "Start date": self.start,
+                 "Zip": self.zip,"Hours/sales": self.hours_sales})
 
 
-        with open('data.json', 'w') as outfile:
+        with open('employee_file.json', 'w') as outfile:
             json.dump(data1, outfile)
 
 
@@ -65,7 +67,6 @@ def start_date():
     z = str(a) + "/" + str(b) + "/" + str(c)
     return z
 
-
 class getData:
     def __init__(self, file):
         self.file = file
@@ -90,15 +91,19 @@ class getData:
                 if classification == "3":  # hourly
                     empClass = "Hourly"
                     empClassification = (str(hourly))
+                    hours_sales = random .randint(0, 160)
                 elif classification == "1":  # salary
                     empClass = "Salary"
                     empClassification = (str(salary))
+                    hours_sales = None
                 elif classification == "2":  # classification
                     empClass = "Commission"
                     empClassification = (str(commission))
+                    hours_sales = random.randint(0, 160)
 
                 i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification),
-                                      str(address), str(state), str(city), str(empZip), str(birth()), str(social()), str(phone()), str(start_date()))
+                                      str(address), str(state), str(city), str(empZip),
+                                      str(birth()), str(social()), str(phone()), str(start_date()), str(hours_sales))
                 i.add_to_employee_file()
 
 
