@@ -5,6 +5,7 @@ import json
 import os
 import math
 from Model.Add_Employee import add_employee
+from Model.Delete_Employee import *
 
 
 #Creates employee list for input into View
@@ -39,6 +40,11 @@ class Employee_Adder:
                          dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
         add.add_to_employee_file()
 
+class Employee_Deleter:
+    def __init__(self, dicton):
+        add = choice(dicton["Employee number"], dicton["First name"],
+                         dicton["Last name"]
+        add.add_to_employee_file()
             
 
 
