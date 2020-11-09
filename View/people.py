@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
-
+import controller as Controller
+import random
 
 class People():
     """
@@ -60,19 +61,34 @@ class People():
 
         self.data_columns = []
 
-        model_example = [
-            # ['bob', 'cindy', 'lue', 'greg'],
-            [i for i in range(50)],
-            [i for i in range(50)],
-            [i for i in range(50)]
-            # ['Jones', 'Lue', 'Suong', 'Borgerstrom'],
-            # ['$11.00', '$12.00', 'More than you', 'Less than you']
-        ]
+        self.model_example = Controller.List_Maker()
 
-        headers_example = ['First Name', 'Last Name', 'Wage']
 
-        self.create_table(headers_example, model_example)
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Phone', 'Role', 'Position', 'Team']
+        self.header_buttons = []
+        self.header_button_actions = [self.sort_ascending for i in range(len(self.headers_example))]
+
+        self.table = self.create_table(self.headers_example, self.model_example.data)
         self.scrollbar.configure(command=self.yview)
+
+    def button_action(self, event):
+        button_text = event.widget.cget('text')
+        button_index = self.headers_example.index(button_text)
+
+        self.header_button_actions[button_index](button_text, button_index)
+
+
+    def sort_ascending(self, text, index):
+
+        print(text, "Ascending")
+
+        self.header_button_actions[index] = self.sort_descnding
+
+    def sort_descnding(self, text, index):
+
+        print(text, "Descending")
+
+        self.header_button_actions[index] = self.sort_ascending
 
     def yview(self, *args):
 
@@ -98,6 +114,8 @@ class People():
 
     def create_table(self, lyst1, lyst2):
 
+        table = []
+
         lyst1_size = len(lyst1)
 
         for i in range(lyst1_size):
@@ -113,6 +131,8 @@ class People():
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
             button.grid(row=0, column=0, sticky=tk.EW)
+            button.bind('<Button-1>', self.button_action)
+            self.header_buttons.append(button)
 
             column = tk.Listbox(grid_frame,
                                 foreground=self.colors.foreground,
@@ -122,8 +142,10 @@ class People():
                                 yscrollcommand=self.sync_yview)
             column.grid(row=1, column=0, sticky=tk.NS)
 
+            table.append(column)
+
             for j in range(len(lyst2[i])):
-                column.insert(tk.END, lyst2[i][j])
+                column.insert(tk.END, lyst2[j][lyst1[i]])
 
                 if j % 2 == 0:
                     background = self.colors.background
@@ -137,3 +159,5 @@ class People():
 
         self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, sticky=tk.N+tk.S+tk.E)
+
+        return table
