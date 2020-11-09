@@ -5,7 +5,7 @@ import json
 import os
 import math
 from Model.Add_Employee import add_employee
-from Model.Delete_Employee import *
+from Model.Delete_Employee import delete_employee
 
 
 #Creates employee list for input into View
@@ -21,6 +21,7 @@ class List_Maker:
     def reload(self):
         with open('Model/employee_file.json') as infile:
             self.data = json.load(infile)
+
 
 class PTO_Maker:
     def __init__(self):
@@ -40,10 +41,25 @@ class Employee_Adder:
                          dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
         add.add_to_employee_file()
 
+
 class Employee_Deleter:
     def __init__(self, dicton):
-        del = delete_employee.delete_this(dicton["Employee number"], dicton["First name"],
-                         dicton["Last name"]
+        d = delete_employee()
+        d.delete_this(dicton["Employee number"], dicton["First name"], dicton["Last name"])
+
+
+class Employee_Editer:
+    def __init__(self, dicton1, dicton):
+        d = delete_employee()
+        d.delete_this(dicton1["Employee number"], dicton1["First name"], dicton1["Last name"])
+        add = add_employee(dicton["Employee number"], dicton["First name"],
+                         dicton["Last name"], dicton["Pay type"], dicton["Pay amount"],
+                         dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
+                         dicton["Phone"], dicton["Zip"], dicton["Birth day"],
+                         dicton["Birth month"], dicton["Birth year"], dicton["Start day"], dicton["Start month"],
+                         dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
+        add.add_to_employee_file()
+
             
 
 
