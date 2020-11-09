@@ -135,7 +135,8 @@ class Admin():
         self.left_frame.grid(column=0, sticky=tk.NSEW)
 
         self.left_frame.rowconfigure(0, weight=1)
-        self.left_frame.rowconfigure(1, weight=21)
+        self.left_frame.rowconfigure(1, weight=0)
+        self.left_frame.rowconfigure(2, weight=21)
 
         self.left_frame.columnconfigure(0, weight=5)
         self.left_frame.columnconfigure(1, weight=1)
@@ -150,12 +151,30 @@ class Admin():
                                      style='Header.TButton', command=self.add_employee)
         self.people_add.grid(row=0, column=1, sticky=tk.E, padx=(0, 15))
 
+        self.frame_search = tk.Frame(self.left_frame, background=self.colors.background)
+        self.frame_search.grid(row=1, column=0, columnspan=2, sticky=tk.EW)
+
+        self.search_value = tk.StringVar()
+        self.search_value.set("Search")
+        self.search_value.trace("w", self.search)
+        self.entry_search = ttk.Entry(self.frame_search, textvariable=self.search_value)
+        # self.entry_search.bind("<Key>", self.search)
+        # self.entry_search.bind("<Button-1>", lambda x: "break")
+
+        self.entry_search.grid(row=0, column=0)
+
+        self.search_options = ["First name", "Last name", "Employee number"]
+        self.search_option_value = tk.StringVar(self.master)
+        self.search_option_value.set(self.search_options[0])
+        self.dropdown_search = ttk.OptionMenu(self.frame_search, self.search_option_value, self.search_options[0], *self.search_options)
+        self.dropdown_search.grid(row=0, column=1, sticky=tk.E)
+
         self.people_listbox = tk.Listbox(self.left_frame,
                                          foreground=self.colors.foreground,
                                          selectforeground=self.colors.background,
                                          background=self.colors.background,
                                          relief=tk.FLAT)
-        self.people_listbox.grid(row=1, column=0, columnspan=2, sticky=tk.NSEW)
+        self.people_listbox.grid(row=2, column=0, columnspan=2, sticky=tk.NSEW)
 
         self.populate_people(self.people_example)
 
@@ -294,6 +313,31 @@ class Admin():
 
         self.set_values(self.people_example[0])
 
+    def search(self, *args):
+
+
+        value = self.search_value.get()
+
+        if value == "Search":
+            return
+
+        if value == '':
+            self.clear_listbox()
+            self.populate_people(self.people_example)
+
+        self.clear_listbox()
+
+        results = []
+
+        search_filter = self.search_option_value.get()
+
+        for i in self.people_example:
+            if value in i[search_filter]:
+                results.append(i)
+
+        self.populate_people(results)
+
+
     def set_values(self, data):
         self.field_name.configure(text=data["First name"] + " " + data["Last name"])
         self.set_default_text_field(self.field_first_name, data["First name"])
@@ -407,13 +451,13 @@ class Admin():
         self.clear_listbox()
         self.populate_people(self.people_example)
 
-    def listbox_select(self, event):
+    def listbox_select(self, event, lyst):
         widget = event.widget
         selection = widget.curselection()
         value = widget.get(tk.ACTIVE)
         # print("selection:", selection[0], ": '%s'" % value)
 
-        self.set_values(self.people_example[selection[0]])
+        self.set_values(lyst[selection[0]])
 
     def clear_listbox(self):
         self.people_listbox.delete(0, tk.END)
@@ -421,10 +465,10 @@ class Admin():
     def populate_people(self, lyst):
 
         #setup listbox click evnets
-        self.people_listbox.bind("<Double-Button-1>", self.listbox_select)
+        self.people_listbox.bind("<Double-Button-1>", lambda event: self.listbox_select(event, lyst))
 
         for i in range(len(lyst)):
-            self.people_listbox.insert(tk.END, lyst[i]["First name"] + " " + lyst[i]["Last name"])
+            self.people_listbox.insert(tk.END, lyst[i]["First name"] + " " + lyst[i]["Last name"] + " - " + lyst[i]["Employee number"])
 
             if i % 2 == 0:
                 background = self.colors.background
