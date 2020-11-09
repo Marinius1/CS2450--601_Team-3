@@ -370,7 +370,34 @@ class Admin():
         print("delete employee method")
 
     def add_employee(self):
-        self.set_values(self.people_example[0])
+
+        default_data = {
+            "Employee number": "xx-xxxxx",
+            "First name": "First Name",
+            "Last name": "Last Name",
+            "Pay type": "Hourly",
+            "Pay amount": "00.00",
+            "Address": "123 Example St.",
+            "State": "Alaska",
+            "City": "Anchorage",
+            "Zip": "00000",
+            "Birth day": "1",
+            "Birth month": "1",
+            "Birth year": "2000",
+            "Social security": "xxx-xx-xxxx",
+            "Phone": "xxx-xxx-xxxx",
+            "Start day": "1",
+            "Start month": "1",
+            "Start year": "2000",
+            "Hours/sales": "1",
+            "Role": "Example Role",
+            "Position": "Example",
+            "Team": "Example Team",
+            "PTO total": "0",
+            "PTO used": "0",
+        }
+
+        self.set_values(default_data)
 
     def save_employee(self):
         data = self.get_values()
