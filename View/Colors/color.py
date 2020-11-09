@@ -19,7 +19,6 @@ class Color:
 
         # change working directory to local file location
         # os.chdir(os.path.dirname(os.path.abspath(__file__)))
-        print(os.getcwd())
 
         self.scheme = scheme
         self.scheme_path = "./View/Colors/thirdparty/iTerm2-Color-Schemes/schemes" \

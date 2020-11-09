@@ -7,7 +7,7 @@ On application init
 
 import tkinter as tk
 from tkinter import ttk
-
+from controller import *
 from View.Colors.color import Color
 from View.navbar import NavBar
 from View.homepage import Homepage
@@ -31,7 +31,6 @@ class Window():
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.
         """
-
         self.master = master
 
         self.width = self.master.winfo_screenwidth()
@@ -83,7 +82,7 @@ class Window():
         self.page_home = People(self.master, name="people", theme=self.theme)
 
     def admin(self):
-        self.page_home = Admin(self.master, name="people", theme=self.theme)
+        self.page_home = Admin(self.master, name="admin", theme=self.theme)
 
     def timecard(self):
         self.page_home = TimeCard(self.master, theme=self.theme)
