@@ -313,36 +313,37 @@ class Admin():
         self.dropdown_pay_type["value"].set(data["Pay type"])
         self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
 
+
+        #Get data from save button
     def get_values(self):
         return {
-            "name_amalgamated": self.field_name.cget("text"),
-            "first_name": self.field_first_name["entry"].get(),
-            "last_name": self.field_last_name["entry"].get(),
-            "address": self.field_address["entry"].get(),
-            "city": self.field_city["entry"].get(),
-            "state": self.dropdown_state["value"].get(),
-            "zip": self.field_zip["entry"].get(),
-            "birthday": {
-                "day": self.date_birthday["day"]["value"].get(),
-                "month": self.date_birthday["month"]["value"].get(),
-                "year": self.date_birthday["year"]["value"].get(),
-            },
-            "phone": self.field_phone["entry"].get(),
-            "ssn": self.field_ssn["entry"].get(),
-            "job_title": self.field_job_title["entry"].get(),
-            "team": self.field_team["entry"].get(),
-            "role": self.field_role["entry"].get(),
-            "id": self.field_id["entry"].get(),
-            "start_employment": {
-                "day": self.date_start_employment["day"]["value"].get(),
-                "month": self.date_start_employment["month"]["value"].get(),
-                "year": self.date_start_employment["year"]["value"].get(),
-            },
-            "total_time": self.info_start_employment_data.cget("text"),
-            "total_pto": self.field_pto_total["entry"].get(),
-            "used_pto": self.field_pto_used["entry"].get(),
-            "pay_type": self.dropdown_pay_type["value"].get(),
-            "pay_rate": self.field_pay_rate["entry"].get(),
+            "First name": self.field_first_name["entry"].get(),
+            "Last name": self.field_last_name["entry"].get(),
+            "Address": self.field_address["entry"].get(),
+            "City": self.field_city["entry"].get(),
+            "State": self.dropdown_state["value"].get(),
+            "Zip": self.field_zip["entry"].get(),
+ #           "Birth date": {
+ #               "day": self.date_birthday["day"]["value"].get(),
+ #               "month": self.date_birthday["month"]["value"].get(),
+ #               "year": self.date_birthday["year"]["value"].get(),
+ #           },
+            "Phone": self.field_phone["entry"].get(),
+            "Social security": self.field_ssn["entry"].get(),
+ #           "job_title": self.field_job_title["entry"].get(),
+ #           "team": self.field_team["entry"].get(),
+ #           "role": self.field_role["entry"].get(),
+            "Employee number": self.field_id["entry"].get(),
+ #           "start_employment": {
+ #               "day": self.date_start_employment["day"]["value"].get(),
+ #               "month": self.date_start_employment["month"]["value"].get(),
+ #               "year": self.date_start_employment["year"]["value"].get(),
+ #           },
+ #           "total_time": self.info_start_employment_data.cget("text"),
+ #           "total_pto": self.field_pto_total["entry"].get(),
+ #           "used_pto": self.field_pto_used["entry"].get(),
+            "Pay type": self.dropdown_pay_type["value"].get(),
+            "Pay amount": self.field_pay_rate["entry"].get(),
         }
 
     def set_default_text_field(self, field, value):

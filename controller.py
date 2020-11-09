@@ -4,7 +4,7 @@ Module contains all data agregation methods and classes for use between the mode
 import json
 import os
 import math
-
+from .Model.Add Employee import add_employee
 
 #Creates employee list for input into View
 
@@ -13,14 +13,22 @@ class List_Maker:
     def __init__(self):
         self.data = []
 
-        with open('Model\employee_file.json') as infile:
+        with open('Model/employee_file.json') as infile:
             self.data = json.load(infile)
 
     def reload(self):
-        with open('Model\employee_file.json') as infile:
+        with open('Model/employee_file.json') as infile:
             self.data = json.load(infile)
             print(self.data)
 
+
+class Employee_Adder:
+    def __init__(self, dict):
+        self.data = []
+        self.data.append(dict["First name"], dict["Last name"],
+                         dict["Pay type"], dict["Pay amount"], dict["Birth date"],
+                         dict["Address"], dict["State"], dict["City"], dict["Social security"],
+                         dict["Phone"], dict["Start date"], dict["Zip"], dict["Hours/sales"])
 
             
 
