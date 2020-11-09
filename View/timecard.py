@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
-import random
+import controller as Controller
+import datetime
 
-class TimeCard:
+class TimeCard():
     """
     the 'row' class. creates a View that arranges children horizontally within
     it's bounds. can auto wrap or truncate if needed. scrolling is also an
@@ -18,6 +19,13 @@ class TimeCard:
         truncate or wrap data when the contents of the horizontal View exceed the
         bounds.
         """
+
+        # populate test data
+        self.L = Controller.List_Maker()
+        self.P = Controller.PTO_Maker()
+        self.people_example = self.L.data
+        self.PTO = self.P.PTO_lyst
+        self.click_buffer = []
 
         self.master = master
 
@@ -38,134 +46,421 @@ class TimeCard:
                              font=('Roboto', 24)
                              )
 
+        self.style.map('Header.TButton',
+                       background=[('active', self.colors.a8)],
+                       foreground=[('active', self.colors.background)])
+        self.style.configure('Header.TButton',
+                             background=self.colors.a7,
+                             foreground=self.colors.background,
+                             borderwidth=0,
+                             bordercolor=self.colors.a0,
+                             focusthickness=3,
+                             focuscolor=self.colors.a10,
+                             )
+
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3,
                                   relief=tk.RIDGE)
         self.home_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
-        self.home_frame.rowconfigure((0,1), weight=1)
+        self.home_frame.rowconfigure(0, weight=1)
 
-        # prevoius timecards/pay data
-        self.scrollbar = tk.Scrollbar(self.home_frame)
+        self.home_frame.columnconfigure(0, weight=0)
+        self.home_frame.columnconfigure(1, weight=1)
 
-        self.data_columns = []
+        self.left_frame = tk.Frame(self.home_frame)
+        self.left_frame.configure(background=self.colors.background, border=3,
+                                  relief=tk.RIDGE)
+        self.left_frame.grid(column=0, sticky=tk.NSEW)
+
+        self.left_frame.rowconfigure(0, weight=1)
+        self.left_frame.rowconfigure(1, weight=0)
+        self.left_frame.rowconfigure(2, weight=21)
+
+        self.left_frame.columnconfigure(0, weight=5)
+        self.left_frame.columnconfigure(1, weight=1)
+        # self.left_frame.grid_propagate(0)
+
+        self.people_label = ttk.Label(self.left_frame,
+                                      text="People",
+                                      style='Recent.TLabel')
+        self.people_label.grid(row=0, column=0, sticky=tk.W, padx=15)
+
+        self.people_add = ttk.Button(self.left_frame, text="Add",
+                                     style='Header.TButton', command=self.add_employee)
+        self.people_add.grid(row=0, column=1, sticky=tk.E, padx=(0, 15))
+
+        self.frame_search = tk.Frame(self.left_frame, background=self.colors.background)
+        self.frame_search.grid(row=1, column=0, columnspan=2, sticky=tk.EW)
+
+        self.search_value = tk.StringVar()
+        self.search_value.set("Search")
+        self.search_value.trace("w", self.search)
+        self.entry_search = ttk.Entry(self.frame_search, textvariable=self.search_value)
+        # self.entry_search.bind("<Key>", self.search)
+        # self.entry_search.bind("<Button-1>", lambda x: "break")
+
+        self.entry_search.grid(row=0, column=0)
+
+        self.search_options = ["First name", "Last name", "Employee number"]
+        self.search_option_value = tk.StringVar(self.master)
+        self.search_option_value.set(self.search_options[0])
+        self.dropdown_search = ttk.OptionMenu(self.frame_search, self.search_option_value, self.search_options[0], *self.search_options)
+        self.dropdown_search.grid(row=0, column=1, sticky=tk.E)
+
+        self.people_listbox = tk.Listbox(self.left_frame,
+                                         foreground=self.colors.foreground,
+                                         selectforeground=self.colors.background,
+                                         background=self.colors.background,
+                                         relief=tk.FLAT)
+        self.people_listbox.grid(row=2, column=0, columnspan=2, sticky=tk.NSEW)
+
+        self.populate_people(self.people_example)
+
+        self.right_frame = tk.Frame(self.home_frame)
+        self.right_frame.configure(background=self.colors.background, border=3,
+                                   relief=tk.RIDGE)
+        self.right_frame.grid(row=0, column=1, sticky=tk.NSEW)
+
+        self.right_frame.rowconfigure(tuple(i for i in range(4)), weight=0)
+        self.right_frame.columnconfigure(0, weight=1)
+
+        self.field_name = ttk.Label(self.right_frame, text='', style='Recent.TLabel')
+        self.field_name.configure(font=('Roboto', 48))
+        self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
+
+        self.save_action = self.save_employee
+
+        self.people_save = ttk.Button(self.right_frame, text="Save",
+                                      style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_action))
+        self.people_save.grid(row=0, column=2, sticky=tk.E)
+
+        self.people_delete = ttk.Button(self.right_frame, text="Delete",
+                                        style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.del_employee))
+        self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
+
+        self.info_identity_frame = tk.Frame(self.right_frame)
+        self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
+
+        self.info_identity_frame.rowconfigure(0, weight=1)
+
+        self.display_employee = self.create_text_display(self.info_identity_frame, 'Employee ID:', '', 0)
+
+        self.display_pay_type = self.create_text_display(self.info_identity_frame, 'Pay Type:', '', 1)
+
+        # salary specific widgets
+        self.display_salary = None
+
+        # hourly specific widgets
+        self.display_hourly = None
+
+        # commission specific widgets
+        self.display_commission = None
+
+        self.display_hours_worked = self.create_text_display(self.info_identity_frame, 'Hours Worked', '', 5)
+
+        self.field_additional_hours = self.create_text_entry(self.info_identity_frame, 'Additional Hours', '0.00', 5, 2)
+        self.button_additional_hours = ttk.Button(self.info_identity_frame, text="Add", style='Header.TButton')
+        self.button_additional_hours.grid(row=5, column=4, padx=(10, 0))
+
+        self.set_values(self.people_example[0])
+
+    def search(self, *args):
 
 
-        model_example = [
-            ["2020-10-31", "2020-10-15", "2020-09-30"],
-            ["32", "45", "42"],
-            ["$2500", "3600", "3400"]
-        ]
+        value = self.search_value.get()
 
-        headers_example = ['Pay Date', 'Hours Worked', 'Amount']
+        if value == "Search":
+            return
 
-        self.create_table(headers_example, model_example)
-        self.scrollbar.configure(command=self.yview)
+        if value == '':
+            self.clear_listbox()
+            self.populate_people(self.people_example)
 
-        self.column_offset = len(self.data_columns)
+        self.clear_listbox()
 
-        self.home_frame.columnconfigure(tuple(self.column_offset + i for i in range(2, 5)), weight=1)
+        results = []
 
-        # current pay
-        self.summary_current_pay = self.create_summary_frame(self.home_frame, 'Current Pay', "$2300", 0, self.column_offset + 2)
+        search_filter = self.search_option_value.get()
 
-        # hours worked
-        self.summary_hours_worked = self.create_summary_frame(self.home_frame, 'Hours Worked', "39", 1, self.column_offset + 2)
+        for i in self.people_example:
+            if value in i[search_filter]:
+                results.append(i)
 
-        # nex pay date
-        self.summary_next_pay_date = self.create_summary_frame(self.home_frame, 'Next Pay Date', "11-15-20", 0, self.column_offset + 3)
-
-        # pto available
-        self.summary_pto_available = self.create_summary_frame(self.home_frame, 'PTO Available', "34 Hours", 1, self.column_offset + 3)
+        self.populate_people(results)
 
 
-    def yview(self, *args):
+    def set_values(self, data):
 
-        for i in self.data_columns:
-            i.yview(*args)
+        self.field_name.configure(text=data["First name"] + " " + data["Last name"])
+        self.set_default_display_field(self.display_employee, data["Employee number"])
+        self.set_default_display_field(self.display_pay_type, data["Pay type"])
 
-            pos = i.yview()
-            self.scrollbar.set(pos[0], pos[1])
+        self.set_default_display_field(self.display_hours_worked, "TBD")
 
-    def sync_yview(self, *args):
+        thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
 
-        for i in range(len(self.data_columns)):
-            data_columns_copy = self.data_columns.copy()
-            data_columns_copy.pop(i)
+        if len(thing) == 0:
+            thing.append(data)
 
-            sync_check = [self.data_columns[i].yview() == j.yview() for j in data_columns_copy]
+        # self.set_default_text_field(self.field_pto_total, thing[0]["PTO total"])
+        # self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
+        #
+        # self.dropdown_pay_type["value"].set(data["Pay type"])
+        # self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
 
-            if not all(sync_check):
-                for k in range(len(self.data_columns)):
-                    if k != i:
-                        self.data_columns[k].yview_moveto(args[0])
-                    self.scrollbar.set(*args)
+        if data["Pay type"] == "Salary":
+            if self.display_hourly is not None:
+                self.display_hourly["entry"].destroy()
+                self.display_hourly["label"].destroy()
+                self.display_hourly = None
 
-    def create_table(self, lyst1, lyst2):
+            if self.display_commission is not None:
+                self.display_commission["entry"].destroy()
+                self.display_commission["label"].destroy()
+                self.display_commission = None
 
-        lyst1_size = len(lyst1)
+            if self.display_salary is None:
+                self.display_salary = self.create_text_display(self.info_identity_frame, 'Expected Payout:', '', 3)
+            self.set_default_display_field(self.display_salary, thing[0]["Total pay"])
 
-        for i in range(lyst1_size):
+        if data["Pay type"] == "Hourly":
+            if self.display_salary is not None:
+                self.display_salary["entry"].destroy()
+                self.display_salary["label"].destroy()
+                self.display_salary = None
 
-            self.home_frame.columnconfigure(i, weight=0)
+            if self.display_commission is not None:
+                self.display_commission["entry"].destroy()
+                self.display_commission["label"].destroy()
+                self.display_commission = None
 
-            grid_frame = tk.Frame(self.home_frame, background='red')
-            grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NS)
+            if self.display_hourly is None:
+                self.display_hourly = self.create_text_display(self.info_identity_frame, 'Expected Payout:', '', 3)
+            self.set_default_display_field(self.display_hourly, thing[0]["Total pay"])
 
-            grid_frame.rowconfigure(0, weight=0)
-            grid_frame.rowconfigure(1, weight=1)
+        if data["Pay type"] == "Commission":
 
-            button = ttk.Button(grid_frame, text=lyst1[i],
-                                style='Header.TButton')
-            button.grid(row=0, column=0, sticky=tk.EW)
+            if self.display_hourly is not None:
+                self.display_hourly["entry"].destroy()
+                self.display_hourly["label"].destroy()
+                self.display_hourly = None
 
-            column = tk.Listbox(grid_frame,
-                                foreground=self.colors.foreground,
-                                selectforeground=self.colors.background,
-                                background=self.colors.background,
-                                relief=tk.FLAT,
-                                yscrollcommand=self.sync_yview)
-            column.grid(row=1, column=0, sticky=tk.NS)
+            if self.display_salary is None:
+                self.display_salary = self.create_text_display(self.info_identity_frame, 'Expected Payout:', '', 3)
+            self.set_default_display_field(self.display_salary, thing[0]["Total pay"])
 
-            for j in range(len(lyst2[i])):
-                column.insert(tk.END, lyst2[i][j])
+            if self.display_commission is None:
+                self.display_commission = self.create_text_display(self.info_identity_frame, 'Expected Payout:', '', 4)
+            self.set_default_display_field(self.display_commission, thing[0]["Total pay"])
 
-                if j % 2 == 0:
-                    background = self.colors.background
-                else:
-                    background = self.colors.a7
 
-                column.itemconfigure(j, background=background)
-            # column.configure(height=len(lyst2[i]))
+    #Get data from save button
+    def get_values(self):
+        data = {
+            # "First name": self.field_first_name["entry"].cget("text"),
+            # "Last name": self.field_last_name["entry"].cget("text"),
+            #
+            "Employee number": self.display_employee["entry"].cget("text"),
+            #
+            # "PTO total": self.field_pto_total["entry"].cget("text"),
+            # "PTO used": self.field_pto_used["entry"].cget("text"),
+            "Pay type": self.display_pay_type["entry"].cget("text"),
+            "Hours worked": self.display_hours_worked["entry"].cget("text")
+        }
 
-            self.data_columns.append(column)
+        if self.display_salary is not None:
+            data["Total pay"] = self.display_salary["entry"].cget('text')
+        if self.display_hourly is not None:
+            data["Total pay"] = self.display_hourly["entry"].cget('text')
+        if self.display_commission is not None:
+            data["Base pay"] = self.display_salary["entry"].cget('text')
+            data["Total pay"] = self.display_commission["entry"].cget('text')
 
-        # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
-        self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
+        print(data)
 
-    def create_summary_frame(self, parent, title, content, row, column):
-        summary_frame = tk.Frame(parent)
-        summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
+        return data
 
-        summary_frame.rowconfigure(0, weight=1)
-        summary_frame.rowconfigure(1, weight=3)
-        summary_frame.columnconfigure(0, weight=1)
+    def set_default_display_field(self, field, value):
+        field["entry"].configure(text=value)
 
-        summary_frame.grid_propagate(0)
+    def set_default_text_field(self, field, value):
+        field["entry"].delete(0, 'end')
+        field["entry"].insert(0, value)
 
-        summary_frame_title = ttk.Label(summary_frame, text=title, style='Recent.TLabel')
-        summary_frame_title.configure(font=('Roboto', 40))
-        summary_frame_title.grid(row=0, column=0)
+    def del_employee(self):
+        datay = self.get_values()
 
-        summary_frame_content = ttk.Label(summary_frame, text=content, style='Recent.TLabel')
-        summary_frame_content.configure(font=('Roboto', 150, 'bold'))
-        summary_frame_content.grid(row=1, column=0)
+        emp_identifier = {
+            "Employee number": datay["Employee number"],
+            "First name": datay["First name"],
+            "Last name": datay["Last name"]
+        }
+        Controller.Employee_Deleter(emp_identifier)
+        self.L.reload()
+        self.people_example = self.L.data
 
-        summary_frame.bind('<Configure>', lambda event: self.resize_summary_frame(event=event, title=summary_frame_title, content=summary_frame_content))
+        self.clear_listbox()
+        self.populate_people(self.people_example)
 
-        return [summary_frame, summary_frame_title, summary_frame_content]
+    def add_employee(self):
 
-    def resize_summary_frame(self, event, title, content):
-        title.configure(font=('Roboto', int(event.height * .1)))
-        content.configure(font=('Roboto', int(event.height * .2), 'bold'))
+        default_data = {
+            "Employee number": "xx-xxxxx",
+            "First name": "First Name",
+            "Last name": "Last Name",
+            "Pay type": "Hourly",
+            "Pay amount": "00.00",
+            "Address": "123 Example St.",
+            "State": "Alaska",
+            "City": "Anchorage",
+            "Zip": "00000",
+            "Birth day": "1",
+            "Birth month": "1",
+            "Birth year": "2000",
+            "Social security": "xxx-xx-xxxx",
+            "Phone": "xxx-xxx-xxxx",
+            "Start day": "1",
+            "Start month": "1",
+            "Start year": "2000",
+            "Hours/sales": "1",
+            "Role": "Example Role",
+            "Position": "Example",
+            "Team": "Example Team",
+            "PTO total": "0",
+            "PTO used": "0",
+        }
+
+        self.set_values(default_data)
+        self.save_action = self.save_employee
+
+    def save_employee(self):
+        datax = self.get_values()
+        Controller.Employee_Adder(datax)
+        self.L.reload()
+        self.people_example = self.L.data
+
+        self.clear_listbox()
+        self.populate_people(self.people_example)
+
+    def edit_employee(self):
+        datax = self.get_values()
+        Controller.Employee_Editer(self.click_buffer, datax)
+        self.L.reload()
+        self.people_example = self.L.data
+
+        self.clear_listbox()
+        self.populate_people(self.people_example)
+
+    def listbox_select(self, event, lyst):
+        widget = event.widget
+        selection = widget.curselection()
+        value = widget.get(tk.ACTIVE)
+        self.click_buffer = self.get_values()
+        # print("selection:", selection[0], ": '%s'" % value)
+
+        self.set_values(lyst[selection[0]])
+        self.save_action = self.edit_employee
+
+    def clear_listbox(self):
+        self.people_listbox.delete(0, tk.END)
+
+    def populate_people(self, lyst):
+
+        #setup listbox click evnets
+        self.people_listbox.bind("<Double-Button-1>", lambda event: self.listbox_select(event, lyst))
+
+        for i in range(len(lyst)):
+            self.people_listbox.insert(tk.END, lyst[i]["First name"] + " " + lyst[i]["Last name"] + " - " + lyst[i]["Employee number"])
+
+            if i % 2 == 0:
+                background = self.colors.background
+            else:
+                background = self.colors.a7
+
+            self.people_listbox.itemconfigure(i, background=background)
+
+    def create_text_display(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=column_start, sticky=sticky)
+
+        entry = ttk.Label(master, text=placeholder, background=self.colors.background)
+        entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
+        return {"label": label, "entry": entry}
+
+    def create_text_entry(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=column_start, sticky=sticky)
+
+        entry = ttk.Entry(master)
+        entry.insert(0, placeholder)
+        entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
+        return {"label": label, "entry": entry}
+
+    def create_dropdown_menu(self, master, label, options, row, column_start=0):
+
+        label = ttk.Label(master, text=label)
+        label.configure(background=self.colors.background)
+        label.grid(row=row, column=column_start, sticky=tk.E)
+
+        value = tk.StringVar(self.master)
+        value.set(options[0])
+        menu = ttk.OptionMenu(master, value, options[0], *options)
+        menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
+        return {"label": label, "menu": menu, "value": value}
+
+    def create_date_selector(self, master, row):
+        frame = tk.Frame(master, background=self.colors.background)
+        frame.grid(row=row, column=1, columnspan=4, sticky=tk.W, padx=(10))
+        frame.columnconfigure((0,1,2,3), weight=1)
+
+        days = [i for i in range(1, 32)]
+        day_dropdown = self.create_dropdown_menu(frame, 'Day', days, 0, 0)
+
+        months_dropdown = self.create_dropdown_menu(frame, 'Month', self.months, 0, 2)
+
+        years = [i for i in range(1950, 2005)]
+        years_dropdown= self.create_dropdown_menu(frame, 'Year', years, 0, 4)
+
+        return {
+            "day": {"label": day_dropdown["label"], "dropdown": day_dropdown["menu"], "value": day_dropdown["value"]},
+            "month": {"label": months_dropdown["label"], "dropdown": months_dropdown["menu"], "value": months_dropdown["value"]},
+            "year": {"label": years_dropdown["label"], "dropdown": years_dropdown["menu"], "value": years_dropdown["value"]},
+        }
+
+    def create_are_you_sure(self, message, on_success):
+        top = tk.Toplevel(self.master)
+
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        width = screen_width / 6
+        height = screen_height / 6
+
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
+
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
+
+        top.title("Are You Sure?")
+
+        top.rowconfigure((0,1), weight=1)
+        top.columnconfigure((0,1,2), weight=1)
+
+        question = ttk.Label(top, text=message, background=self.colors.background)
+        question.grid(row=0, column=1)
+
+        button_frame = tk.Frame(top)
+        button_frame.grid(row=1, column=0, columnspan=3, sticky=tk.NSEW, pady=(height / 10, 0))
+        button_frame.columnconfigure((0,1), weight=1)
+
+        yes_button = ttk.Button(button_frame, text="Yes", style='Header.TButton', command=lambda:[on_success(), top.destroy()])
+        yes_button.grid(row=0, column=0, sticky=tk.W, padx=(width / 10, 0))
+
+        cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
+        cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
+
