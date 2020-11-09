@@ -22,6 +22,11 @@ class List_Maker:
             self.data = json.load(infile)
             print(self.data)
 
+class PTO_Maker:
+    def __init__(self):
+        self.PTO_lyst = []
+
+        #with open('Model/')
 
 class Employee_Adder:
     def __init__(self, dict):

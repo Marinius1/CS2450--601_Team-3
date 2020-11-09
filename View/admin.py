@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
 import controller as Controller
+import datetime
 
 class Admin():
     """
@@ -241,7 +242,19 @@ class Admin():
                   "Wisconsin",
                   "West Virginia",
                   "Wyoming"]
-
+        self.months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"]
         self.dropdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
 
         self.field_zip = self.create_text_entry(self.info_identity_frame, "Zip", '', 4, 2)
@@ -290,23 +303,23 @@ class Admin():
         self.dropdown_state["value"].set(data["State"])
         self.set_default_text_field(self.field_zip, data["Zip"])
         # birthday
-        self.date_birthday["day"]["value"].set(data["Birth date"][0] + data["Birth date"][1])
-        self.date_birthday["month"]["value"].set(data["Birth date"][3] + data["Birth date"][4])
-        self.date_birthday["year"]["value"].set(data["Birth date"][6] + data["Birth date"][7])
+        self.date_birthday["day"]["value"].set(data["Birth day"])
+        self.date_birthday["month"]["value"].set(self.months[int(data["Birth month"]) - 1])
+        self.date_birthday["year"]["value"].set(data["Birth year"])
 
         self.set_default_text_field(self.field_phone, data["Phone"])
         self.set_default_text_field(self.field_ssn, data["Social security"])
-        #self.set_default_text_field(self.field_job_title, data["job_title"])
-        #self.set_default_text_field(self.field_team, data["team"])
-        #self.set_default_text_field(self.field_role, data["role"])
+        self.set_default_text_field(self.field_job_title, data["Position"])
+        self.set_default_text_field(self.field_team, data["Team"])
+        self.set_default_text_field(self.field_role, data["Role"])
         self.set_default_text_field(self.field_id, data["Employee number"])
 
-        #self.date_start_employment["day"]["value"].set(data["start_employment"]["day"])
-        #self.date_start_employment["month"]["value"].set(data["start_employment"]["month"])
-        #self.date_start_employment["year"]["value"].set(data["start_employment"]["year"])
-
-        #self.info_start_employment_data.config(text=data["total_time"])
-
+        self.date_start_employment["day"]["value"].set(data["Start day"])
+        self.date_start_employment["month"]["value"].set(self.months[int(data["Start month"]) -1])
+        self.date_start_employment["year"]["value"].set(data["Start year"])
+        timewith = datetime.date.today() -  datetime.date(int(data["Start year"]), int(data["Start month"]), int(data["Start day"]))
+        self.info_start_employment_data.config(text=str(int(timewith.days / 31)))
+        print(datetime.date.today())
         #self.set_default_text_field(self.field_pto_total, data["total_pto"])
         #self.set_default_text_field(self.field_pto_used, data["used_pto"])
 
@@ -413,21 +426,7 @@ class Admin():
         days = [i for i in range(1, 32)]
         day_dropdown = self.create_dropdown_menu(frame, 'Day', days, 0, 0)
 
-        months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ]
-        months_dropdown = self.create_dropdown_menu(frame, 'Month', months, 0, 2)
+        months_dropdown = self.create_dropdown_menu(frame, 'Month', self.months, 0, 2)
 
         years = [i for i in range(1950, 2005)]
         years_dropdown= self.create_dropdown_menu(frame, 'Year', years, 0, 4)
