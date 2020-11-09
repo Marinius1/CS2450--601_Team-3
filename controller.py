@@ -31,10 +31,12 @@ class PTO_Maker:
 class Employee_Adder:
     def __init__(self, dicton):
         self.data = []
-        self.data.append(dicton["First name"], dicton["Last name"],
-                         dicton["Pay type"], dicton["Pay amount"], dicton["Birth date"],
+        self.data.append(dicton["Employee number"], dicton["First name"],
+                         dicton["Last name"], dicton["Pay type"], dicton["Pay amount"],
                          dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
-                         dicton["Phone"], dicton["Start date"], dicton["Zip"], dicton["Hours/sales"])
+                         dicton["Phone"], dicton["Zip"], dicton["Hours/sales"], dicton["Birth day"],
+                         dicton["Birth month"], dicton["Birth year"], dicton["Start day"], dicton["Start month"],
+                         dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
 
             
 
