@@ -1,8 +1,14 @@
+"""
+Module contains all data agregation methods and classes for use between the model and view.
+"""
+import json
+import os
+import math
 
 
+#Creates employee list for input into View
 
-
-class list_maker:
+class List_Maker:
 
     def __init__(self):
         self.data = []
@@ -24,6 +30,7 @@ class list_maker:
 """ Controller module.
 used to control information between the module and View.
 Working "Main" module."""
+
 
 
 """Control user input from View to authenticator, 
@@ -153,7 +160,7 @@ on load event
     send available document choices to View
 """
 
-
+'''
    admin_data = list_maker()
    print(admin_data.data)
    Admin.people_example = admin_data.data
@@ -161,4 +168,4 @@ on load event
    root = tk.Tk()
    window = Window(root)
    root.mainloop()
-   
+'''

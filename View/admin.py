@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
-
+import controller as Controller
 
 class Admin():
     """
@@ -20,7 +20,9 @@ class Admin():
         """
 
         # populate test data
-        self.people_example = [
+        L = Controller.List_Maker()
+        self.people_example = L.data
+        '''
             {
                 "name": "Helium Man",
                 "first_name": "Helium",
@@ -82,7 +84,7 @@ class Admin():
                 "pay_rate": "$32,000"
             }
         ]
-
+            '''
         self.master = master
 
         self.name = name
@@ -223,40 +225,40 @@ class Admin():
         self.set_values(self.people_example[0])
 
     def set_values(self, data):
-        self.field_name.configure(text=data["name"])
+        self.field_name.configure(text=data["First name"] + " " + data["Last name"])
 
-        self.set_default_text_field(self.field_first_name, data["first_name"])
-        self.set_default_text_field(self.field_last_name, data["last_name"])
-        self.set_default_text_field(self.field_address, data["address"])
-        self.set_default_text_field(self.field_city, data["city"])
+        self.set_default_text_field(self.field_first_name, data["First name"])
+        self.set_default_text_field(self.field_last_name, data["Last name"])
+        self.set_default_text_field(self.field_address, data["Address"])
+        self.set_default_text_field(self.field_city, data["City"])
 
         # state
-        self.dropdown_state["value"].set(data["state"])
-        self.set_default_text_field(self.field_zip, data["zip"])
+        self.dropdown_state["value"].set(data["State"])
+        self.set_default_text_field(self.field_zip, "data['zip']")
 
         # birthday
-        self.date_birthday["day"]["value"].set(data["birthday"]["day"])
-        self.date_birthday["month"]["value"].set(data["birthday"]["month"])
-        self.date_birthday["year"]["value"].set(data["birthday"]["year"])
+        self.date_birthday["day"]["value"].set(data["Birth date"][0-1])
+        self.date_birthday["month"]["value"].set(data["Birth date"][3-4])
+        self.date_birthday["year"]["value"].set(data["Birth date"][6-7])
 
-        self.set_default_text_field(self.field_phone, data["phone"])
-        self.set_default_text_field(self.field_ssn, data["ssn"])
-        self.set_default_text_field(self.field_job_title, data["job_title"])
-        self.set_default_text_field(self.field_team, data["team"])
-        self.set_default_text_field(self.field_role, data["role"])
-        self.set_default_text_field(self.field_id, data["id"])
+        self.set_default_text_field(self.field_phone, data["Phone"])
+        self.set_default_text_field(self.field_ssn, data["Social security"])
+        #self.set_default_text_field(self.field_job_title, data["job_title"])
+        #self.set_default_text_field(self.field_team, data["team"])
+        #self.set_default_text_field(self.field_role, data["role"])
+        self.set_default_text_field(self.field_id, data["Employee number"])
 
-        self.date_start_employment["day"]["value"].set(data["start_employment"]["day"])
-        self.date_start_employment["month"]["value"].set(data["start_employment"]["month"])
-        self.date_start_employment["year"]["value"].set(data["start_employment"]["year"])
+        #self.date_start_employment["day"]["value"].set(data["start_employment"]["day"])
+        #self.date_start_employment["month"]["value"].set(data["start_employment"]["month"])
+        #self.date_start_employment["year"]["value"].set(data["start_employment"]["year"])
 
-        self.info_start_employment_data.config(text=data["total_time"])
+        #self.info_start_employment_data.config(text=data["total_time"])
 
-        self.set_default_text_field(self.field_pto_total, data["total_pto"])
-        self.set_default_text_field(self.field_pto_used, data["used_pto"])
+        #self.set_default_text_field(self.field_pto_total, data["total_pto"])
+        #self.set_default_text_field(self.field_pto_used, data["used_pto"])
 
-        self.dropdown_pay_type["value"].set(data["pay_type"])
-        self.set_default_text_field(self.field_pay_rate, data["pay_rate"])
+        self.dropdown_pay_type["value"].set(data["Pay type"])
+        self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
 
     def get_values(self):
         return {
@@ -318,7 +320,7 @@ class Admin():
         self.people_listbox.bind("<Double-Button-1>", self.listbox_select)
 
         for i in range(len(lyst)):
-            self.people_listbox.insert(tk.END, lyst[i]["name"])
+            self.people_listbox.insert(tk.END, lyst[i]["First name"] + " " + lyst[i]["Last name"])
 
             if i % 2 == 0:
                 background = self.colors.background
