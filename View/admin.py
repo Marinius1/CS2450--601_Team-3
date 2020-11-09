@@ -197,7 +197,7 @@ class Admin():
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
         self.people_delete = ttk.Button(self.right_frame, text="Delete",
-                                     style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.delete_employee))
+                                     style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.del_employee))
         self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
         self.info_identity_frame = tk.Frame(self.right_frame)
@@ -411,9 +411,14 @@ class Admin():
         field["entry"].delete(0, 'end')
         field["entry"].insert(0, value)
 
-    def delete_employee(self):
-        print("delete employee method")
+    def del_employee(self):
+        data = self.get_values()
 
+        emp_identifier = {
+            "Employee number": data["Employee number"],
+            "First name": data["First name"],
+            "Last name": data["Last name"],
+        }
 
     def add_employee(self):
 
