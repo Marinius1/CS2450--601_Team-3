@@ -33,10 +33,7 @@ class NavBar():
         self.nav_frame.grid(row=0, column=0, sticky=tk.EW)
 
 
-        menubar = tk.Menu(self.master)
-        self.fileMenu = tk.Menu(self.master, tearoff=0)
-        self.fileMenu.add_command(label="Exit")
-        menubar.add_cascade(label="File", menu=self.fileMenu)
+
 
         # self.toolbar = tk.Frame(self.master)
         # self.toolbar.rowconfigure(0, weight=1)
