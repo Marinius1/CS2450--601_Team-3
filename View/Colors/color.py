@@ -22,7 +22,7 @@ class Color:
         print(os.getcwd())
 
         self.scheme = scheme
-        self.scheme_path = "./Colors/thirdparty/iTerm2-Color-Schemes/schemes" \
+        self.scheme_path = "./View/Colors/thirdparty/iTerm2-Color-Schemes/schemes" \
                            "/" + self.scheme + ".itermcolors"
 
         self.tree = xml.parse(self.scheme_path)
