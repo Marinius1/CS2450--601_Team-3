@@ -4,7 +4,7 @@ import random
 class previous_month_pay:
 
     def __init__(self, filename):
-        self.filename = filename
+        self.filename = "employee_file.json"
         with open(filename) as file:
             self.data = json.load(file)
 
@@ -68,9 +68,15 @@ class upcoming_pay:
             self.data = json.load(file)
 
     def upcoming_salary(self):
+        lyst = []
         with open('this_pay_period.json') as infile:
             data1 = json.load(infile)
+
+        for l in data1:
+            lyst.append(l["Employee number"])
         for i in self.data:
+            if i["Employee number"] in lyst:
+                continue
             if i["Pay type"] == "Salary":
                 j = i["Pay amount"]
                 month_pay = round(float(j)/12, 2)
@@ -78,14 +84,21 @@ class upcoming_pay:
                 used_pto = pto // 3
                 unused_pto = pto - used_pto
                 data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
-                              "PTO total": unused_pto, "PTO used": used_pto})
+                                "PTO total": unused_pto, "PTO used": used_pto})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
     def upcoming_commission(self):
+        lyst = []
         with open('this_pay_period.json') as infile:
             data1 = json.load(infile)
+
+        for l in data1:
+            lyst.append(l["Employee number"])
         for i in self.data:
+            if i["Employee number"] in lyst:
+                continue
+
             if i["Pay type"] == "Commission":
                 p = i["Pay amount"]
                 t = random.randint(40, 160)
@@ -95,15 +108,20 @@ class upcoming_pay:
                 used_pto = pto//3
                 unused_pto = pto - used_pto
                 data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
-                              "PTO total": unused_pto, "PTO used": used_pto, "Sales": t})
+                                  "PTO total": unused_pto, "PTO used": used_pto, "Sales": t})
                 with open('this_pay_period.json', 'w') as outfile:
-                    json.dump(data1, outfile)
+                        json.dump(data1, outfile)
 
 
     def upcoming_hourly(self):
+        lyst = []
         with open('this_pay_period.json') as infile:
             data1 = json.load(infile)
+        for l in data1:
+            lyst.append(l["Employee number"])
         for i in self.data:
+            if i["Employee number"] in lyst:
+                continue
             if i["Pay type"] == "Hourly":
                 p = i["Pay amount"]
                 t = random.randint(40, 160)
@@ -113,7 +131,7 @@ class upcoming_pay:
                 used_pto = pto//3
                 unused_pto = pto - used_pto
                 data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
-                              "PTO total": unused_pto, "PTO used": used_pto, "Hours": t})
+                                  "PTO total": unused_pto, "PTO used": used_pto, "Hours": t})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
