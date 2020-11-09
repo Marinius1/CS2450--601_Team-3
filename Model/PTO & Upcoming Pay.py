@@ -77,7 +77,7 @@ class upcoming_pay:
                 pto = 80
                 used_pto = pto // 3
                 unused_pto = pto - used_pto
-                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO unused": unused_pto, "PTO used": used_pto})
+                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO total": unused_pto, "PTO used": used_pto})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
@@ -93,7 +93,7 @@ class upcoming_pay:
                 pto = float(t) / 8
                 used_pto = pto//3
                 unused_pto = pto - used_pto
-                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO unused": unused_pto, "PTO used": used_pto})
+                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO total": unused_pto, "PTO used": used_pto})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
@@ -110,7 +110,7 @@ class upcoming_pay:
                 pto = float(t)/8
                 used_pto = pto//3
                 unused_pto = pto - used_pto
-                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO unused": unused_pto, "PTO used": used_pto})
+                data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay), "PTO total": unused_pto, "PTO used": used_pto})
                 with open('this_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
 

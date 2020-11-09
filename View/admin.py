@@ -22,7 +22,9 @@ class Admin():
 
         # populate test data
         L = Controller.List_Maker()
+        P = Controller.PTO_Maker()
         self.people_example = L.data
+        self.PTO = P.PTO_lyst
         '''
             {
                 "name": "Helium Man",
@@ -320,8 +322,9 @@ class Admin():
         timewith = datetime.date.today() -  datetime.date(int(data["Start year"]), int(data["Start month"]), int(data["Start day"]))
         self.info_start_employment_data.config(text=str(int(timewith.days / 31)))
         print(datetime.date.today())
-        #self.set_default_text_field(self.field_pto_total, data["total_pto"])
-        #self.set_default_text_field(self.field_pto_used, data["used_pto"])
+        thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
+        self.set_default_text_field(self.field_pto_total, thing[0]["PTO unused"])
+        self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
 
         self.dropdown_pay_type["value"].set(data["Pay type"])
         self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
