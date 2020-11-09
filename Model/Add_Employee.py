@@ -4,13 +4,12 @@ Adds a new employee to the employee employee_file.json file.
 '''
 class add_employee:
 
-    def __init__(self, eNum, first, last, type, amount, address, state, city, social, phone, zip, h_s,
+    def __init__(self, eNum, first, last, type, amount, address, state, city, social, phone, zip,
                  bDay, bMonth, bYear, sDay, sMonth, sYear, role, pos, team):
         self.role = role
         self.pos = pos
         self.team = team
         self.eNum = eNum
-        self.h_s = h_s
         self.zip = zip
         self.first = first
         self.last = last
@@ -38,18 +37,18 @@ class add_employee:
                               "Address": self.address, "City": self.city, "State": self.state, "Social security": self.social,
                               "Birth day": self.bDay, "Birth month": self.bMonth, "Birth year": self.bYear, "Pay type": self.type,
                               "Pay amount": self.amount,"Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
-                              "Zip": self.zip, "Hours/sales": self.h_s, "Role": self.role, "Position": self.pos, "Team": self.team})
+                              "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team})
             else:
                 data.append({"Employee number": self.eNum,"First name": self.first, "Last name": self.last, "Phone": self.phone,
                               "Address": self.address, "City": self.city, "State": self.state, "Social security": self.social,
                               "Birth day": self.bDay, "Birth month": self.bMonth, "Birth year": self.bYear, "Pay type": self.type,
                               "Pay amount": self.amount,"Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
-                              "Zip": self.zip, "Hours/sales": self.h_s, "Role": self.role, "Position": self.pos, "Team": self.team})
+                              "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team})
 
 
         with open('./Model/employee_file.json', 'w') as outfile:
             json.dump(data1,outfile)
-
+'''
 employee_num = "646-1234567"
 first = "Isaac"
 last = "Dobbins"
@@ -67,11 +66,11 @@ start_day = "11"
 start_month = "11"
 start_year = "2011"
 zzip = "84058"
-hours_sales = "82"
 role = "Worker"
 teams = "Team 1"
 position = "Warehouse"
 a = add_employee(employee_num, first, last, pay_type, pay_amount, address,state, city, social,
-                 phone,zzip, hours_sales, birth_day, birth_month, birth_year,start_day,start_month,start_year, role, position, teams)
+                 phone, zzip, birth_day, birth_month, birth_year, start_day, start_month, start_year, role, position, teams)
 
 a.add_to_employee_file()
+'''

@@ -21,10 +21,10 @@ class Admin():
         """
 
         # populate test data
-        L = Controller.List_Maker()
-        P = Controller.PTO_Maker()
-        self.people_example = L.data
-        self.PTO = P.PTO_lyst
+        self.L = Controller.List_Maker()
+        self.P = Controller.PTO_Maker()
+        self.people_example = self.L.data
+        self.PTO = self.P.PTO_lyst
         '''
             {
                 "name": "Helium Man",
@@ -344,20 +344,21 @@ class Admin():
             "State": self.dropdown_state["value"].get(),
             "Zip": self.field_zip["entry"].get(),
             "Birth day": self.date_birthday["day"]["value"].get(),
-            "Birth month": self.date_birthday["month"]["value"].get(),
+            "Birth month": str(self.months.index(self.date_birthday["month"]["value"].get()) +1),
             "Birth year": self.date_birthday["year"]["value"].get(),
             "Phone": self.field_phone["entry"].get(),
             "Social security": self.field_ssn["entry"].get(),
+            "Position": self.field_job_title["entry"].get(),
             "Team": self.field_team["entry"].get(),
             "Role": self.field_role["entry"].get(),
             "Employee number": self.field_id["entry"].get(),
             "Start day": self.date_start_employment["day"]["value"].get(),
-            "Start month": self.date_start_employment["month"]["value"].get(),
+            "Start month": str(self.months.index(self.date_start_employment["month"]["value"].get()) + 1),
             "Start year": self.date_start_employment["year"]["value"].get(),
             "PTO total": self.field_pto_total["entry"].get(),
             "PTO used": self.field_pto_used["entry"].get(),
             "Pay type": self.dropdown_pay_type["value"].get(),
-            "Pay amount": self.field_pay_rate["entry"].get(),
+            "Pay amount": self.field_pay_rate["entry"].get()
         }
 
     def set_default_text_field(self, field, value):
@@ -398,8 +399,10 @@ class Admin():
         self.set_values(default_data)
 
     def save_employee(self):
-        data = self.get_values()
-        print(data)
+        datax = self.get_values()
+        Controller.Employee_Adder(datax)
+        self.L.reload
+        self.people_example = self.L.data
 
     def listbox_select(self, event):
         widget = event.widget
