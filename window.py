@@ -31,7 +31,6 @@ class Window():
         window class init function. Needs to create the window of course,
         and set up any window-level logic data pertinent to the View.
         """
-
         self.master = master
 
         self.width = self.master.winfo_screenwidth()

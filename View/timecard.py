@@ -72,9 +72,11 @@ class TimeCard:
         # hours worked
         self.summary_hours_worked = self.create_summary_frame(self.home_frame, 'Hours Worked', "39", 1, self.column_offset + 2)
 
-        # nex pay data
+        # nex pay date
+        self.summary_next_pay_date = self.create_summary_frame(self.home_frame, 'Next Pay Date', "11-15-20", 0, self.column_offset + 3)
 
         # pto available
+        self.summary_pto_available = self.create_summary_frame(self.home_frame, 'PTO Available', "34 Hours", 1, self.column_offset + 3)
 
 
     def yview(self, *args):
