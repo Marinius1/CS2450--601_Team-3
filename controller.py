@@ -29,12 +29,12 @@ class PTO_Maker:
             self.PTO_lyst = json.load(infile)
 
 class Employee_Adder:
-    def __init__(self, dict):
+    def __init__(self, dicton):
         self.data = []
-        self.data.append(dict["First name"], dict["Last name"],
-                         dict["Pay type"], dict["Pay amount"], dict["Birth date"],
-                         dict["Address"], dict["State"], dict["City"], dict["Social security"],
-                         dict["Phone"], dict["Start date"], dict["Zip"], dict["Hours/sales"])
+        self.data.append(dicton["First name"], dicton["Last name"],
+                         dicton["Pay type"], dicton["Pay amount"], dicton["Birth date"],
+                         dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
+                         dicton["Phone"], dicton["Start date"], dicton["Zip"], dicton["Hours/sales"])
 
             
 

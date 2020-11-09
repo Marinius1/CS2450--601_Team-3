@@ -323,7 +323,7 @@ class Admin():
         self.info_start_employment_data.config(text=str(int(timewith.days / 31)))
         print(datetime.date.today())
         thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
-        self.set_default_text_field(self.field_pto_total, thing[0]["PTO unused"])
+        self.set_default_text_field(self.field_pto_total, thing[0]["PTO total"])
         self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
 
         self.dropdown_pay_type["value"].set(data["Pay type"])
