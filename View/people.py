@@ -82,35 +82,43 @@ class People():
 
         print(text, "Ascending")
 
-        key_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
-        key_list.sort(reverse=True)
+        val_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
+        val_list.sort(reverse=True)
+
+        model_copy = self.model_example.data.copy()
 
         for i in self.table:
             i.delete(0, tk.END)
 
-        for i in key_list:
-            for j in self.model_example.data:
+        for i in val_list:
+            for j in model_copy:
                 if i == j[text]:
                     for k in range(len(self.headers_example)):
                         self.table[k].insert(tk.END, j[self.headers_example[k]])
+                    model_copy.pop(model_copy.index(j))
+
 
         self.header_button_actions[self.headers_example.index(text)] = self.sort_descnding
 
     def sort_descnding(self, text):
 
-        print(text, "Descending")
-        key_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
-        key_list.sort()
+        val_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
+        val_list.sort()
+
+        model_copy = self.model_example.data.copy()
 
         for i in self.table:
             i.delete(0, tk.END)
 
-        for i in key_list:
-            for j in self.model_example.data:
+        for i in val_list:
+            for j in model_copy:
                 if i == j[text]:
                     for k in range(len(self.headers_example)):
                         self.table[k].insert(tk.END, j[self.headers_example[k]])
-        self.header_button_actions[self.headers_example.index(text)] = self.sort_ascending
+                    model_copy.pop(model_copy.index(j))
+
+
+        self.header_button_actions[self.headers_example.index(text)] = self.sort_descnding
 
     def yview(self, *args):
 
