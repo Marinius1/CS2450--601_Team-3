@@ -4,7 +4,7 @@ Module contains all data agregation methods and classes for use between the mode
 import json
 import os
 import math
-from .Model.Add Employee import add_employee
+from .Model.Add_Employee import add_employee
 
 #Creates employee list for input into View
 
