@@ -54,5 +54,5 @@ class _sort:
 s = _sort("employee_file.json")
 
 
-for i in s.a_pay_type_sort():
-    print (i)
+for i in s.a_first_name_sort():
+    print (i["First name"], i["Last name"])
