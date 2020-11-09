@@ -30,7 +30,7 @@ class add_employee:
 
     def add_to_employee_file(self):
         data = []
-        with open('./Model/employee_file.json') as infile:
+        with open('employee_file.json') as infile:
             data1 = json.load(infile)
             if len(data1) > 0:
                 data1.append({"Employee number": self.eNum,"First name": self.first, "Last name": self.last, "Phone": self.phone,
@@ -46,7 +46,7 @@ class add_employee:
                               "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team})
 
 
-        with open('./Model/employee_file.json', 'w') as outfile:
+        with open('employee_file.json', 'w') as outfile:
             json.dump(data1,outfile)
 '''
 employee_num = "646-1234567"
@@ -69,6 +69,7 @@ zzip = "84058"
 role = "Worker"
 teams = "Team 1"
 position = "Warehouse"
+
 a = add_employee(employee_num, first, last, pay_type, pay_amount, address,state, city, social,
                  phone, zzip, birth_day, birth_month, birth_year, start_day, start_month, start_year, role, position, teams)
 
