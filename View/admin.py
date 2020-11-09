@@ -186,7 +186,62 @@ class Admin():
         self.field_address = self.create_text_entry(self.info_identity_frame, 'Address', '', 2)
         self.field_city = self.create_text_entry(self.info_identity_frame, 'City', '', 3)
 
-        self.states = ['NV', 'UT', 'AZ']
+        self.states = ["Alaska",
+                  "Alabama",
+                  "Arkansas",
+                  "American Samoa",
+                  "Arizona",
+                  "California",
+                  "Colorado",
+                  "Connecticut",
+                  "District of Columbia",
+                  "Delaware",
+                  "Florida",
+                  "Georgia",
+                  "Guam",
+                  "Hawaii",
+                  "Iowa",
+                  "Idaho",
+                  "Illinois",
+                  "Indiana",
+                  "Kansas",
+                  "Kentucky",
+                  "Louisiana",
+                  "Massachusetts",
+                  "Maryland",
+                  "Maine",
+                  "Michigan",
+                  "Minnesota",
+                  "Missouri",
+                  "Mississippi",
+                  "Montana",
+                  "North Carolina",
+                  " North Dakota",
+                  "Nebraska",
+                  "New Hampshire",
+                  "New Jersey",
+                  "New Mexico",
+                  "Nevada",
+                  "New York",
+                  "Ohio",
+                  "Oklahoma",
+                  "Oregon",
+                  "Pennsylvania",
+                  "Puerto Rico",
+                  "Rhode Island",
+                  "South Carolina",
+                  "South Dakota",
+                  "Tennessee",
+                  "Texas",
+                  "Utah",
+                  "Virginia",
+                  "Virgin Islands",
+                  "Vermont",
+                  "Washington",
+                  "Wisconsin",
+                  "West Virginia",
+                  "Wyoming"]
+
         self.dropdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
 
         self.field_zip = self.create_text_entry(self.info_identity_frame, "Zip", '', 4, 2)
@@ -226,7 +281,6 @@ class Admin():
 
     def set_values(self, data):
         self.field_name.configure(text=data["First name"] + " " + data["Last name"])
-
         self.set_default_text_field(self.field_first_name, data["First name"])
         self.set_default_text_field(self.field_last_name, data["Last name"])
         self.set_default_text_field(self.field_address, data["Address"])
@@ -234,8 +288,7 @@ class Admin():
 
         # state
         self.dropdown_state["value"].set(data["State"])
-        self.set_default_text_field(self.field_zip, "data['zip']")
-
+        self.set_default_text_field(self.field_zip, data["Zip"])
         # birthday
         self.date_birthday["day"]["value"].set(data["Birth date"][0] + data["Birth date"][1])
         self.date_birthday["month"]["value"].set(data["Birth date"][3] + data["Birth date"][4])
