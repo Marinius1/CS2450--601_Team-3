@@ -27,4 +27,7 @@ class delete_employee:
         with open('Model/employee_file.json', 'w') as outfile:
             json.dump(self.data, outfile)
 
+    def clean_files(self):
+        pass
+
 
