@@ -28,6 +28,7 @@ class Admin():
                 "address": "123 Sesame St.",
                 "city": "Las Vegas",
                 "state": "NV",
+                "zip": "84062",
                 "birthday": {
                     "day": "12",
                     "month": "March",
@@ -57,6 +58,7 @@ class Admin():
                 "address": "Google Rd.",
                 "city": "Sacramento",
                 "state": "NV",
+                "zip": "84062",
                 "birthday": {
                     "day": "12",
                     "month": "March",
@@ -184,6 +186,9 @@ class Admin():
 
         self.states = ['NV', 'UT', 'AZ']
         self.dropdown_state = self.create_dropdown_menu(self.info_identity_frame, 'State', self.states, 4)
+
+        self.field_zip = self.create_text_entry(self.info_identity_frame, "Zip", '', 4, 2)
+
         self.field_phone = self.create_text_entry(self.info_identity_frame, 'Phone Number', '', 5)
 
         self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth', background=self.colors.background)
@@ -227,6 +232,7 @@ class Admin():
 
         # state
         self.dropdown_state["value"].set(data["state"])
+        self.set_default_text_field(self.field_zip, data["zip"])
 
         # birthday
         self.date_birthday["day"]["value"].set(data["birthday"]["day"])
@@ -260,6 +266,7 @@ class Admin():
             "address": self.field_address["entry"].get(),
             "city": self.field_city["entry"].get(),
             "state": self.dropdown_state["value"].get(),
+            "zip": self.field_zip["entry"].get(),
             "birthday": {
                 "day": self.date_birthday["day"]["value"].get(),
                 "month": self.date_birthday["month"]["value"].get(),
@@ -320,10 +327,10 @@ class Admin():
 
             self.people_listbox.itemconfigure(i, background=background)
 
-    def create_text_entry(self, master, label, placeholder, row, column_start=0):
+    def create_text_entry(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
         label = ttk.Label(master, text=label)
         label.configure(background=self.colors.background)
-        label.grid(row=row, column=column_start, sticky=tk.E)
+        label.grid(row=row, column=column_start, sticky=sticky)
 
         entry = ttk.Entry(master)
         entry.insert(0, placeholder)
@@ -364,7 +371,7 @@ class Admin():
             "November",
             "December",
         ]
-        months_dropdown= self.create_dropdown_menu(frame, 'Month', months, 0, 2)
+        months_dropdown = self.create_dropdown_menu(frame, 'Month', months, 0, 2)
 
         years = [i for i in range(1950, 2005)]
         years_dropdown= self.create_dropdown_menu(frame, 'Year', years, 0, 4)

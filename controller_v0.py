@@ -1,12 +1,30 @@
-from View.window import Window
-import tkinter as tk
+
+
+
+
+class list_maker:
+
+    def __init__(self):
+        self.data = []
+
+        with open('Model\data.json') as infile:
+            self.data = json.load(infile)
+
+    def reload(self):
+        with open('Model\data.json') as infile:
+            self.data = json.load(infile)
+            print(self.data)
+
+
+            
+
+
+
 
 """ Controller module.
 used to control information between the module and View.
 Working "Main" module."""
 
-"""Open View start window"""
-"""Call authenticator"""
 
 """Control user input from View to authenticator, 
 when response from authenticator module
@@ -135,7 +153,12 @@ on load event
     send available document choices to View
 """
 
-if __name__=="__main__":
-    root = tk.Tk()
-    window = Window(root)
-    root.mainloop()
+
+   admin_data = list_maker()
+   print(admin_data.data)
+   Admin.people_example = admin_data.data
+   print(Admin.people_example)
+   root = tk.Tk()
+   window = Window(root)
+   root.mainloop()
+   

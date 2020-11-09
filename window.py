@@ -8,12 +8,14 @@ On application init
 import tkinter as tk
 from tkinter import ttk
 
-from .Colors.color import Color
-from .menu import Menu
-from .navbar import NavBar
-from .homepage import Homepage
-from .people import People
-from .admin import Admin
+from View.Colors.color import Color
+from View.navbar import NavBar
+from View.homepage import Homepage
+from View.people import People
+from View.admin import Admin
+from View.login import Login
+from View.timecard import TimeCard
+from View.payroll import PayRoll
 
 
 class Window():
@@ -51,10 +53,10 @@ class Window():
 
         self.master.columnconfigure(0, weight=1)
 
-        self.nav = NavBar(self.master, name="nav", theme=theme, window=self)
+        self.nav = None
+        self.page_home = Login(self.master, theme=theme, window=self)
+        # self.nav = NavBar(self.master, name="nav", theme=theme, window=self)
         # self.page_home = Homepage(self.master, name="homepage", theme=theme)
-        # self.page_people = People(self.master, name="people", theme=theme)
-        self.page_home = Homepage(self.master, name="Home", theme=theme)
 
     @property
     def size(self):
@@ -71,6 +73,9 @@ class Window():
         """manual window sizing event that can be called"""
         self.master.geometry(str(self.width) + "x" + str(self.height))
 
+    def create_nav(self):
+        self.nav = NavBar(self.master, name="nav", theme=self.theme, window=self)
+
     def home(self):
         self.page_home = Homepage(self.master, name="Home", theme=self.theme)
 
@@ -80,3 +85,13 @@ class Window():
     def admin(self):
         self.page_home = Admin(self.master, name="people", theme=self.theme)
 
+    def timecard(self):
+        self.page_home = TimeCard(self.master, theme=self.theme)
+
+    def pay(self):
+        self.page_home = PayRoll(self.master, theme=self.theme)
+
+if __name__=="__main__":
+    root = tk.Tk()
+    window = Window(root)
+    root.mainloop()
