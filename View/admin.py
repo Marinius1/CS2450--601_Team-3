@@ -25,6 +25,7 @@ class Admin():
         self.P = Controller.PTO_Maker()
         self.people_example = self.L.data
         self.PTO = self.P.PTO_lyst
+        self.click_buffer = []
         '''
             {
                 "name": "Helium Man",
@@ -197,7 +198,7 @@ class Admin():
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
         self.people_delete = ttk.Button(self.right_frame, text="Delete",
-                                     style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.delete_employee))
+                                     style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.del_employee))
         self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
         self.info_identity_frame = tk.Frame(self.right_frame)
@@ -411,9 +412,20 @@ class Admin():
         field["entry"].delete(0, 'end')
         field["entry"].insert(0, value)
 
-    def delete_employee(self):
-        print("delete employee method")
+    def del_employee(self):
+        datay = self.get_values()
 
+        emp_identifier = {
+            "Employee number": datay["Employee number"],
+            "First name": datay["First name"],
+            "Last name": datay["Last name"]
+        }
+        Controller.Employee_Deleter(emp_identifier)
+        self.L.reload()
+        self.people_example = self.L.data
+
+        self.clear_listbox()
+        self.populate_people(self.people_example)
 
     def add_employee(self):
 
@@ -456,12 +468,19 @@ class Admin():
         self.populate_people(self.people_example)
 
     def edit_employee(self):
-        pass
+        datax = self.get_values()
+        Controller.Employee_Editer(self.click_buffer, datax)
+        self.L.reload()
+        self.people_example = self.L.data
+
+        self.clear_listbox()
+        self.populate_people(self.people_example)
 
     def listbox_select(self, event, lyst):
         widget = event.widget
         selection = widget.curselection()
         value = widget.get(tk.ACTIVE)
+        self.click_buffer = self.get_values()
         # print("selection:", selection[0], ": '%s'" % value)
 
         self.set_values(lyst[selection[0]])
