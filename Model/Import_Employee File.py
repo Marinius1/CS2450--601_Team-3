@@ -103,13 +103,18 @@ class getData:
         self.file = file
 
     def load_employees(self):
-        day = random.randint(1,28)
-        month = random.randint(1, 12)
-        year = random.randint(1965, 2004)
         with open(self.file) as empFile:
             item = empFile.readlines()
             item.pop(0)
             for emp in item:
+                day1 = random.randint(1, 28)
+                month1 = random.randint(1, 12)
+                year1 = random.randint(1965, 2004)
+
+                day2 = random.randint(1, 28)
+                month2 = random.randint(1, 12)
+                year2 = random.randint(1965, 2004)
+
                 i = emp.rstrip().split(',')
                 empId = i[0]
                 firstName = i[1]
@@ -136,8 +141,8 @@ class getData:
                     hours_sales = random.randint(0, 160)
 
                 i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification),
-                                      str(address), str(state),str(city), str(empZip), str(day), str(month), str(year), str(social()),
-                                      str(phone()),str(day), str(month), str(year),str(hours_sales),str(role()),str(position()),str(teams()))
+                                      str(address), str(state),str(city), str(empZip), str(day1), str(month1), str(year1), str(social()),
+                                      str(phone()),str(day2), str(month2), str(year2),str(hours_sales),str(role()),str(position()),str(teams()))
                 i.add_to_employee_file()
 
 

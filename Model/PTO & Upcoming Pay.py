@@ -115,3 +115,7 @@ class upcoming_pay:
                     json.dump(data1, outfile)
 
 
+a = upcoming_pay("employee_file.json")
+a.upcoming_salary()
+a.upcoming_commission()
+a.upcoming_hourly()
