@@ -75,20 +75,42 @@ class People():
         button_text = event.widget.cget('text')
         button_index = self.headers_example.index(button_text)
 
-        self.header_button_actions[button_index](button_text, button_index)
+        self.header_button_actions[button_index](button_text)
 
 
-    def sort_ascending(self, text, index):
+    def sort_ascending(self, text):
 
         print(text, "Ascending")
 
-        self.header_button_actions[index] = self.sort_descnding
+        key_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
+        key_list.sort(reverse=True)
 
-    def sort_descnding(self, text, index):
+        for i in self.table:
+            i.delete(0, tk.END)
+
+        for i in key_list:
+            for j in self.model_example.data:
+                if i == j[text]:
+                    for k in range(len(self.headers_example)):
+                        self.table[k].insert(tk.END, j[self.headers_example[k]])
+
+        self.header_button_actions[self.headers_example.index(text)] = self.sort_descnding
+
+    def sort_descnding(self, text):
 
         print(text, "Descending")
+        key_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
+        key_list.sort()
 
-        self.header_button_actions[index] = self.sort_ascending
+        for i in self.table:
+            i.delete(0, tk.END)
+
+        for i in key_list:
+            for j in self.model_example.data:
+                if i == j[text]:
+                    for k in range(len(self.headers_example)):
+                        self.table[k].insert(tk.END, j[self.headers_example[k]])
+        self.header_button_actions[self.headers_example.index(text)] = self.sort_ascending
 
     def yview(self, *args):
 
