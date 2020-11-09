@@ -21,9 +21,9 @@ class add_employee:
 
     def add_to_employee_file(self):
         data = []
-        with open('employee_file.json') as infile:
+        with open('./Model/employee_file.json') as infile:
             data1 = json.load(infile)
-            f = open('employee_number.txt', 'r')
+            f = open('./Model/employee_number.txt', 'r')
             line = f.readlines()
             num = line.pop(0)
             num = num.rstrip('\n')
@@ -38,7 +38,7 @@ class add_employee:
                              "Birth date": self.birthday, "Pay type": self.type,
                              "Pay amount": self.amount, "Start date": self.start, "Zip": self.zip, "Hours/sales": self.hours_sales})
 
-            with open("employee_number.txt", "w") as f1:
+            with open("./Model/employee_number.txt", "w") as f1:
                 for _ in line:
                     j = line.pop(0)
                     f1.write(j)
