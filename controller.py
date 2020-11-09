@@ -13,11 +13,11 @@ class List_Maker:
     def __init__(self):
         self.data = []
 
-        with open('Model\data.json') as infile:
+        with open('Model\employee_file.json') as infile:
             self.data = json.load(infile)
 
     def reload(self):
-        with open('Model\data.json') as infile:
+        with open('Model\employee_file.json') as infile:
             self.data = json.load(infile)
             print(self.data)
 

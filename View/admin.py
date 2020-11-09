@@ -237,9 +237,9 @@ class Admin():
         self.set_default_text_field(self.field_zip, "data['zip']")
 
         # birthday
-        self.date_birthday["day"]["value"].set(data["Birth date"][0-1])
-        self.date_birthday["month"]["value"].set(data["Birth date"][3-4])
-        self.date_birthday["year"]["value"].set(data["Birth date"][6-7])
+        self.date_birthday["day"]["value"].set(data["Birth date"][0] + data["Birth date"][1])
+        self.date_birthday["month"]["value"].set(data["Birth date"][3] + data["Birth date"][4])
+        self.date_birthday["year"]["value"].set(data["Birth date"][6] + data["Birth date"][7])
 
         self.set_default_text_field(self.field_phone, data["Phone"])
         self.set_default_text_field(self.field_ssn, data["Social security"])
