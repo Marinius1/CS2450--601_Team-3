@@ -8,6 +8,7 @@ On application init
 import tkinter as tk
 from tkinter import ttk
 from controller import *
+from View.menu import Menu
 from View.Colors.color import Color
 from View.navbar import NavBar
 from View.homepage import Homepage
@@ -51,6 +52,8 @@ class Window():
         self.master.rowconfigure(1, weight=1)
 
         self.master.columnconfigure(0, weight=1)
+
+        self.menu = Menu(self.master)
 
         self.nav = None
         self.page_home = Login(self.master, theme=theme, window=self)

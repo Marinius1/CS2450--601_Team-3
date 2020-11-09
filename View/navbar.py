@@ -33,10 +33,7 @@ class NavBar():
         self.nav_frame.grid(row=0, column=0, sticky=tk.EW)
 
 
-        menubar = tk.Menu(self.master)
-        self.fileMenu = tk.Menu(self.master, tearoff=0)
-        self.fileMenu.add_command(label="Exit")
-        menubar.add_cascade(label="File", menu=self.fileMenu)
+
 
         # self.toolbar = tk.Frame(self.master)
         # self.toolbar.rowconfigure(0, weight=1)
@@ -58,6 +55,19 @@ class NavBar():
                              focusthickness=3,
                              focuscolor=self.colors.a10
                              )
+        self.style.map('Help.TButton', background=[('active', self.colors.a8)],
+                       foreground=[('active', self.colors.background)])
+        self.style.configure('Help.TButton',
+                             background=self.colors.a7,
+                             foreground=self.colors.background,
+                             borderwidth=0,
+                             bordercolor=self.colors.a0,
+                             focusthickness=3,
+                             focuscolor=self.colors.a10
+                             )
+
+        self.style.map('Help.TLabel')
+        self.style.configure('Help.TLabel', font=('Roboto', 24))
         
         self.nav_home = ttk.Button(self.nav_frame, text="Home", command=window.home)
         self.nav_home.configure(style='Nav.TButton')
@@ -78,6 +88,66 @@ class NavBar():
         self.nav_admin = ttk.Button(self.nav_frame, text="Admin", command=window.admin)
         self.nav_admin.configure(style='Nav.TButton')
         self.nav_admin.grid(row=0, column=5, sticky=tk.NS)
+
+        # help button
+        self.nav_frame.columnconfigure(6, weight=1)
+        self.button_help = ttk.Button(self.nav_frame, text="Help", style='Help.TButton', command=self.help)
+        self.button_help.grid(row=0, column = 6, sticky=tk.E, padx=(0, 25))
+
+    def help(self):
+        self.create_help_modal("This is the help modal.")
+
+    def create_help_modal(self, message):
+        top = tk.Toplevel(self.master)
+
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        width = screen_width / 2
+        height = screen_height / 2
+
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
+
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
+
+        top.title("Help")
+
+        top.rowconfigure(0, uniform='row', weight=1)
+        top.rowconfigure(1, uniform='row', weight=6)
+        top.rowconfigure(2, uniform='row', weight=1)
+        top.columnconfigure(0, weight=1)
+
+        frames = []
+        for i in range(3):
+            frame = tk.Frame(top, background=self.colors.background)
+            frame.grid(row=i, sticky=tk.NSEW)
+            frame.rowconfigure(0, weight=1)
+            frame.columnconfigure(0, weight=1)
+            frames.append(frame)
+
+        top_message = ttk.Label(frames[0], text=message, background=self.colors.background, style='Help.TLabel')
+        top_message.grid(row=0)
+
+        text_scrollbar = tk.Scrollbar(frames[1])
+        text_scrollbar.grid(row=0, column=1, sticky=tk.NS)
+
+        with open("./View/lorem.txt", 'r') as f:
+            text = f.read()
+
+        text_help = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set)
+        text_help.insert(tk.END, text)
+
+        text_help.bind("<Key>", lambda x: "break")
+
+        text_help.grid(row=0, sticky=tk.EW, padx=(10, 0))
+
+        text_scrollbar.configure(command=text_help.yview)
+
+        button_close = ttk.Button(frames[2], text="Close", style='Header.TButton', command=top.destroy)
+        button_close.grid(row=0, sticky=tk.E, padx=(0, 25))
 
 '''
 @abstract method implementation

@@ -20,21 +20,24 @@ class List_Maker:
     def reload(self):
         with open('Model/employee_file.json') as infile:
             self.data = json.load(infile)
-            print(self.data)
 
 class PTO_Maker:
     def __init__(self):
         self.PTO_lyst = []
 
-        #with open('Model/')
+        with open('Model/this_pay_period.json') as infile:
+            self.PTO_lyst = json.load(infile)
+
 
 class Employee_Adder:
-    def __init__(self, dict):
-        self.data = []
-        self.data.append(dict["First name"], dict["Last name"],
-                         dict["Pay type"], dict["Pay amount"], dict["Birth date"],
-                         dict["Address"], dict["State"], dict["City"], dict["Social security"],
-                         dict["Phone"], dict["Start date"], dict["Zip"], dict["Hours/sales"])
+    def __init__(self, dicton):
+        add = add_employee(dicton["Employee number"], dicton["First name"],
+                         dicton["Last name"], dicton["Pay type"], dicton["Pay amount"],
+                         dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
+                         dicton["Phone"], dicton["Zip"], dicton["Birth day"],
+                         dicton["Birth month"], dicton["Birth year"], dicton["Start day"], dicton["Start month"],
+                         dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
+        add.add_to_employee_file()
 
             
 
