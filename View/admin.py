@@ -323,6 +323,10 @@ class Admin():
         self.info_start_employment_data.config(text=str(int(timewith.days / 31)))
         print(datetime.date.today())
         thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
+
+        if len(thing) == 0:
+            thing.append(data)
+
         self.set_default_text_field(self.field_pto_total, thing[0]["PTO total"])
         self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
 
@@ -330,7 +334,7 @@ class Admin():
         self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
 
 
-        #Get data from save button
+    #Get data from save button
     def get_values(self):
         return {
             "First name": self.field_first_name["entry"].get(),
@@ -339,25 +343,19 @@ class Admin():
             "City": self.field_city["entry"].get(),
             "State": self.dropdown_state["value"].get(),
             "Zip": self.field_zip["entry"].get(),
- #           "Birth date": {
- #               "day": self.date_birthday["day"]["value"].get(),
- #               "month": self.date_birthday["month"]["value"].get(),
- #               "year": self.date_birthday["year"]["value"].get(),
- #           },
+            "Birth day": self.date_birthday["day"]["value"].get(),
+            "Birth month": self.date_birthday["month"]["value"].get(),
+            "Birth year": self.date_birthday["year"]["value"].get(),
             "Phone": self.field_phone["entry"].get(),
             "Social security": self.field_ssn["entry"].get(),
- #           "job_title": self.field_job_title["entry"].get(),
- #           "team": self.field_team["entry"].get(),
- #           "role": self.field_role["entry"].get(),
+            "Team": self.field_team["entry"].get(),
+            "Role": self.field_role["entry"].get(),
             "Employee number": self.field_id["entry"].get(),
- #           "start_employment": {
- #               "day": self.date_start_employment["day"]["value"].get(),
- #               "month": self.date_start_employment["month"]["value"].get(),
- #               "year": self.date_start_employment["year"]["value"].get(),
- #           },
- #           "total_time": self.info_start_employment_data.cget("text"),
- #           "total_pto": self.field_pto_total["entry"].get(),
- #           "used_pto": self.field_pto_used["entry"].get(),
+            "Start day": self.date_start_employment["day"]["value"].get(),
+            "Start month": self.date_start_employment["month"]["value"].get(),
+            "Start year": self.date_start_employment["year"]["value"].get(),
+            "PTO total": self.field_pto_total["entry"].get(),
+            "PTO used": self.field_pto_used["entry"].get(),
             "Pay type": self.dropdown_pay_type["value"].get(),
             "Pay amount": self.field_pay_rate["entry"].get(),
         }
