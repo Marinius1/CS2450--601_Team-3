@@ -42,9 +42,8 @@ class Employee_Adder:
 
 class Employee_Deleter:
     def __init__(self, dicton):
-        add = choice(dicton["Employee number"], dicton["First name"],
+        del = delete_employee.delete_this(dicton["Employee number"], dicton["First name"],
                          dicton["Last name"]
-        add.add_to_employee_file()
             
 
 
