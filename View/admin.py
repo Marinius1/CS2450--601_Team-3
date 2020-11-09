@@ -190,8 +190,10 @@ class Admin():
         self.field_name.configure(font=('Roboto', 48))
         self.field_name.grid(row=0, column=0, sticky=tk.NW, padx=25, pady=15)
 
+        self.save_action = self.save_employee
+
         self.people_save = ttk.Button(self.right_frame, text="Save",
-                                         style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_employee))
+                                         style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_action))
         self.people_save.grid(row=0, column=2, sticky=tk.E)
 
         self.people_delete = ttk.Button(self.right_frame, text="Delete",
@@ -412,6 +414,7 @@ class Admin():
     def delete_employee(self):
         print("delete employee method")
 
+
     def add_employee(self):
 
         default_data = {
@@ -441,6 +444,7 @@ class Admin():
         }
 
         self.set_values(default_data)
+        self.save_action = self.save_employee
 
     def save_employee(self):
         datax = self.get_values()
@@ -451,6 +455,9 @@ class Admin():
         self.clear_listbox()
         self.populate_people(self.people_example)
 
+    def edit_employee(self):
+        pass
+
     def listbox_select(self, event, lyst):
         widget = event.widget
         selection = widget.curselection()
@@ -458,6 +465,7 @@ class Admin():
         # print("selection:", selection[0], ": '%s'" % value)
 
         self.set_values(lyst[selection[0]])
+        self.save_action = self.edit_employee
 
     def clear_listbox(self):
         self.people_listbox.delete(0, tk.END)
@@ -551,3 +559,4 @@ class Admin():
 
         cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
         cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
+
