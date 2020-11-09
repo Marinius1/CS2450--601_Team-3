@@ -59,7 +59,7 @@ class _sort:
         d = sorted(self.data, key=lambda i: i["Pay amount"], reverse=True)
         return d
 
-s = _sort("data.json")
+s = _sort("employee_file.json")
 
 
 for i in s.a_pay_type_sort():
