@@ -228,7 +228,7 @@ class PayRoll():
 
             self.home_frame.columnconfigure(i, weight=0)
 
-            grid_frame = tk.Frame(self.home_frame, background='red')
+            grid_frame = tk.Frame(self.home_frame, background=self.colors.background)
             grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NS)
 
             grid_frame.rowconfigure(0, weight=0)
