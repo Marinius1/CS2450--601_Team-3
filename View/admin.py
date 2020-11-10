@@ -201,7 +201,7 @@ class Admin():
                                      style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.del_employee))
         self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
-        self.info_identity_frame = tk.Frame(self.right_frame)
+        self.info_identity_frame = tk.Frame(self.right_frame, background=self.colors.background)
         self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
 
         self.info_identity_frame.rowconfigure(0, weight=1)
