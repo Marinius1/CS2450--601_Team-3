@@ -48,7 +48,7 @@ class add_employee:
 
         with open('Model/employee_file.json', 'w') as outfile:
             json.dump(data1,outfile)
-
+'''
 employee_num = "77-1234567"
 first = "Bilbo"
 last = "Baggins"
@@ -74,3 +74,4 @@ a = add_employee(employee_num, first, last, pay_type, pay_amount, address,state,
                  phone, zzip, birth_day, birth_month, birth_year, start_day, start_month, start_year, role, position, teams)
 
 a.add_to_employee_file()
+'''
