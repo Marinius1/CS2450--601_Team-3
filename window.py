@@ -53,7 +53,7 @@ class Window():
 
         self.master.columnconfigure(0, weight=1)
 
-        self.menu = Menu(self.master)
+        self.menu = Menu(self.master, self)
 
         self.nav = None
         self.page_home = Login(self.master, theme=theme, window=self)
@@ -77,6 +77,11 @@ class Window():
 
     def create_nav(self):
         self.nav = NavBar(self.master, name="nav", theme=self.theme, window=self)
+
+    def login(self):
+        self.nav.nav_frame.grid_forget()
+        self.nav = None
+        self.page_home = Login(self.master, name="Login", theme=self.theme)
 
     def home(self):
         self.page_home = Homepage(self.master, name="Home", theme=self.theme)
