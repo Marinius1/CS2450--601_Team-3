@@ -306,9 +306,22 @@ class Admin():
         self.info_start_employment_data = tk.Label(self.info_identity_frame, text='')
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
+        self.label_pay_type = tk.Label(self.info_identity_frame, text="Pay type")
+        self.label_pay_type.grid(row=15, column=0, sticky=tk.E)
 
         self.pay_types = ["Salary", "Hourly", "Commission"]
-        self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
+        # self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
+        self.value_pay_type = tk.StringVar()
+
+        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1]);
+        self.radio_hourly.grid(row=15, column=1)
+
+        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0]);
+        self.radio_salary.grid(row=15, column=2)
+
+        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2]);
+        self.radio_commission.grid(row=15, column=3)
+
         self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
 
         self.set_values(self.people_example[0])
@@ -514,7 +527,7 @@ class Admin():
 
         value = tk.StringVar(self.master)
         value.set(options[0])
-        menu = ttk.OptionMenu(master, value, options[0], *options)
+        menu = ttk.Combobox(master, textvariable=value, value=options[0], values=options, height=3)
         menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
         return {"label": label, "menu": menu, "value": value}
 

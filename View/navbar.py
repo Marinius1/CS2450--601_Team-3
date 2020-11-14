@@ -32,8 +32,7 @@ class NavBar():
         self.nav_frame.configure(background=self.colors.background, border=3, relief=tk.RIDGE)
         self.nav_frame.grid(row=0, column=0, sticky=tk.EW)
 
-
-
+        self.help_content = "./View/help_files/lorem.txt"
 
         # self.toolbar = tk.Frame(self.master)
         # self.toolbar.rowconfigure(0, weight=1)
@@ -97,6 +96,9 @@ class NavBar():
     def help(self):
         self.create_help_modal("This is the help modal.")
 
+    def set_help_content(self, path):
+        self.help_content = path
+
     def create_help_modal(self, message):
         top = tk.Toplevel(self.master)
 
@@ -134,7 +136,7 @@ class NavBar():
         text_scrollbar = tk.Scrollbar(frames[1])
         text_scrollbar.grid(row=0, column=1, sticky=tk.NS)
 
-        with open("./View/lorem.txt", 'r') as f:
+        with open(self.help_content, 'r') as f:
             text = f.read()
 
         text_help = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set)
