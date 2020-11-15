@@ -23,9 +23,7 @@ class Admin():
 
         # populate test data
         self.L = Controller.List_Maker()
-        self.P = Controller.PTO_Maker()
         self.people_example = self.L.data
-        self.PTO = self.P.PTO_lyst
         self.click_buffer = []
       
         self.master = master
@@ -333,10 +331,10 @@ class Admin():
         timewith = datetime.date.today() -  datetime.date(int(data["Start year"]), int(data["Start month"]), int(data["Start day"]))
         self.info_start_employment_data.config(text=str(int(timewith.days / 31)))
         print(datetime.date.today())
-        thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
+        #thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
 
-        if len(thing) == 0:
-            thing.append(data)
+        #if len(thing) == 0:
+            #thing.append(data)
 
    
 
