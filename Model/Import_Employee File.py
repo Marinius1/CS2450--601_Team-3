@@ -1,6 +1,9 @@
 import json
 import random
 
+'''
+Imports a list of employees from csv file
+'''
 EMPLOYEE_FILE = "employees.csv"
 lyst = []
 

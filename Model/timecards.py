@@ -1,5 +1,8 @@
 import json
 
+'''
+IGNORE
+'''
 
 class timeCards:
 
@@ -8,9 +11,22 @@ class timeCards:
         with open(filename) as file:
             self.data = json.load(file)
 
+    def employee_list_time_cards(self):
+        with open("timecards.json") as f1:
+            data2 = json.load(f1)
+        with open("employee_file.json") as f:
+            data1 = json.load(f)
+
+            for i in data1:
+                data2.append({"Employee number": i["Employee number"], "Hours/sales": i["Hours/sales"]})
+
+        with open("timecards.json", "w") as f2:
+            json.dump(data2, f2)
+
+
     def create_time_card(self, salary, sales_hours):
         lyst = []
-        with open("timecards.json") as f:
+        with open("timecards.json", "w") as f:
             data1 = json.load(f)
             if len(data1) == 0:
                 data1 = []
@@ -50,5 +66,7 @@ class timeCards:
                     json.dump(data1, outfile)
 
 
+
 t = timeCards("employee_file.json")
+t.employee_list_time_cards()
 #t.edit_time_card("47-2771794", 50)
