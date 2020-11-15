@@ -337,7 +337,8 @@ class PayRoll():
                     else:
                         background = self.colors.a7
                     entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=lyst2[i][j])
-                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
+                    entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW, width=200)
 
                 self.data_columns.append(canvas)
             else:
@@ -356,6 +357,7 @@ class PayRoll():
                     else:
                         background = self.colors.a7
                     entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'))
+                    entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     entry.insert(tk.END, lyst2[i][j])
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
 
