@@ -89,6 +89,12 @@ class PayRoll():
         # self.entry_search.bind("<Button-1>", lambda x: "break")
         self.entry_search.grid(row=0, column=0)
 
+        self.search_options = ["First name", "Last name", "Employee number"]
+        self.search_option_value = tk.StringVar(self.master)
+        self.search_option_value.set(self.search_options[0])
+        self.dropdown_search = ttk.OptionMenu(self.nav_frame, self.search_option_value, self.search_options[0], *self.search_options)
+        self.dropdown_search.grid(row=0, column=1, sticky=tk.W)
+
         self.pay_periods = ['1', '2', '3']
         self.period_select = self.create_dropdown_menu(self.nav_frame, "Period", self.pay_periods, 0, 2)
 
@@ -128,8 +134,7 @@ class PayRoll():
         self.right_frame = tk.Frame(self.home_frame, background=self.colors.background)
         self.right_frame.grid(row=0, rowspan=2, column=1, sticky=tk.NSEW)
 
-        self.right_frame.rowconfigure(0, weight=0)
-        self.right_frame.rowconfigure((1,2), weight=1)
+        self.right_frame.rowconfigure((0,1,2), weight=0)
         self.right_frame.columnconfigure(0, weight=1)
 
         self.right_buttons = tk.Frame(self.right_frame, background=self.colors.background)
@@ -140,19 +145,41 @@ class PayRoll():
         self.right_buttons.columnconfigure(0, weight=1)
 
         self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton')
-        self.save_button.grid(row=0, column=0, sticky=tk.NE, padx=10, pady=10)
+        self.save_button.grid(row=0, column=1, sticky=tk.NE, padx=10, pady=10)
+
+        self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=self.create_pay_period)
+        self.new_period_button.grid(row=0, column=0, sticky=tk.NW, padx=10, pady=10)
 
         self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_file)
-        self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10)
+        self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_file)
-        self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10)
+        self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.metrics_frame = tk.Frame(self.right_frame, background=self.colors.background)
-        self.metrics_frame.grid(row=1, column=0, sticky=tk.NSEW)
+        self.metrics_frame.grid(row=1, column=0, sticky=tk.EW)
 
-        self.metrics_label = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24))
-        self.metrics_label.grid()
+        self.metrics_frame.rowconfigure((0,1,2,3,4), weight=0)
+        self.metrics_frame.columnconfigure(0, weight=1)
+
+        self.metrics_title = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24, 'bold'))
+        self.metrics_title.grid(row=0, sticky=tk.W)
+
+        self.expected_payout_label = tk.Label(self.metrics_frame, text="Expected payout: ", font=('Roboto', 22))
+        self.expected_payout_label.grid(row=1, sticky=tk.W)
+
+        self.expected_payout_data = tk.StringVar()
+        self.expected_payout_data.set("$10,000")
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.expected_payout_data, font=('Roboto', 22))
+        self.expected_payout_display.grid(row=1, column=1, sticky=tk.W)
+
+        self.last_payout_label= tk.Label(self.metrics_frame, text="Last payout:", font=('Roboto', 22))
+        self.last_payout_label.grid(row=2, sticky=tk.W)
+
+        self.last_payout_data = tk.StringVar()
+        self.last_payout_data.set("$10,000")
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.last_payout_data, font=('Roboto', 22))
+        self.expected_payout_display.grid(row=2, column=1, sticky=tk.W)
 
         self.pay_frame = tk.Frame(self.right_frame, background=self.colors.background)
         self.pay_frame.grid(row=2, column=0, sticky=tk.EW)
@@ -162,6 +189,8 @@ class PayRoll():
 
         self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton')
         self.pay_button.grid(row=0, column=0, sticky=tk.EW+tk.N, padx=10, pady=10)
+
+        self.get_table_data()
 
         #
         #
@@ -285,6 +314,9 @@ class PayRoll():
         # self.button_pay = ttk.Button(self.home_frame, text="Pay", style='Pay.TButton', command=self.pay)
         # self.button_pay.grid(row=1, column=len(self.data_columns) + 2, columnspan=2, sticky=tk.N+tk.EW, padx=10, pady=10)
 
+    def create_pay_period(self):
+        pass
+
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
         label = ttk.Label(master, text=label)
@@ -325,6 +357,21 @@ class PayRoll():
                     if k != i:
                         self.data_columns[k].yview_moveto(args[0])
                     self.scrollbar.set(*args)
+
+    def get_table_data(self):
+
+        staged_data = []
+
+        for i in self.data_columns:
+            staged_data.append(i.get(0, tk.END))
+
+        data = list(zip(*staged_data))
+        print(data)
+
+    def set_table_data(self, data):
+
+        pass
+
 
     def create_table(self, master, lyst1, lyst2):
 
