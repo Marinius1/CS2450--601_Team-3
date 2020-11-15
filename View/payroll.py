@@ -190,7 +190,7 @@ class PayRoll():
         self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton')
         self.pay_button.grid(row=0, column=0, sticky=tk.EW+tk.N, padx=10, pady=10)
 
-        self.get_table_data()
+        # self.get_table_data()
 
       
     def create_pay_period(self):
@@ -228,6 +228,8 @@ class PayRoll():
         for i in range(len(self.data_columns)):
             data_columns_copy = self.data_columns.copy()
             data_columns_copy.pop(i)
+
+
 
             sync_check = [self.data_columns[i].yview() == j.yview() for j in data_columns_copy]
 
@@ -305,38 +307,65 @@ class PayRoll():
             master.columnconfigure(i, weight=0)
 
             grid_frame = tk.Frame(master, background=self.colors.background)
-            grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NS)
+            grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NSEW)
 
             grid_frame.rowconfigure(0, weight=0)
             grid_frame.rowconfigure(1, weight=1)
+            grid_frame.columnconfigure(0, weight=1)
 
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
             button.grid(row=0, column=0, sticky=tk.EW)
 
-            column = tk.Listbox(grid_frame,
-                                foreground=self.colors.foreground,
-                                selectforeground=self.colors.background,
-                                background=self.colors.background,
-                                relief=tk.FLAT,
-                                yscrollcommand=self.sync_yview,
-                                font=('Roboto', 16),
-                                width=19)
-            column.grid(row=1, column=0, sticky=tk.NS)
+            if i != 4:
+
+                column = tk.Listbox(grid_frame,
+                                    foreground=self.colors.foreground,
+                                    selectforeground=self.colors.background,
+                                    background=self.colors.background,
+                                    relief=tk.FLAT,
+                                    yscrollcommand=self.sync_yview,
+                                    font=('Roboto', 16),
+                                    width=19)
+                column.grid(row=1, column=0, sticky=tk.NS)
 
 
-            for j in range(len(lyst2[i])):
-                column.insert(tk.END, lyst2[i][j])
+                for j in range(len(lyst2[i])):
+                    column.insert(tk.END, lyst2[i][j])
 
-                if j % 2 == 0:
-                    background = self.colors.background
-                else:
-                    background = self.colors.a7
+                    if j % 2 == 0:
+                        background = self.colors.background
+                    else:
+                        background = self.colors.a7
 
-                column.itemconfigure(j, background=background)
+                    column.itemconfigure(j, background=background)
+
+                self.data_columns.append(column)
+            else:
+                column = tk.Frame(grid_frame, bd=5, width=200, background='red', relief=tk.SUNKEN)
+                column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
+                column.rowconfigure(0, weight=1)
+                column.columnconfigure(0, weight=1)
+
+                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+                canvas.grid(row=0, column=0, sticky=tk.NSEW)
+
+                for j in range(len(lyst2[i])):
+                    if j % 2 == 0:
+                        background = self.colors.background
+                    else:
+                        background = self.colors.a7
+                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'))
+                    entry.insert(tk.END, lyst2[i][j])
+                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
+
+                self.data_columns.append(canvas)
+
+
+
+
             # column.configure(height=len(lyst2[i]))
 
-            self.data_columns.append(column)
 
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
