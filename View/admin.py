@@ -26,69 +26,7 @@ class Admin():
         self.people_example = self.L.data
         self.PTO = self.P.PTO_lyst
         self.click_buffer = []
-        '''
-            {
-                "name": "Helium Man",
-                "first_name": "Helium",
-                "last_name": "Man",
-                "address": "123 Sesame St.",
-                "city": "Las Vegas",
-                "state": "NV",
-                "zip": "84062",
-                "birthday": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "phone": "123-456-7890",
-                "ssn": "111-111-1111",
-                "job_title": "Peasant",
-                "team": "Executive",
-                "role": "Top Dawg",
-                "id": "12345",
-                "start_employment": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "total_time": "52",
-                "total_pto": "32",
-                "used_pto": "7",
-                "pay_type": "Salary",
-                "pay_rate": "$32,000"
-            },
-            {
-                "name": "Carbon Man",
-                "first_name": "Carbon",
-                "last_name": "Man",
-                "address": "Google Rd.",
-                "city": "Sacramento",
-                "state": "NV",
-                "zip": "84062",
-                "birthday": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "phone": "123-456-7890",
-                "ssn": "111-111-1111",
-                "job_title": "Peasant",
-                "team": "Executive",
-                "role": "Top Dawg",
-                "id": "56789",
-                "start_employment": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "total_time": "52",
-                "total_pto": "32",
-                "used_pto": "7",
-                "pay_type": "Hourly",
-                "pay_rate": "$32,000"
-            }
-        ]
-            '''
+      
         self.master = master
 
         self.name = name
