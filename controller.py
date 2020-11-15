@@ -1,6 +1,8 @@
 """
 Module contains all data agregation methods and classes for use between the model and view.
 """
+
+
 import json
 import os
 import math

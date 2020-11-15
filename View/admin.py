@@ -20,76 +20,18 @@ class Admin():
         bounds.
         """
 
+
         # populate test data
         self.L = Controller.List_Maker()
         self.P = Controller.PTO_Maker()
         self.people_example = self.L.data
         self.PTO = self.P.PTO_lyst
         self.click_buffer = []
-        '''
-            {
-                "name": "Helium Man",
-                "first_name": "Helium",
-                "last_name": "Man",
-                "address": "123 Sesame St.",
-                "city": "Las Vegas",
-                "state": "NV",
-                "zip": "84062",
-                "birthday": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "phone": "123-456-7890",
-                "ssn": "111-111-1111",
-                "job_title": "Peasant",
-                "team": "Executive",
-                "role": "Top Dawg",
-                "id": "12345",
-                "start_employment": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "total_time": "52",
-                "total_pto": "32",
-                "used_pto": "7",
-                "pay_type": "Salary",
-                "pay_rate": "$32,000"
-            },
-            {
-                "name": "Carbon Man",
-                "first_name": "Carbon",
-                "last_name": "Man",
-                "address": "Google Rd.",
-                "city": "Sacramento",
-                "state": "NV",
-                "zip": "84062",
-                "birthday": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "phone": "123-456-7890",
-                "ssn": "111-111-1111",
-                "job_title": "Peasant",
-                "team": "Executive",
-                "role": "Top Dawg",
-                "id": "56789",
-                "start_employment": {
-                    "day": "12",
-                    "month": "March",
-                    "year": "1999"
-                },
-                "total_time": "52",
-                "total_pto": "32",
-                "used_pto": "7",
-                "pay_type": "Hourly",
-                "pay_rate": "$32,000"
-            }
-        ]
-            '''
+      
         self.master = master
+
+        self.screen_width = self.master.winfo_screenwidth()
+        self.screen_height = self.master.winfo_screenheight()
 
         self.name = name
         self.colors = Color(theme).colors
@@ -201,15 +143,18 @@ class Admin():
                                      style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Delete?", self.del_employee))
         self.people_delete.grid(row=0, column=3, sticky=tk.E, padx=(15, 25))
 
-        self.info_identity_frame = tk.Frame(self.right_frame)
+        self.info_identity_frame = tk.Frame(self.right_frame, background=self.colors.background)
         self.info_identity_frame.grid(row=1, sticky=tk.EW, padx=25)
 
         self.info_identity_frame.rowconfigure(0, weight=1)
 
-        self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', '', 0)
-        self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', '', 1)
+        self.section_info = tk.Label(self.info_identity_frame, text="Employee Info", font=('Roboto', 20), foreground=self.colors.background, background=self.colors.a7)
+        self.section_info.grid(row=0, column=0, pady=self.screen_height * 0.025, columnspan=5, sticky=tk.EW)
+
+        self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', '', 1)
+        self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', '', 1, 2)
         self.field_address = self.create_text_entry(self.info_identity_frame, 'Address', '', 2)
-        self.field_city = self.create_text_entry(self.info_identity_frame, 'City', '', 3)
+        self.field_city = self.create_text_entry(self.info_identity_frame, 'City', '', 2, 2)
 
         self.states = ["Alaska",
                   "Alabama",
@@ -284,17 +229,24 @@ class Admin():
         self.field_zip = self.create_text_entry(self.info_identity_frame, "Zip", '', 4, 2)
 
         self.field_phone = self.create_text_entry(self.info_identity_frame, 'Phone Number', '', 5)
+        self.field_phone['label'].grid(pady=self.screen_height * 0.025)
+        self.field_phone['entry'].grid(pady=self.screen_height * 0.025)
 
         self.birthday_label = ttk.Label(self.info_identity_frame, text='Date of Birth', background=self.colors.background)
         self.birthday_label.grid(row=6, column=0, sticky=tk.E)
         self.date_birthday = self.create_date_selector(self.info_identity_frame, 6)
 
         self.field_ssn = self.create_text_entry(self.info_identity_frame, 'SSN', '', 7)
+        self.field_ssn['label'].grid(pady=(0, self.screen_height * 0.025))
+        self.field_ssn['entry'].grid(pady=(0, self.screen_height * 0.025))
 
-        self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 8)
-        self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9)
+        self.section_job_info = tk.Label(self.info_identity_frame, text="Job Info", font=('Roboto', 20), foreground=self.colors.background, background=self.colors.a7)
+        self.section_job_info.grid(row=8, column=0, pady=self.screen_height * 0.025, columnspan=5, sticky=tk.EW)
+
+        self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 9)
+        self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9, 2)
         self.field_role = self.create_text_entry(self.info_identity_frame, 'Role', '', 10)
-        self.field_id = self.create_text_entry(self.info_identity_frame, 'Employee ID', '', 11)
+        self.field_id = self.create_text_entry(self.info_identity_frame, 'Employee ID', '', 10, 2)
 
         self.start_employment_label = ttk.Label(self.info_identity_frame, text='Start Date', background=self.colors.background)
         self.start_employment_label.grid(row=12, column=0, sticky=tk.E)
@@ -306,12 +258,22 @@ class Admin():
         self.info_start_employment_data = tk.Label(self.info_identity_frame, text='')
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
-
-        self.field_pto_total = self.create_text_entry(self.info_identity_frame, 'Total PTO', '', 13)
-        self.field_pto_used = self.create_text_entry(self.info_identity_frame, 'Used PTO', '', 14)
+        self.label_pay_type = tk.Label(self.info_identity_frame, text="Pay type")
+        self.label_pay_type.grid(row=15, column=0, sticky=tk.E)
 
         self.pay_types = ["Salary", "Hourly", "Commission"]
-        self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
+        # self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
+        self.value_pay_type = tk.StringVar()
+
+        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1]);
+        self.radio_hourly.grid(row=15, column=1)
+
+        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0]);
+        self.radio_salary.grid(row=15, column=2)
+
+        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2]);
+        self.radio_commission.grid(row=15, column=3)
+
         self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
 
         self.set_values(self.people_example[0])
@@ -374,10 +336,10 @@ class Admin():
         if len(thing) == 0:
             thing.append(data)
 
-        self.set_default_text_field(self.field_pto_total, thing[0]["PTO total"])
-        self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
+   
 
-        self.dropdown_pay_type["value"].set(data["Pay type"])
+        # self.dropdown_pay_type["value"].set(data["Pay type"])
+        self.value_pay_type.set(data["Pay type"])
         self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
 
 
@@ -402,9 +364,8 @@ class Admin():
             "Start day": self.date_start_employment["day"]["value"].get(),
             "Start month": str(self.months.index(self.date_start_employment["month"]["value"].get()) + 1),
             "Start year": self.date_start_employment["year"]["value"].get(),
-            "PTO total": self.field_pto_total["entry"].get(),
-            "PTO used": self.field_pto_used["entry"].get(),
-            "Pay type": self.dropdown_pay_type["value"].get(),
+            # "Pay type": self.dropdown_pay_type["value"].get(),
+            "Pay type": self.value_pay_type.get(),
             "Pay amount": self.field_pay_rate["entry"].get()
         }
 
@@ -451,8 +412,6 @@ class Admin():
             "Role": "Example Role",
             "Position": "Example",
             "Team": "Example Team",
-            "PTO total": "0",
-            "PTO used": "0",
         }
 
         self.set_values(default_data)
@@ -522,7 +481,7 @@ class Admin():
 
         value = tk.StringVar(self.master)
         value.set(options[0])
-        menu = ttk.OptionMenu(master, value, options[0], *options)
+        menu = ttk.Combobox(master, textvariable=value, value=options[0], values=options, height=3)
         menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
         return {"label": label, "menu": menu, "value": value}
 

@@ -53,7 +53,7 @@ class Window():
 
         self.master.columnconfigure(0, weight=1)
 
-        self.menu = Menu(self.master)
+        self.menu = Menu(self.master, self)
 
         self.nav = None
         self.page_home = Login(self.master, theme=theme, window=self)
@@ -78,19 +78,29 @@ class Window():
     def create_nav(self):
         self.nav = NavBar(self.master, name="nav", theme=self.theme, window=self)
 
+    def login(self):
+        self.nav.nav_frame.grid_forget()
+        self.nav = None
+        self.page_home = Login(self.master, theme=self.theme, window=self)
+
     def home(self):
+        self.nav.help_content = "./View/help_files/home.txt"
         self.page_home = Homepage(self.master, name="Home", theme=self.theme)
 
     def people(self):
+        self.nav.help_content = "./View/help_files/people.txt"
         self.page_home = People(self.master, name="people", theme=self.theme)
 
     def admin(self):
+        self.nav.help_content = "./View/help_files/admin.txt"
         self.page_home = Admin(self.master, name="admin", theme=self.theme)
 
     def timecard(self):
+        self.nav.help_content = "./View/help_files/timecard.txt"
         self.page_home = TimeCard(self.master, theme=self.theme)
 
     def pay(self):
+        self.nav.help_content = "./View/help_files/payroll.txt"
         self.page_home = PayRoll(self.master, theme=self.theme)
 
 if __name__=="__main__":

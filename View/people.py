@@ -69,6 +69,7 @@ class People():
         self.header_button_actions = [self.sort_ascending for i in range(len(self.headers_example))]
 
         self.table = self.create_table(self.headers_example, self.model_example.data)
+        self.sort_descnding("First name")
         self.scrollbar.configure(command=self.yview)
 
     def button_action(self, event):
@@ -83,18 +84,28 @@ class People():
         print(text, "Ascending")
 
         val_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
-        val_list.sort(reverse=True)
+        val_list.sort()
 
         model_copy = self.model_example.data.copy()
 
         for i in self.table:
             i.delete(0, tk.END)
 
+        count = 0
         for i in val_list:
             for j in model_copy:
                 if i == j[text]:
                     for k in range(len(self.headers_example)):
                         self.table[k].insert(tk.END, j[self.headers_example[k]])
+
+                        if count % 2 == 0:
+                            background = self.colors.background
+                        else:
+                            background = self.colors.a7
+
+                        self.table[k].itemconfigure(tk.END, background=background)
+                    count += 1
+
                     model_copy.pop(model_copy.index(j))
 
 
@@ -103,22 +114,32 @@ class People():
     def sort_descnding(self, text):
 
         val_list = [self.model_example.data[i][text] for i in range(len(self.model_example.data))]
-        val_list.sort()
+        val_list.sort(reverse=True)
 
         model_copy = self.model_example.data.copy()
 
         for i in self.table:
             i.delete(0, tk.END)
 
+        count = 0
         for i in val_list:
             for j in model_copy:
                 if i == j[text]:
                     for k in range(len(self.headers_example)):
                         self.table[k].insert(tk.END, j[self.headers_example[k]])
+
+                        if count % 2 == 0:
+                            background = self.colors.background
+                        else:
+                            background = self.colors.a7
+
+                        self.table[k].itemconfigure(tk.END, background=background)
+                    count += 1
+
                     model_copy.pop(model_copy.index(j))
 
 
-        self.header_button_actions[self.headers_example.index(text)] = self.sort_descnding
+        self.header_button_actions[self.headers_example.index(text)] = self.sort_ascending
 
     def yview(self, *args):
 
@@ -152,7 +173,7 @@ class People():
 
             self.home_frame.columnconfigure(i, weight=0)
 
-            grid_frame = tk.Frame(self.home_frame, background='red')
+            grid_frame = tk.Frame(self.home_frame, background=self.colors.background)
             grid_frame.grid(row=0, column=i, sticky=tk.NS)
 
             grid_frame.rowconfigure(0, weight=0)
@@ -174,18 +195,13 @@ class People():
 
             table.append(column)
 
-            for j in range(len(lyst2[i])):
-                column.insert(tk.END, lyst2[j][lyst1[i]])
 
-                if j % 2 == 0:
-                    background = self.colors.background
-                else:
-                    background = self.colors.a7
 
-                column.itemconfigure(j, background=background)
+
             # column.configure(height=len(lyst2[i]))
 
             self.data_columns.append(column)
+
 
         self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, sticky=tk.N+tk.S+tk.E)

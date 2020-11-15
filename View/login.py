@@ -69,7 +69,7 @@ class Login():
         count = 0
         for x in range(3):
             for y in range(3):
-                debug_frame = tk.Frame(self.home_frame)
+                debug_frame = tk.Frame(self.home_frame, background=self.colors.background)
                 debug_frame.grid(row=x, column=y, sticky=tk.NSEW)
                 self.frames_login[str((x,y))] = debug_frame
                 count += 1
@@ -90,7 +90,7 @@ class Login():
         self.screen_width = self.master.winfo_screenwidth()
         self.screen_height = self.master.winfo_screenheight()
 
-        self.frame_login_data = tk.Frame(self.frames_login[str((1,1))])
+        self.frame_login_data = tk.Frame(self.frames_login[str((1,1))], background=self.colors.background)
         self.frame_login_data.grid(row=1, column=0, sticky=tk.NSEW, pady=(self.screen_height / 20, 0))
         self.frame_login_data.columnconfigure((0,1), weight=1)
 
