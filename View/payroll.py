@@ -1,6 +1,7 @@
 
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 from pynput.mouse import Listener
 
 from .Colors.color import Color
@@ -120,7 +121,7 @@ class PayRoll():
         self.is_first_draw = True
         self.listener = None
 
-        self.master.bind('<Configure>', lambda event: self.resize_column(event=event))
+        # self.master.bind('<Configure>', lambda event: self.resize_column(event=event))
 
         self.scrollbar.configure(command=self.yview)
 
@@ -141,10 +142,10 @@ class PayRoll():
         self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton')
         self.save_button.grid(row=0, column=0, sticky=tk.NE, padx=10, pady=10)
 
-        self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton')
+        self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_file)
         self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10)
 
-        self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton')
+        self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_file)
         self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10)
 
         self.metrics_frame = tk.Frame(self.right_frame, background=self.colors.background)
@@ -349,7 +350,8 @@ class PayRoll():
                                 background=self.colors.background,
                                 relief=tk.FLAT,
                                 yscrollcommand=self.sync_yview,
-                                width=10)
+                                font=('Roboto', 16),
+                                width=19)
             column.grid(row=1, column=0, sticky=tk.NS)
 
 
@@ -422,7 +424,7 @@ class PayRoll():
             width = self.home_frame.winfo_width()
             # print(int(width))
             for i in self.data_columns:
-                i.configure(font=('Roboto', int(width * .01)))
+                i.configure(font=('Roboto', int(width * .01)), width=int(width * .01))
 
             self.can_listen = False
             self.listener.stop()
@@ -430,4 +432,9 @@ class PayRoll():
 
             return False
 
-
+    def import_file(self):
+        file_name = filedialog.askopenfilename(initialdir="/",
+                                               title="Select file",
+                                               filetypes=(("CSV Files", "*.csv"),)
+                                               )
+        print(file_name)
