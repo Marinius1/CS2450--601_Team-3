@@ -218,7 +218,9 @@ class PayRoll():
     def yview(self, *args):
 
         for i in self.data_columns:
-            i.yview(*args)
+
+            if args[0] == 'moveto':
+                i.yview(args[0], float(args[1]))
 
             pos = i.yview()
             self.scrollbar.set(pos[0], pos[1])
@@ -319,30 +321,27 @@ class PayRoll():
 
             if i != 4:
 
-                column = tk.Listbox(grid_frame,
-                                    foreground=self.colors.foreground,
-                                    selectforeground=self.colors.background,
-                                    background=self.colors.background,
-                                    relief=tk.FLAT,
-                                    yscrollcommand=self.sync_yview,
-                                    font=('Roboto', 16),
-                                    width=19)
+                column = tk.Frame(grid_frame, bd=0, width=200, background='red', relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
+                column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
+                column.rowconfigure(0, weight=1)
+                column.columnconfigure(0, weight=1)
 
+                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+                canvas.grid(row=0, column=0, sticky=tk.NSEW)
+                canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
                 for j in range(len(lyst2[i])):
-                    column.insert(tk.END, lyst2[i][j])
-
                     if j % 2 == 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=lyst2[i][j])
+                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
 
-                    column.itemconfigure(j, background=background)
-
-                self.data_columns.append(column)
+                self.data_columns.append(canvas)
             else:
-                column = tk.Frame(grid_frame, bd=5, width=200, background='red', relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, width=200, background='red', relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
@@ -350,6 +349,7 @@ class PayRoll():
                 canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
+                canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                 for j in range(len(lyst2[i])):
                     if j % 2 == 0:
                         background = self.colors.background
@@ -414,7 +414,13 @@ class PayRoll():
             # print('first event')
             self.is_first_draw = False
 
-
+    def on_mousewheel(self, event, canvas):
+        shift = (event.state & 0x1) != 0
+        scroll = -1 if event.delta > 0 else 1
+        if shift:
+            canvas.xview_scroll(scroll, "units")
+        else:
+            canvas.yview_scroll(scroll, "units")
 
     def on_click(self, x, y, button, pressed):
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
