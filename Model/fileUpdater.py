@@ -106,7 +106,7 @@ class upcoming_pay:
                 json.dump(x, y)
 
 
-a = upcoming_pay("employee_file.json")
-a.upcoming_hourly()
-a.upcoming_commission()
-a.upcoming_salary()
+#a = upcoming_pay("employee_file.json")
+#a.upcoming_hourly()
+#a.upcoming_commission()
+#a.upcoming_salary()

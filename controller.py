@@ -8,6 +8,8 @@ import os
 import math
 from Model.Add_Employee import add_employee
 from Model.Delete_Employee import delete_employee
+import Model.newFile
+import Model.updateHours
 
 
 #Creates employee list for input into View
