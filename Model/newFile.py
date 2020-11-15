@@ -74,15 +74,33 @@ class new:
             for i in self.data:
                 if i["Pay type"] == "Hourly":
                     z = float(i["Pay amount"]) * float(i["Hours/sales"])
+                    zz = float(i["Hours/sales"]) // 8 #Hourly accrue 1 hour per 8 hours worked.
+                    zzz = zz * (1/3)#random amount time used
                 elif i["Pay type"] == "Commission":
                     z = float(i["Pay amount"]) * float(i["Hours/sales"])
+                    zz = z // 100 #Commission earn an 1 for every $100
+                    zzz = zz * (1 / 3)  # random amount time used
                 elif i["Pay type"] == "Salary":
                     z = float(i["Pay amount"]) / 12
-                d1.append({"Employee number": i["Employee number"], "Expected pay": str(z)})
+                    zz = 25
+                    zzz = zz * (1 / 3)  # random amount time used
+                d1.append({"Employee number": i["Employee number"], "Total pay": str(z), "PTO used": str(zzz), "PTO total":str(zz)})
             with open(x1, 'w') as f:
                 json.dump(d1, f)
 
+    def edit_PTO(self, employeeId, hours_used, hours_remain, file):
+        with open(file) as f:
+            data1 = json.load(f)
+        for i in data1:
+            if i["Employee number"] == employeeId:
+                z = data1.index(i)
+                data1.pop(z)
+                data1.append({"Employee number": i["Employee number"], "Total pay": i["Total pay"],
+                              "PTO total": hours_remain, "PTO used": hours_used})
+                with open('cur_period.json', 'w') as outfile:
+                    json.dump(data1, outfile)
 '''
 n = new("employee_file.json")
 n.stupid_function()
+n.edit_PTO(Employee ID, Hours used, hours total, file to change)
 '''
