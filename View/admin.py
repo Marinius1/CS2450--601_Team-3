@@ -60,6 +60,7 @@ class Admin():
                              bordercolor=self.colors.a0,
                              focusthickness=3,
                              focuscolor=self.colors.a10,
+                             font=('Roboto', 16)
                              )
 
         self.home_frame = tk.Frame(self.master)
@@ -116,7 +117,8 @@ class Admin():
                                          foreground=self.colors.foreground,
                                          selectforeground=self.colors.background,
                                          background=self.colors.background,
-                                         relief=tk.FLAT)
+                                         relief=tk.FLAT,
+                                         font=('Roboto', 16))
         self.people_listbox.grid(row=2, column=0, columnspan=2, sticky=tk.NSEW)
 
         self.populate_people(self.people_example)
@@ -258,20 +260,20 @@ class Admin():
         self.info_start_employment_data = tk.Label(self.info_identity_frame, text='')
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
-        self.label_pay_type = tk.Label(self.info_identity_frame, text="Pay type")
+        self.label_pay_type = tk.Label(self.info_identity_frame, text="Pay type", background=self.colors.background)
         self.label_pay_type.grid(row=15, column=0, sticky=tk.E)
 
         self.pay_types = ["Salary", "Hourly", "Commission"]
         # self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
         self.value_pay_type = tk.StringVar()
 
-        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1]);
+        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1], background=self.colors.background);
         self.radio_hourly.grid(row=15, column=1)
 
-        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0]);
+        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0], background=self.colors.background);
         self.radio_salary.grid(row=15, column=2)
 
-        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2]);
+        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2], background=self.colors.background);
         self.radio_commission.grid(row=15, column=3)
 
         self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)

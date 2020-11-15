@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from pynput.mouse import Listener
+import time
 
 from .Colors.color import Color
 
@@ -108,6 +109,8 @@ class PayRoll():
 
         self.canvas_columns = []
         self.data_columns = []
+
+        self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
         headers_example = ['First name', 'Last name', 'Employee ID', 'Pay Type', 'Hours Worked', 'Expected Pay', 'PTO accumulated', 'PTO  used']
 
@@ -217,22 +220,21 @@ class PayRoll():
         print(amount)
 
     def yview(self, *args):
+        if time.time() - self.scroll_poll >= .1:
+            self.scroll_poll = time.time()
+            for i in self.canvas_columns:
 
-        for i in self.canvas_columns:
+                if args[0] == 'moveto':
+                    i.yview(args[0], float(args[1]))
 
-            if args[0] == 'moveto':
-                i.yview(args[0], float(args[1]))
-
-            pos = i.yview()
-            self.scrollbar.set(pos[0], pos[1])
+                pos = i.yview()
+                self.scrollbar.set(pos[0], pos[1])
 
     def sync_yview(self, *args):
 
         for i in range(len(self.canvas_columns)):
             data_columns_copy = self.canvas_columns.copy()
             data_columns_copy.pop(i)
-
-
 
             sync_check = [self.canvas_columns[i].yview() == j.yview() for j in data_columns_copy]
 
@@ -326,7 +328,7 @@ class PayRoll():
 
             if i != 4:
 
-                column = tk.Frame(grid_frame, bd=0, width=200, background='red', relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
@@ -349,7 +351,7 @@ class PayRoll():
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
             else:
-                column = tk.Frame(grid_frame, bd=0, width=200, background='red', relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
