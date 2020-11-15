@@ -106,6 +106,7 @@ class PayRoll():
         self.table_frame.rowconfigure(1, weight=1)
         self.table_frame.columnconfigure(0, weight=1)
 
+        self.canvas_columns = []
         self.data_columns = []
         self.scrollbar = tk.Scrollbar(self.table_frame)
         headers_example = ['First name', 'Last name', 'Employee ID', 'Pay Type', 'Hours Worked', 'Expected Pay', 'PTO accumulated', 'PTO  used']
@@ -217,7 +218,7 @@ class PayRoll():
 
     def yview(self, *args):
 
-        for i in self.data_columns:
+        for i in self.canvas_columns:
 
             if args[0] == 'moveto':
                 i.yview(args[0], float(args[1]))
@@ -227,18 +228,18 @@ class PayRoll():
 
     def sync_yview(self, *args):
 
-        for i in range(len(self.data_columns)):
-            data_columns_copy = self.data_columns.copy()
+        for i in range(len(self.canvas_columns)):
+            data_columns_copy = self.canvas_columns.copy()
             data_columns_copy.pop(i)
 
 
 
-            sync_check = [self.data_columns[i].yview() == j.yview() for j in data_columns_copy]
+            sync_check = [self.canvas_columns[i].yview() == j.yview() for j in data_columns_copy]
 
             if not all(sync_check):
-                for k in range(len(self.data_columns)):
+                for k in range(len(self.canvas_columns)):
                     if k != i:
-                        self.data_columns[k].yview_moveto(args[0])
+                        self.canvas_columns[k].yview_moveto(args[0])
                     self.scrollbar.set(*args)
 
     def get_table_data(self):
@@ -246,7 +247,15 @@ class PayRoll():
         staged_data = []
 
         for i in self.data_columns:
-            staged_data.append(i.get(0, tk.END))
+            temp_data = []
+            for j in i:
+                try:
+                    temp_data.append(j.get())
+                except:
+                    temp_data.append(j.cget('text'))
+
+            staged_data.append(temp_data)
+
 
         rotated_data = list(zip(*staged_data))
 
@@ -264,8 +273,8 @@ class PayRoll():
                 "PTO used": i[7]
             })
 
-        print(data)
-        self.set_table_data(data)
+        # print(data)
+        # self.set_table_data(data)
         return data
 
 
@@ -288,16 +297,12 @@ class PayRoll():
         new_data = list(zip(*staged_data))
 
         for i in self.data_columns:
-            i.delete(0, tk.END)
             for j in range(len(new_data[self.data_columns.index(i)])):
-                i.insert(tk.END, new_data[self.data_columns.index(i)][j])
-
-                if j % 2 == 0:
-                    background = self.colors.background
-                else:
-                    background = self.colors.a7
-
-                i.itemconfigure(j, background=background)
+                try:
+                    i[self.data_columns.index(i)].delete(0, tk.END)
+                    i[self.data_columns.index(i)].insert(tk.END, new_data[self.data_columns.index(i)][j])
+                except:
+                    i[self.data_columns.index(i)].configure(text=new_data[self.data_columns.index(i)][j])
 
 
     def create_table(self, master, lyst1, lyst2):
@@ -331,6 +336,7 @@ class PayRoll():
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
+                data_items = []
                 for j in range(len(lyst2[i])):
                     if j % 2 == 0:
                         background = self.colors.background
@@ -339,8 +345,9 @@ class PayRoll():
                     entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=lyst2[i][j])
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW, width=200)
-
-                self.data_columns.append(canvas)
+                    data_items.append(entry)
+                self.data_columns.append(data_items)
+                self.canvas_columns.append(canvas)
             else:
                 column = tk.Frame(grid_frame, bd=0, width=200, background='red', relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
@@ -351,6 +358,8 @@ class PayRoll():
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+
+                data_items = []
                 for j in range(len(lyst2[i])):
                     if j % 2 == 0:
                         background = self.colors.background
@@ -360,8 +369,10 @@ class PayRoll():
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     entry.insert(tk.END, lyst2[i][j])
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
+                    data_items.append(entry)
 
-                self.data_columns.append(canvas)
+                self.data_columns.append(data_items)
+                self.canvas_columns.append(canvas)
 
 
 
@@ -430,7 +441,7 @@ class PayRoll():
             # Stop listener
             width = self.home_frame.winfo_width()
             # print(int(width))
-            for i in self.data_columns:
+            for i in self.canvas_columns:
                 i.configure(font=('Roboto', int(width * .01)), width=int(width * .01))
 
             self.can_listen = False
