@@ -62,10 +62,7 @@ class Employee_Editer:
                          dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
         add.add_to_employee_file()
 
-            
-
-
-
+       
 
 """ Controller module.
 used to control information between the module and View.

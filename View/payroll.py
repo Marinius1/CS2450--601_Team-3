@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from pynput.mouse import Listener
+import controller as Controller
 
 from .Colors.color import Color
 
@@ -192,7 +193,7 @@ class PayRoll():
 
         self.get_table_data()
 
-      
+####      
     def create_pay_period(self):
         pass
 
@@ -246,7 +247,7 @@ class PayRoll():
 
         data = list(zip(*staged_data))
         print(data)
-
+####
     def set_table_data(self, data):
 
         pass
