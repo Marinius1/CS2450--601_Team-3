@@ -365,12 +365,56 @@ class PayRoll():
         for i in self.data_columns:
             staged_data.append(i.get(0, tk.END))
 
-        data = list(zip(*staged_data))
+        rotated_data = list(zip(*staged_data))
+
+        data = []
+
+        for i in rotated_data:
+            data.append({
+                "First name": i[0],
+                "Last name": i[1],
+                "Employee number": i[2],
+                "Pay type": i[3],
+                "Hours worked": i[4],
+                "Pay amount": i[5],
+                "PTO total": i[6],
+                "PTO used": i[7]
+            })
+
         print(data)
+        self.set_table_data(data)
+        return data
+
 
     def set_table_data(self, data):
 
-        pass
+        staged_data = []
+
+        for i in data:
+            tmp_list = []
+            tmp_list.append(i["First name"])
+            tmp_list.append(i["Last name"])
+            tmp_list.append(i["Employee number"])
+            tmp_list.append(i["Pay type"])
+            tmp_list.append(i["Hours worked"])
+            tmp_list.append(i["Pay amount"])
+            tmp_list.append(i["PTO total"])
+            tmp_list.append(i["PTO used"])
+            staged_data.append(tmp_list)
+
+        new_data = list(zip(*staged_data))
+
+        for i in self.data_columns:
+            i.delete(0, tk.END)
+            for j in range(len(new_data[self.data_columns.index(i)])):
+                i.insert(tk.END, new_data[self.data_columns.index(i)][j])
+
+                if j % 2 == 0:
+                    background = self.colors.background
+                else:
+                    background = self.colors.a7
+
+                i.itemconfigure(j, background=background)
 
 
     def create_table(self, master, lyst1, lyst2):
