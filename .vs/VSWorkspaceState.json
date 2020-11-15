@@ -3,9 +3,8 @@
     "",
     "\\Model",
     "\\View",
-    "\\View\\Colors",
-    "\\View\\Colors\\thirdparty\\iTerm2-Color-Schemes"
+    "\\View\\Colors"
   ],
-  "SelectedNode": "\\Model\\PTO & Upcoming Pay.py",
+  "SelectedNode": "\\window.py",
   "PreviewInSolutionExplorer": true
 }
