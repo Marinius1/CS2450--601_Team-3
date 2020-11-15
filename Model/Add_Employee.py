@@ -1,6 +1,7 @@
 import json
 '''
 Adds a new employee to the employee employee_file.json file.
+Also checks to make sure that the employee doesn't already exist.
 '''
 class add_employee:
 

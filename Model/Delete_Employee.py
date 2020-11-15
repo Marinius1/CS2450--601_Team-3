@@ -1,6 +1,10 @@
 import json
 
 
+'''
+Delete employee from employee file.
+'''
+
 class choice:
 
     def __init__(self, number, first, last):
@@ -30,4 +34,7 @@ class delete_employee:
     def clean_files(self):
         pass
 
-
+'''
+d = delete_employee
+d.delete_this(employee ID, First name, Last name)
+'''
