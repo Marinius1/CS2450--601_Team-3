@@ -9,7 +9,7 @@ class Menu():
     option.
     """
 
-    def __init__(self, master=None):
+    def __init__(self, master=None, window=None):
         """
         init(name: str, children[]: List<varies>): void
         calls super(). needs to populate the horizontal View. also needs to bind either
@@ -17,7 +17,9 @@ class Menu():
         bounds.
         """
 
+
         self.master = master
+        self.window = window
 
         self.menu = tk.Menu(self.master)
 
@@ -25,8 +27,8 @@ class Menu():
         self.menu_file.add_command(label="Import...", command=self.import_file)
         self.menu_file.add_separator()
 
-        self.menu_file.add_command(label="Logout")
-        self.menu_file.add_command(label="Exit")
+        self.menu_file.add_command(label="Logout", command=self.logout)
+        self.menu_file.add_command(label="Exit", command=self.master.quit)
 
         self.menu.add_cascade(label="File", menu=self.menu_file)
 
@@ -37,5 +39,8 @@ class Menu():
                                                title="Select file",
                                                filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*"))
                                                )
-
         print(file_name)
+
+    def logout(self):
+        self.window.login()
+
