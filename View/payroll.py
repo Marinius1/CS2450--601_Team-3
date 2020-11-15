@@ -84,7 +84,7 @@ class PayRoll():
 
         self.search_value = tk.StringVar()
         self.search_value.set("Search")
-        self.search_value.trace("w", lambda x: print(*x))
+        self.search_value.trace("w", self.search)
         self.entry_search = ttk.Entry(self.nav_frame, textvariable=self.search_value)
         # self.entry_search.bind("<Key>", self.search)
         # self.entry_search.bind("<Button-1>", lambda x: "break")
@@ -114,7 +114,7 @@ class PayRoll():
         self.scrollbar = tk.Scrollbar(self.table_frame)
         self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hours worked', 'Pay amount', 'PTO total', 'PTO used']
 
-        model_example = [
+        self.model_example = [
             [random.randint(25,50) for i in range(100)],
             [random.randint(25,50) for i in range(100)],
             [random.randint(0,3000) for i in range(100)],
@@ -126,7 +126,7 @@ class PayRoll():
         ]
 
         self.actions = []
-        self.create_table(self.table_frame, self.headers_example, model_example)
+        self.create_table(self.table_frame, self.headers_example, self.model_example)
 
         self.can_listen = False
         self.is_first_draw = True
@@ -197,6 +197,40 @@ class PayRoll():
 
         # self.get_table_data()
 
+    def search(self, *args):
+
+        value = self.search_value.get()
+
+        if value == "Search":
+            return
+
+        if value == '':
+            self.set_table_data(self.model_example)
+
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours worked": int(0),
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+        results = []
+
+        search_filter = self.search_option_value.get()
+
+        data = self.get_table_data()
+
+        for i in data:
+            if value in i[search_filter]:
+                results.append(i)
+
+        self.set_table_data(results)
       
     def create_pay_period(self):
         pass
