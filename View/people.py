@@ -190,7 +190,8 @@ class People():
                                 selectforeground=self.colors.background,
                                 background=self.colors.background,
                                 relief=tk.FLAT,
-                                yscrollcommand=self.sync_yview)
+                                yscrollcommand=self.sync_yview,
+                                font=('Roboto', 16))
             column.grid(row=1, column=0, sticky=tk.NS)
 
             table.append(column)

@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from pynput.mouse import Listener
+import time
 
 from .Colors.color import Color
 
@@ -89,6 +90,12 @@ class PayRoll():
         # self.entry_search.bind("<Button-1>", lambda x: "break")
         self.entry_search.grid(row=0, column=0)
 
+        self.search_options = ["First name", "Last name", "Employee number"]
+        self.search_option_value = tk.StringVar(self.master)
+        self.search_option_value.set(self.search_options[0])
+        self.dropdown_search = ttk.OptionMenu(self.nav_frame, self.search_option_value, self.search_options[0], *self.search_options)
+        self.dropdown_search.grid(row=0, column=1, sticky=tk.W)
+
         self.pay_periods = ['1', '2', '3']
         self.period_select = self.create_dropdown_menu(self.nav_frame, "Period", self.pay_periods, 0, 2)
 
@@ -100,7 +107,10 @@ class PayRoll():
         self.table_frame.rowconfigure(1, weight=1)
         self.table_frame.columnconfigure(0, weight=1)
 
+        self.canvas_columns = []
         self.data_columns = []
+
+        self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
         headers_example = ['First name', 'Last name', 'Employee ID', 'Pay Type', 'Hours Worked', 'Expected Pay', 'PTO accumulated', 'PTO  used']
 
@@ -128,8 +138,7 @@ class PayRoll():
         self.right_frame = tk.Frame(self.home_frame, background=self.colors.background)
         self.right_frame.grid(row=0, rowspan=2, column=1, sticky=tk.NSEW)
 
-        self.right_frame.rowconfigure(0, weight=0)
-        self.right_frame.rowconfigure((1,2), weight=1)
+        self.right_frame.rowconfigure((0,1,2), weight=0)
         self.right_frame.columnconfigure(0, weight=1)
 
         self.right_buttons = tk.Frame(self.right_frame, background=self.colors.background)
@@ -140,19 +149,41 @@ class PayRoll():
         self.right_buttons.columnconfigure(0, weight=1)
 
         self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton')
-        self.save_button.grid(row=0, column=0, sticky=tk.NE, padx=10, pady=10)
+        self.save_button.grid(row=0, column=1, sticky=tk.NE, padx=10, pady=10)
+
+        self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=self.create_pay_period)
+        self.new_period_button.grid(row=0, column=0, sticky=tk.NW, padx=10, pady=10)
 
         self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_file)
-        self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10)
+        self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_file)
-        self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10)
+        self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.metrics_frame = tk.Frame(self.right_frame, background=self.colors.background)
-        self.metrics_frame.grid(row=1, column=0, sticky=tk.NSEW)
+        self.metrics_frame.grid(row=1, column=0, sticky=tk.EW)
 
-        self.metrics_label = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24))
-        self.metrics_label.grid()
+        self.metrics_frame.rowconfigure((0,1,2,3,4), weight=0)
+        self.metrics_frame.columnconfigure(0, weight=1)
+
+        self.metrics_title = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24, 'bold'))
+        self.metrics_title.grid(row=0, sticky=tk.W)
+
+        self.expected_payout_label = tk.Label(self.metrics_frame, text="Expected payout: ", font=('Roboto', 22))
+        self.expected_payout_label.grid(row=1, sticky=tk.W)
+
+        self.expected_payout_data = tk.StringVar()
+        self.expected_payout_data.set("$10,000")
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.expected_payout_data, font=('Roboto', 22))
+        self.expected_payout_display.grid(row=1, column=1, sticky=tk.W)
+
+        self.last_payout_label= tk.Label(self.metrics_frame, text="Last payout:", font=('Roboto', 22))
+        self.last_payout_label.grid(row=2, sticky=tk.W)
+
+        self.last_payout_data = tk.StringVar()
+        self.last_payout_data.set("$10,000")
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.last_payout_data, font=('Roboto', 22))
+        self.expected_payout_display.grid(row=2, column=1, sticky=tk.W)
 
         self.pay_frame = tk.Frame(self.right_frame, background=self.colors.background)
         self.pay_frame.grid(row=2, column=0, sticky=tk.EW)
@@ -163,127 +194,11 @@ class PayRoll():
         self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton')
         self.pay_button.grid(row=0, column=0, sticky=tk.EW+tk.N, padx=10, pady=10)
 
-        #
-        #
-        # self.names_example = [
-        #     "Cathrine Turek",
-        #     "Danette Strachan",
-        #     "Teodoro Schamber",
-        #     "Johanne Sidener",
-        #     "Willette Kirch",
-        #     "Amal Gupton",
-        #     "Leonor Slifer",
-        #     "Olive Tesch",
-        #     "Beulah Doby",
-        #     "Desirae Twellman",
-        #     "Roman Rippeon",
-        #     "Juliann Mascorro",
-        #     "Wynell Westbury",
-        #     "Glen Overmyer",
-        #     "Ilse Hoggard",
-        #     "Leta Presson",
-        #     "Kenya Lizaola",
-        #     "Carmelina Kollman",
-        #     "Mae Cherry",
-        #     "Jimmie Felker",
-        #     "Mia Wahl",
-        #     "Joanie Stillwell",
-        #     "Leonard Littlefield",
-        #     "Meghan Tignor",
-        #     "Candi Diangelo",
-        #     "Zita Mangrum",
-        #     "Bibi Campbell",
-        #     "Jacalyn Cox",
-        #     "Corrinne Glymph",
-        #     "Norberto Stilwell",
-        #     "Lashanda Alligood",
-        #     "Josphine Atienza",
-        #     "Krystina Breedlove",
-        #     "Verlene Dye",
-        #     "Hee Bugarin",
-        #     "Fredia Mckinnie",
-        #     "Marisha Ricci",
-        #     "Jackie Slaugh",
-        #     "Santina Suydam",
-        #     "Leonora Gathings",
-        #     "Rashad Ousley",
-        #     "Reena Gitlin",
-        #     "Loyd Vivas",
-        #     "Astrid Pop",
-        #     "Millard Allan",
-        #     "Marianna Heisler",
-        #     "Divina Barrus",
-        #     "Jasmin Selke",
-        #     "Petra Dahl",
-        #     "Wilburn Agrawal",
-        #     "Kimiko Digby",
-        #     "Larisa Rouillard",
-        #     "Allene Sprau",
-        #     "Emma Duncan",
-        #     "Brittani Paz",
-        #     "Alvera Curlin",
-        #     "Karrie Kovats",
-        #     "Jacinta Cash",
-        #     "Fatimah Ecker",
-        #     "Rosann Valenti",
-        #     "Christoper Greenhaw",
-        #     "Myrtice Dorsey",
-        #     "Vanessa Toland",
-        #     "Cathi Cone",
-        #     "Theodore Neiss",
-        #     "Guadalupe Knittel",
-        #     "Winnie Durham",
-        #     "Tiny Tabares",
-        #     "Rochell Garr",
-        #     "Shandra Gillison",
-        #     "Georgie Clinton",
-        #     "Minta Battista",
-        #     "Fatima Lauber",
-        #     "Lyndia Burbridge",
-        #     "Bari Alleyne",
-        #     "Jacalyn Migues",
-        #     "Katlyn Riess",
-        #     "Annabell Mcfate",
-        #     "Debroah Graffam",
-        #     "Xavier Bodie",
-        #     "Claud Locke",
-        #     "Deandrea Pozo",
-        #     "Crysta Fritch",
-        #     "Janey Wendland",
-        #     "Love Muriel",
-        #     "Mozelle Kroenke",
-        #     "Mckinley Chancy",
-        #     "Cira Mace",
-        #     "Milda Stamant",
-        #     "Karl Levis",
-        #     "Bettina Merlo",
-        #     "Jong Fritts",
-        #     "Elma Khang",
-        #     "Magdalena Elzey",
-        #     "Loreta Dole",
-        #     "Beverlee Mota",
-        #     "Manuel Link",
-        #     "Michaela Ferrante",
-        #     "Oswaldo Scriber "
-        # ]
-        #
-        # pay_types_example = ["Salary", "Hourly", "Commissioned"]
-        #
+        # self.get_table_data()
 
-        #
-        # headers_example = ['Employee', 'Pay Type', 'Hours Worked', 'Current Pay', 'Last Pay']
-        #
-        # self.create_table(headers_example, model_example)
-        # self.scrollbar.configure(command=self.yview)
-        #
-        # self.home_frame.columnconfigure(len(self.data_columns) + 2, weight=1)
-        # self.current_payroll = self.create_summary_frame(self.home_frame, "Current Payroll", self.sum_pay(model_example[3]), 0, len(self.data_columns) + 2)
-        #
-        # self.home_frame.columnconfigure(len(self.data_columns) + 3, weight=1)
-        # self.last_payroll = self.create_summary_frame(self.home_frame, "Last Payroll", self.sum_pay(model_example[4]), 0, len(self.data_columns) + 3)
-        #
-        # self.button_pay = ttk.Button(self.home_frame, text="Pay", style='Pay.TButton', command=self.pay)
-        # self.button_pay.grid(row=1, column=len(self.data_columns) + 2, columnspan=2, sticky=tk.N+tk.EW, padx=10, pady=10)
+      
+    def create_pay_period(self):
+        pass
 
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
@@ -305,26 +220,92 @@ class PayRoll():
         print(amount)
 
     def yview(self, *args):
+        if time.time() - self.scroll_poll >= .1:
+            self.scroll_poll = time.time()
+            for i in self.canvas_columns:
 
-        for i in self.data_columns:
-            i.yview(*args)
+                if args[0] == 'moveto':
+                    i.yview(args[0], float(args[1]))
 
-            pos = i.yview()
-            self.scrollbar.set(pos[0], pos[1])
+                pos = i.yview()
+                self.scrollbar.set(pos[0], pos[1])
 
     def sync_yview(self, *args):
 
-        for i in range(len(self.data_columns)):
-            data_columns_copy = self.data_columns.copy()
+        for i in range(len(self.canvas_columns)):
+            data_columns_copy = self.canvas_columns.copy()
             data_columns_copy.pop(i)
 
-            sync_check = [self.data_columns[i].yview() == j.yview() for j in data_columns_copy]
+            sync_check = [self.canvas_columns[i].yview() == j.yview() for j in data_columns_copy]
 
             if not all(sync_check):
-                for k in range(len(self.data_columns)):
+                for k in range(len(self.canvas_columns)):
                     if k != i:
-                        self.data_columns[k].yview_moveto(args[0])
+                        self.canvas_columns[k].yview_moveto(args[0])
                     self.scrollbar.set(*args)
+
+    def get_table_data(self):
+
+        staged_data = []
+
+        for i in self.data_columns:
+            temp_data = []
+            for j in i:
+                try:
+                    temp_data.append(j.get())
+                except:
+                    temp_data.append(j.cget('text'))
+
+            staged_data.append(temp_data)
+
+
+        rotated_data = list(zip(*staged_data))
+
+        data = []
+
+        for i in rotated_data:
+            data.append({
+                "First name": i[0],
+                "Last name": i[1],
+                "Employee number": i[2],
+                "Pay type": i[3],
+                "Hours worked": i[4],
+                "Pay amount": i[5],
+                "PTO total": i[6],
+                "PTO used": i[7]
+            })
+
+        # print(data)
+        # self.set_table_data(data)
+        return data
+
+
+    def set_table_data(self, data):
+
+        staged_data = []
+
+        for i in data:
+            tmp_list = []
+            tmp_list.append(i["First name"])
+            tmp_list.append(i["Last name"])
+            tmp_list.append(i["Employee number"])
+            tmp_list.append(i["Pay type"])
+            tmp_list.append(i["Hours worked"])
+            tmp_list.append(i["Pay amount"])
+            tmp_list.append(i["PTO total"])
+            tmp_list.append(i["PTO used"])
+            staged_data.append(tmp_list)
+
+        new_data = list(zip(*staged_data))
+
+        for i in self.data_columns:
+            for j in range(len(new_data[self.data_columns.index(i)])):
+                try:
+                    i[self.data_columns.index(i)].delete(0, tk.END)
+                    i[self.data_columns.index(i)].insert(tk.END, new_data[self.data_columns.index(i)][j])
+                except:
+                    i[self.data_columns.index(i)].configure(text=new_data[self.data_columns.index(i)][j])
+
 
     def create_table(self, master, lyst1, lyst2):
 
@@ -335,38 +316,71 @@ class PayRoll():
             master.columnconfigure(i, weight=0)
 
             grid_frame = tk.Frame(master, background=self.colors.background)
-            grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NS)
+            grid_frame.grid(row=0, column=i, rowspan=2, sticky=tk.NSEW)
 
             grid_frame.rowconfigure(0, weight=0)
             grid_frame.rowconfigure(1, weight=1)
+            grid_frame.columnconfigure(0, weight=1)
 
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
             button.grid(row=0, column=0, sticky=tk.EW)
 
-            column = tk.Listbox(grid_frame,
-                                foreground=self.colors.foreground,
-                                selectforeground=self.colors.background,
-                                background=self.colors.background,
-                                relief=tk.FLAT,
-                                yscrollcommand=self.sync_yview,
-                                font=('Roboto', 16),
-                                width=19)
-            column.grid(row=1, column=0, sticky=tk.NS)
+            if i != 4:
+
+                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
+                column.grid(row=1, column=0, sticky=tk.NS)
+                column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
+                column.rowconfigure(0, weight=1)
+                column.columnconfigure(0, weight=1)
+
+                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+                canvas.grid(row=0, column=0, sticky=tk.NSEW)
+                canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+
+                data_items = []
+                for j in range(len(lyst2[i])):
+                    if j % 2 == 0:
+                        background = self.colors.background
+                    else:
+                        background = self.colors.a7
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=lyst2[i][j])
+                    entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW, width=200)
+                    data_items.append(entry)
+                self.data_columns.append(data_items)
+                self.canvas_columns.append(canvas)
+            else:
+                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
+                column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
+                column.rowconfigure(0, weight=1)
+                column.columnconfigure(0, weight=1)
+
+                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+                canvas.grid(row=0, column=0, sticky=tk.NSEW)
+
+                canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+
+                data_items = []
+                for j in range(len(lyst2[i])):
+                    if j % 2 == 0:
+                        background = self.colors.background
+                    else:
+                        background = self.colors.a7
+                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'))
+                    entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+                    entry.insert(tk.END, lyst2[i][j])
+                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
+                    data_items.append(entry)
+
+                self.data_columns.append(data_items)
+                self.canvas_columns.append(canvas)
 
 
-            for j in range(len(lyst2[i])):
-                column.insert(tk.END, lyst2[i][j])
 
-                if j % 2 == 0:
-                    background = self.colors.background
-                else:
-                    background = self.colors.a7
 
-                column.itemconfigure(j, background=background)
             # column.configure(height=len(lyst2[i]))
 
-            self.data_columns.append(column)
 
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
@@ -415,7 +429,13 @@ class PayRoll():
             # print('first event')
             self.is_first_draw = False
 
-
+    def on_mousewheel(self, event, canvas):
+        shift = (event.state & 0x1) != 0
+        scroll = -1 if event.delta > 0 else 1
+        if shift:
+            canvas.xview_scroll(scroll, "units")
+        else:
+            canvas.yview_scroll(scroll, "units")
 
     def on_click(self, x, y, button, pressed):
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
@@ -423,7 +443,7 @@ class PayRoll():
             # Stop listener
             width = self.home_frame.winfo_width()
             # print(int(width))
-            for i in self.data_columns:
+            for i in self.canvas_columns:
                 i.configure(font=('Roboto', int(width * .01)), width=int(width * .01))
 
             self.can_listen = False
