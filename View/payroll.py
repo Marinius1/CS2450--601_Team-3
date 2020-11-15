@@ -112,7 +112,7 @@ class PayRoll():
 
         self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
-        headers_example = ['First name', 'Last name', 'Employee ID', 'Pay Type', 'Hours Worked', 'Expected Pay', 'PTO accumulated', 'PTO  used']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hours worked', 'Pay amount', 'PTO total', 'PTO used']
 
         model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -125,7 +125,8 @@ class PayRoll():
             [random.randint(0,3000) for i in range(100)]
         ]
 
-        self.create_table(self.table_frame, headers_example, model_example)
+        self.actions = []
+        self.create_table(self.table_frame, self.headers_example, model_example)
 
         self.can_listen = False
         self.is_first_draw = True
@@ -269,7 +270,7 @@ class PayRoll():
                 "Last name": i[1],
                 "Employee number": i[2],
                 "Pay type": i[3],
-                "Hours worked": i[4],
+                "Hours worked": int(i[4]),
                 "Pay amount": i[5],
                 "PTO total": i[6],
                 "PTO used": i[7]
@@ -299,17 +300,20 @@ class PayRoll():
         new_data = list(zip(*staged_data))
 
         for i in self.data_columns:
-            for j in range(len(new_data[self.data_columns.index(i)])):
-                try:
-                    i[self.data_columns.index(i)].delete(0, tk.END)
-                    i[self.data_columns.index(i)].insert(tk.END, new_data[self.data_columns.index(i)][j])
-                except:
-                    i[self.data_columns.index(i)].configure(text=new_data[self.data_columns.index(i)][j])
+            for j in range(len(i)):
+                if isinstance(i[j], tk.Entry):
+                    i[j].delete(0, tk.END)
+                    i[j].insert(tk.END, new_data[self.data_columns.index(i)][j])
+                else:
+                    i[j].configure(text=new_data[self.data_columns.index(i)][j])
 
 
     def create_table(self, master, lyst1, lyst2):
 
         lyst1_size = len(lyst1)
+
+        for i in range(lyst1_size):
+            self.actions.append(self.sort_ascending)
 
         for i in range(lyst1_size):
 
@@ -324,6 +328,7 @@ class PayRoll():
 
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
+            button.bind('<Button-1>', self.button_action)
             button.grid(row=0, column=0, sticky=tk.EW)
 
             if i != 4:
@@ -458,3 +463,31 @@ class PayRoll():
                                                filetypes=(("CSV Files", "*.csv"),)
                                                )
         print(file_name)
+
+    def button_action(self, event):
+        button_text = event.widget.cget('text')
+        button_index = self.headers_example.index(button_text)
+
+        self.actions[button_index](button_text)
+
+    def sort_ascending(self, key):
+        print(key)
+
+        data = self.get_table_data()
+        sorted_data = sorted(data, key=lambda i: i[key])
+
+        # print(sorted_data)
+        self.set_table_data(sorted_data)
+
+        self.actions[self.headers_example.index(key)] = self.sort_descending
+
+    def sort_descending(self, key):
+        print(key)
+
+        data = self.get_table_data()
+        sorted_data = sorted(data, key=lambda i: i[key], reverse=True)
+
+        # print(sorted_data)
+        self.set_table_data(sorted_data)
+
+        self.actions[self.headers_example.index(key)] = self.sort_ascending
