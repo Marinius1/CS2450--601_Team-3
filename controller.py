@@ -29,7 +29,7 @@ class PTO_Maker:
     def __init__(self):
         self.PTO_lyst = []
 
-        with open('Model/this_pay_period.json') as infile:
+        with open('Model/PTO.json') as infile:
             self.PTO_lyst = json.load(infile)
 
 

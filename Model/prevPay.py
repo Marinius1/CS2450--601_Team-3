@@ -1,5 +1,5 @@
 import json
-import random
+
 
 class previous_month_pay:
 
@@ -59,3 +59,24 @@ class previous_month_pay:
                 data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay)})
                 with open('last_pay_period.json', 'w') as outfile:
                     json.dump(data1, outfile)
+
+
+    def new_month(self):
+        with open("PTO.json") as f:
+            d = json.load(f)
+        with open("last_pay_period.json") as ff:
+            d1 = json.load(ff)
+            while len(d1) > 0:
+                d1.pop(0)
+        for i in d:
+            d1.append({"Employee number":i["Employee number"], "Total pay":i["Total pay"], "PTO total":i["PTO total"], "PTO used":i["PTO used"]})
+
+        with open("last_pay_period.json", "w") as f1:
+            json.dump(d1, f1)
+
+        #with open("PTO.json", "w") as f2:
+            #json.dump([], f2)
+'''
+p = previous_month_pay("employee_file.json")
+p.new_month()
+'''

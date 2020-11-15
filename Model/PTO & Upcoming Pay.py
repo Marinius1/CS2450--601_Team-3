@@ -10,7 +10,7 @@ class upcoming_pay:
 
     def upcoming_salary(self):
         lyst = []
-        with open('this_pay_period.json') as infile:
+        with open('PTO.json') as infile:
             data1 = json.load(infile)
 
         for l in data1:
@@ -26,12 +26,12 @@ class upcoming_pay:
                 unused_pto = pto - used_pto
                 data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
                                 "PTO total": unused_pto, "PTO used": used_pto})
-                with open('this_pay_period.json', 'w') as outfile:
+                with open('PTO.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
     def upcoming_commission(self):
         lyst = []
-        with open('this_pay_period.json') as infile:
+        with open('PTO.json') as infile:
             data1 = json.load(infile)
         with open("timecards.json") as f:
             data2 = json.load(f)
@@ -53,13 +53,13 @@ class upcoming_pay:
                         unused_pto = pto - used_pto
                         data1.append({"Employee number": i["Employee number"], "Commission pay": str(month_pay), "Salary pay": 100,
                                   "PTO total": unused_pto, "PTO used": used_pto})
-                    with open('this_pay_period.json', 'w') as outfile:
+                    with open('PTO.json', 'w') as outfile:
                             json.dump(data1, outfile)
 
 
     def upcoming_hourly(self):
         lyst = []
-        with open('this_pay_period.json') as infile:
+        with open('PTO.json') as infile:
             data1 = json.load(infile)
         with open("timecards.json") as f:
             data2 = json.load(f)
@@ -81,11 +81,11 @@ class upcoming_pay:
                         unused_pto = pto - used_pto
                         data1.append({"Employee number": i["Employee number"], "Total pay": str(month_pay),
                                       "PTO total": unused_pto, "PTO used": used_pto})
-                    with open('this_pay_period.json', 'w') as outfile:
+                    with open('PTO.json', 'w') as outfile:
                         json.dump(data1, outfile)
 
     def edit_PTO(self, employeeId, hours_used, hours_remain):
-        with open("this_pay_period.json") as f:
+        with open("PTO.json") as f:
             data1 = json.load(f)
         for i in data1:
             if i["Employee number"] == employeeId:
@@ -93,7 +93,7 @@ class upcoming_pay:
                 data1.pop(z)
                 data1.append({"Employee number": i["Employee number"], "Total pay": i["Total pay"],
                               "PTO total": hours_remain, "PTO used": hours_used})
-                with open('this_pay_period.json', 'w') as outfile:
+                with open('PTO.json', 'w') as outfile:
                     json.dump(data1, outfile)
 
 
