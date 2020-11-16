@@ -551,7 +551,7 @@ class PayRoll():
         data_copy = []
 
         for i in range(len(data)):
-            print(data, "\n\n####\n\n")
+            # print(data, "\n\n####\n\n")
             if not data[i]["First name"] == '':
                 data_copy.append(data[i])
 
