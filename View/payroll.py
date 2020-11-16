@@ -329,7 +329,7 @@ class PayRoll():
 
     def set_table_data(self, data):
 
-        print(data)
+        # print(data)
 
         if len(data) <= 1:
             for i in self.data_columns:
@@ -576,7 +576,7 @@ class PayRoll():
         # print(sorted_data)
         self.set_table_data(sorted_data)
 
-        self.actions[self.headers_example.index(key)] = self.sort_descending
+        self.actions[self.values_list.index(key)] = self.sort_descending
 
     def sort_descending(self, key):
         print(key)
@@ -594,7 +594,7 @@ class PayRoll():
         # print(sorted_data)
         self.set_table_data(sorted_data)
 
-        self.actions[self.headers_example.index(key)] = self.sort_ascending
+        self.actions[self.values_list.index(key)] = self.sort_ascending
 
     def create_are_you_sure(self, message, on_success):
         top = tk.Toplevel(self.master)
