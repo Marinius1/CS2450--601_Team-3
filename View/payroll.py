@@ -289,6 +289,7 @@ class PayRoll():
 
     def pay(self):
         print("pay")
+        self.create_pay_modal("test")
 
     def yview(self, *args):
         if time.time() - self.scroll_poll >= .1:
@@ -693,3 +694,57 @@ class PayRoll():
 
         cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
         cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
+
+    def create_pay_modal(self, message):
+        top = tk.Toplevel(self.master)
+
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        width = screen_width / 2
+        height = screen_height / 2
+
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
+
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
+
+        top.title("Payroll")
+
+        top.rowconfigure(0, uniform='row', weight=1)
+        top.rowconfigure(1, uniform='row', weight=6)
+        top.rowconfigure(2, uniform='row', weight=1)
+        top.columnconfigure(0, weight=1)
+
+        frames = []
+        for i in range(3):
+            frame = tk.Frame(top, background=self.colors.background)
+            frame.grid(row=i, sticky=tk.NSEW)
+            frame.rowconfigure(0, weight=1)
+            frame.columnconfigure(0, weight=1)
+            frames.append(frame)
+
+        top_message = ttk.Label(frames[0], text=message, background=self.colors.background, style='Help.TLabel')
+        top_message.grid(row=0)
+
+        text_scrollbar = tk.Scrollbar(frames[1])
+        text_scrollbar.grid(row=0, column=1, sticky=tk.NS)
+
+        # with open(self.help_content, 'r') as f:
+        #     text = f.read()
+
+        text = "paid!"
+
+        text_pay = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set)
+        text_pay.insert(tk.END, text)
+
+        text_pay.bind("<Key>", lambda x: "break")
+
+        text_pay.grid(row=0, sticky=tk.EW, padx=(10, 0))
+
+        text_scrollbar.configure(command=text_pay.yview)
+
+        button_close = ttk.Button(frames[2], text="Close", style='Header.TButton', command=top.destroy)
+        button_close.grid(row=0, sticky=tk.E, padx=(0, 25))
