@@ -234,6 +234,7 @@ class PayRoll():
         for i in data:
             if value in i[search_filter]:
                 results.append(i)
+
         self.set_table_data(results)
       
     def create_pay_period(self):
@@ -303,15 +304,16 @@ class PayRoll():
         data = []
 
         for i in rotated_data:
+
             data.append({
                 "First name": i[0],
                 "Last name": i[1],
                 "Employee number": i[2],
                 "Pay type": i[3],
-                "Hours worked": int(i[4]),
-                "Pay amount": i[5],
-                "PTO total": i[6],
-                "PTO used": i[7]
+                "Pay amount": i[4],
+                "PTO total": i[5],
+                "PTO used": i[6],
+                "Hours worked": i[7],
             })
 
         # print(data)
@@ -321,7 +323,9 @@ class PayRoll():
 
     def set_table_data(self, data):
 
-        if len(data) == 1:
+
+
+        if len(data) <= 1:
             for i in self.data_columns:
                 for j in range(len(i)):
                     if isinstance(i[j], tk.Entry):
@@ -329,6 +333,8 @@ class PayRoll():
                         i[j].insert(tk.END, 0)
                     else:
                         i[j].configure(text='')
+            if len(data) == 0:
+                return
 
         staged_data = []
 
