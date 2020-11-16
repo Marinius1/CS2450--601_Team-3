@@ -241,7 +241,7 @@ class PayRoll():
         self.set_table_data(results)
       
     def create_pay_period(self):
-        pass
+        print("create pay period")
 
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
