@@ -6,6 +6,7 @@ from pynput.mouse import Listener
 import time
 
 from .Colors.color import Color
+import controller as Controller
 
 import random
 
@@ -27,6 +28,10 @@ class PayRoll():
         """
 
         self.master = master
+
+        self.L = Controller.List_Maker()
+        self.people = self.L.data
+        # print(self.people)
 
         self.name = name
         self.colors = Color(theme).colors
@@ -199,14 +204,14 @@ class PayRoll():
 
     def search(self, *args):
 
+
         value = self.search_value.get()
 
         if value == "Search":
             return
 
         if value == '':
-            self.set_table_data(self.model_example)
-
+            self.set_table_data(self.people)
 
         self.set_table_data([
             {
@@ -224,12 +229,11 @@ class PayRoll():
 
         search_filter = self.search_option_value.get()
 
-        data = self.get_table_data()
+        data = self.people
 
         for i in data:
             if value in i[search_filter]:
                 results.append(i)
-
         self.set_table_data(results)
       
     def create_pay_period(self):
@@ -317,6 +321,15 @@ class PayRoll():
 
     def set_table_data(self, data):
 
+        if len(data) == 1:
+            for i in self.data_columns:
+                for j in range(len(i)):
+                    if isinstance(i[j], tk.Entry):
+                        i[j].delete(0, tk.END)
+                        i[j].insert(tk.END, 0)
+                    else:
+                        i[j].configure(text='')
+
         staged_data = []
 
         for i in data:
@@ -325,24 +338,35 @@ class PayRoll():
             tmp_list.append(i["Last name"])
             tmp_list.append(i["Employee number"])
             tmp_list.append(i["Pay type"])
-            tmp_list.append(i["Hours worked"])
+            tmp_list.append(0)
             tmp_list.append(i["Pay amount"])
-            tmp_list.append(i["PTO total"])
-            tmp_list.append(i["PTO used"])
+            tmp_list.append(0)
+            tmp_list.append(0)
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
 
         for i in self.data_columns:
-            for j in range(len(i)):
-                if isinstance(i[j], tk.Entry):
-                    i[j].delete(0, tk.END)
-                    i[j].insert(tk.END, new_data[self.data_columns.index(i)][j])
+            for j in range(len(new_data[self.data_columns.index(i)])):
+                if isinstance(new_data[self.data_columns.index(i)][j], tk.Entry):
+                    self.data_columns[self.data_columns.index(i)][j].delete(0, tk.END)
+                    self.data_columns[self.data_columns.index(i)][j].insert(tk.END, new_data[self.data_columns.index(i)][j])
                 else:
-                    i[j].configure(text=new_data[self.data_columns.index(i)][j])
+                    self.data_columns[self.data_columns.index(i)][j].configure(text=new_data[self.data_columns.index(i)][j])
 
 
     def create_table(self, master, lyst1, lyst2):
+
+        # desired_keys = [
+        #     "First name",
+        #     "Last name",
+        #     "Employee number",
+        #     "Pay type",
+        #     "Hours worked",
+        #     "Pay amount",
+        #     "PTO total",
+        #     "PTO used"
+        # ]
 
         lyst1_size = len(lyst1)
 
@@ -378,12 +402,18 @@ class PayRoll():
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
                 data_items = []
-                for j in range(len(lyst2[i])):
+                for j in range(len(self.people)):
                     if j % 2 == 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=lyst2[i][j])
+
+                    try:
+                        new_value = self.people[j][lyst1[i]]
+                    except:
+                        new_value = 0
+
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=new_value)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW, width=200)
                     data_items.append(entry)
@@ -401,14 +431,14 @@ class PayRoll():
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
                 data_items = []
-                for j in range(len(lyst2[i])):
+                for j in range(len(self.people)):
                     if j % 2 == 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
                     entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'))
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
-                    entry.insert(tk.END, lyst2[i][j])
+                    entry.insert(tk.END, "")
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
                     data_items.append(entry)
 
