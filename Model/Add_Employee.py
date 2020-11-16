@@ -67,13 +67,12 @@ class add_employee:
                         json.dump(data, outfile)
 
             elif j == False:
-                raise Exception("Employee with that name and employee number already exists.")
+                pass
 
 
 
 
-
-
+'''
 employee_num = "55-555555"
 first = "Sean"
 last = "McNees"
@@ -103,4 +102,4 @@ a = add_employee(employee_num, first, last, pay_type, pay_amount, address,state,
                  start_year, role, position, teams, timecard,PTO, PTOused)
 
 a.add_to_employee_file()
-
+'''
