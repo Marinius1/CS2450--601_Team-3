@@ -289,7 +289,10 @@ class PayRoll():
 
     def pay(self):
         print("pay")
-        self.create_pay_modal("test")
+
+        data = "ok"
+
+        self.create_pay_modal("This is your payroll data", data)
 
     def yview(self, *args):
         if time.time() - self.scroll_poll >= .1:
@@ -695,7 +698,7 @@ class PayRoll():
         cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
         cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
 
-    def create_pay_modal(self, message):
+    def create_pay_modal(self, message, payroll):
         top = tk.Toplevel(self.master)
 
         screen_width = self.master.winfo_screenwidth()
@@ -735,7 +738,7 @@ class PayRoll():
         # with open(self.help_content, 'r') as f:
         #     text = f.read()
 
-        text = "paid!"
+        text = payroll
 
         text_pay = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set)
         text_pay.insert(tk.END, text)
