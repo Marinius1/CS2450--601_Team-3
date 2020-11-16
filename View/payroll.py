@@ -412,7 +412,9 @@ class PayRoll():
 
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
-            button.bind('<Button-1>', self.button_action)
+            if i <= 3:
+                button.bind('<Button-1>', self.button_action)
+
             button.grid(row=0, column=0, sticky=tk.EW)
 
             if i != 7:
