@@ -172,23 +172,23 @@ class PayRoll():
         self.metrics_frame.rowconfigure((0,1,2,3,4), weight=0)
         self.metrics_frame.columnconfigure(0, weight=1)
 
-        self.metrics_title = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24, 'bold'))
+        self.metrics_title = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24, 'bold'), background=self.colors.background)
         self.metrics_title.grid(row=0, sticky=tk.W)
 
-        self.expected_payout_label = tk.Label(self.metrics_frame, text="Expected payout: ", font=('Roboto', 22))
+        self.expected_payout_label = tk.Label(self.metrics_frame, text="Expected payout: ", font=('Roboto', 22), background=self.colors.background)
         self.expected_payout_label.grid(row=1, sticky=tk.W)
 
         self.expected_payout_data = tk.StringVar()
         self.expected_payout_data.set("$10,000")
-        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.expected_payout_data, font=('Roboto', 22))
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.expected_payout_data, font=('Roboto', 22), background=self.colors.background)
         self.expected_payout_display.grid(row=1, column=1, sticky=tk.W)
 
-        self.last_payout_label= tk.Label(self.metrics_frame, text="Last payout:", font=('Roboto', 22))
+        self.last_payout_label= tk.Label(self.metrics_frame, text="Last payout:", font=('Roboto', 22), background=self.colors.background)
         self.last_payout_label.grid(row=2, sticky=tk.W)
 
         self.last_payout_data = tk.StringVar()
         self.last_payout_data.set("$10,000")
-        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.last_payout_data, font=('Roboto', 22))
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.last_payout_data, font=('Roboto', 22), background=self.colors.background)
         self.expected_payout_display.grid(row=2, column=1, sticky=tk.W)
 
         self.pay_frame = tk.Frame(self.right_frame, background=self.colors.background)
