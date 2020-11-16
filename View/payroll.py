@@ -245,6 +245,20 @@ class PayRoll():
         self.NP()
         self.L = Controller.List_Maker()
         self.people = self.L.data
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours/sales": '',
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+
         self.set_table_data(self.people)
 
 
@@ -337,7 +351,7 @@ class PayRoll():
                 for j in range(len(i)):
                     if isinstance(i[j], tk.Entry):
                         i[j].delete(0, tk.END)
-                        i[j].insert(tk.END, 0)
+                        i[j].insert(tk.END, '')
                     else:
                         i[j].configure(text='')
             if len(data) == 0:
@@ -361,7 +375,7 @@ class PayRoll():
 
         for i in self.data_columns:
             for j in range(len(new_data[self.data_columns.index(i)])):
-                if isinstance(new_data[self.data_columns.index(i)][j], tk.Entry):
+                if isinstance(self.data_columns[self.data_columns.index(i)][j], tk.Entry):
                     self.data_columns[self.data_columns.index(i)][j].delete(0, tk.END)
                     self.data_columns[self.data_columns.index(i)][j].insert(tk.END, new_data[self.data_columns.index(i)][j])
                 else:
@@ -545,6 +559,20 @@ class PayRoll():
         IO(file)
         self.L = Controller.List_Maker()
         self.people = self.L.data
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours/sales": '',
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+
         self.set_table_data(self.people)
 
     def import_sales(self):
@@ -553,6 +581,20 @@ class PayRoll():
         IO(file)
         self.L = Controller.List_Maker()
         self.people = self.L.data
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours/sales": '',
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+
         self.set_table_data(self.people)
 
 
