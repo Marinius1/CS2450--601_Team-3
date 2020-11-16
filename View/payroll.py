@@ -588,7 +588,6 @@ class PayRoll():
                 "PTO used": ''
             }
         ])
-
         self.set_table_data(self.people)
 
     def import_sales(self):
