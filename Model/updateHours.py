@@ -13,6 +13,7 @@ class updateHours:
         with open(filename) as file:
             self.data = json.load(file)
 
+
     def updateHourly(self, file1):
         for i in self.data:
             if i["Pay type"] == "Hourly":
@@ -50,6 +51,7 @@ class updateHours:
         with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
 
+
     def updateSalary(self, file1):
         for i in self.data:
             if i["Pay type"] == "Salary":
@@ -67,6 +69,7 @@ class updateHours:
                             i["Timecard"] = str(total)
         with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
+
 
     def setTozero(self):
         for i in self.data:
