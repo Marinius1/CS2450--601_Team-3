@@ -369,16 +369,15 @@ class PayRoll():
 
     def create_table(self, master, lyst1, lyst2):
 
-        # desired_keys = [
-        #     "First name",
-        #     "Last name",
-        #     "Employee number",
-        #     "Pay type",
-        #     "Hours worked",
-        #     "Pay amount",
-        #     "PTO total",
-        #     "PTO used"
-        # ]
+        desired_keys = [
+             "First name",
+             "Last name",
+             "Employee number",
+             "Pay type",
+             "Hours worked",
+             "Pay amount",
+             "PTO total",
+             "PTO used"]
 
         lyst1_size = len(lyst1)
 
@@ -408,8 +407,8 @@ class PayRoll():
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
-
-                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(lyst2[0]))))
+#This line is weird. Future change for dynamic compatability.
+                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
@@ -436,8 +435,8 @@ class PayRoll():
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
-
-                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(lyst2[0]))))
+#This line is weird. Future change for dynamic compatability.
+                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
