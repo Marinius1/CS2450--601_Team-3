@@ -43,8 +43,8 @@ class People():
                        background=[('active', self.colors.a7)],
                        foreground=[('active', self.colors.background)])
         self.style.configure('Header.TButton',
-                             background=self.colors.background,
-                             foreground=self.colors.foreground,
+                             background=self.colors.a7,
+                             foreground=self.colors.background,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
                              focusthickness=3,

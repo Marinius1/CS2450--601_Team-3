@@ -157,7 +157,7 @@ class PayRoll():
         self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_changes))
         self.save_button.grid(row=0, column=1, sticky=tk.NE, padx=10, pady=10)
 
-        self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=self.create_pay_period)
+        self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes? This will set all values to zero", self.create_pay_period))
         self.new_period_button.grid(row=0, column=0, sticky=tk.NW, padx=10, pady=10)
 
         self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_hourly)
@@ -584,7 +584,7 @@ class PayRoll():
         data_copy = []
 
         for i in range(len(data)):
-            print(data, "\n\n####\n\n")
+            # print(data, "\n\n####\n\n")
             if not data[i]["First name"] == '':
                 data_copy.append(data[i])
 
