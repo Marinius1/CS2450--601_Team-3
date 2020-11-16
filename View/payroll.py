@@ -116,7 +116,7 @@ class PayRoll():
 
         self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
-        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours worked']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours/sales']
         self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Hours/sales']
 
         self.model_example = [
@@ -222,7 +222,7 @@ class PayRoll():
                 "Last name": '',
                 "Employee number": '',
                 "Pay type": '',
-                "Hours worked": '',
+                "Hours/sales": '',
                 "Pay amount": '',
                 "PTO total": '',
                 "PTO used": ''
