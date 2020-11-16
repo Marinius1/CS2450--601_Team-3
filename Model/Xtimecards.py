@@ -1,10 +1,17 @@
 import json
 
-with open("0.json") as f:
+with open("employee_file.json") as f:
     a = json.load(f)
-    a.clear()
-with open("0.json", 'w') as f1:
-    json.dump(a, f1)
+    z=1
+    for i in a:
+        print(z)
+        z+=1
+
+with open("employees.csv") as file:
+    x=1
+    for line in file:
+        print(x)
+        x += 1
 
 '''
 IGNORE
