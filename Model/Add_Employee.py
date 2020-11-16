@@ -97,9 +97,9 @@ timecard = str([24,32,96])
 PTO = str(random.randint(2, 10))
 PTOused =  str(random.randint(0,2))
 
-a = add_employee(employee_num, first, last, pay_type, pay_amount, address,state, city, social,
-                 phone, zzip, birth_day, birth_month, birth_year, start_day, start_month,
-                 start_year, role, position, teams, timecard,PTO, PTOused)
-
-a.add_to_employee_file()
+# a = add_employee(employee_num, first, last, pay_type, pay_amount, address,state, city, social,
+#                  phone, zzip, birth_day, birth_month, birth_year, start_day, start_month,
+#                  start_year, role, position, teams, timecard,PTO, PTOused)
+#
+# a.add_to_employee_file()
 '''
