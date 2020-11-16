@@ -212,8 +212,10 @@ class PayRoll():
         for i in staged_data:
             if i["First name"] != '':
                 data.append(i)
-
         print(data)
+        Editer=Controller.Save_Payroll_Shits
+        Editer(data)
+        
 
     def search(self, *args):
 

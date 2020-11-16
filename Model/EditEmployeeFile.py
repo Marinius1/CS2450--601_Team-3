@@ -6,7 +6,7 @@ class editThis:
         self.data = data
 
     def edit(self):
-        with open("employee_file.json") as file:
+        with open("Model/employee_file.json") as file:
             data = json.load(file)
             for i in self.data:
                 empID = str(i["Employee number"])
@@ -15,9 +15,8 @@ class editThis:
                         j["PTO total"] = i["PTO total"]
                         j["PTO used"] = i["PTO used"]
                         j["Hours/sales"] = i["Hours/sales"]
-                        j["Timecard"] = i["Timecard"]
 
-        with open("employee_file.json", 'w') as f:
+        with open("Model/employee_file.json", 'w') as f:
             json.dump(data, f)
 
 
