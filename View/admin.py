@@ -69,7 +69,7 @@ class Admin():
         self.home_frame.rowconfigure(0, weight=1)
 
         self.home_frame.columnconfigure(0, weight=1)
-        self.home_frame.columnconfigure(1, weight=2)
+        self.home_frame.columnconfigure(1, weight=9)
 
         self.left_frame = tk.Frame(self.home_frame)
         self.left_frame.configure(background=self.colors.background, border=3,
@@ -78,9 +78,9 @@ class Admin():
 
         self.left_frame.rowconfigure(0, weight=1)
         self.left_frame.rowconfigure(1, weight=0)
-        self.left_frame.rowconfigure(2, weight=2)
+        self.left_frame.rowconfigure(2, weight=21)
 
-        self.left_frame.columnconfigure(0, weight=5)
+        self.left_frame.columnconfigure(0, weight=2)
         self.left_frame.columnconfigure(1, weight=1)
         # self.left_frame.grid_propagate(0)
 
