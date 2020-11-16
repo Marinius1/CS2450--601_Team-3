@@ -22,11 +22,11 @@ class payRoll:
                 f1.write(" ")
                 f1.write("Pay for this period:")
                 f1.write(str(round(float(i["Total pay"]),2)))
-                z = float(i["PTO total"]) - float(i["PTO used"])
-                f1.write(" ")
-                f1.write("Remaining PTO:")
-                f1.write(str(round(z, 2)))
-                f1.write('\n')
+#                z = float(i["PTO total"]) - float(i["PTO used"])
+#                f1.write(" ")
+#                f1.write("Remaining PTO:")
+#                f1.write(str(round(z, 2)))
+                f1.write(',\n')
 
 
 

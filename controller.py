@@ -10,6 +10,7 @@ from Model.Add_Employee import add_employee
 from Model.Delete_Employee import delete_employee
 import Model.newFile
 import Model.updateHours
+import Model.EditEmployeeFile
 
 
 #Creates employee list for input into View
@@ -82,6 +83,12 @@ class Import_Sales:
     def __init__(self, file):
         FT=Model.updateHours.updateHours('Model/employee_file.json')
         FT.updateCommission(file)
+
+class Save_Payroll_Shits:
+    def __init__(self, lyst):
+        SPS=Model.EditEmployeeFile.editThis(lyst)
+        SPS.edit()
+
         
 
 """ Controller module.
