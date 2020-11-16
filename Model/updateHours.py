@@ -3,6 +3,7 @@ import json
 '''
 Adjusts employee time cards.
 Employee info is updated in employee file so their hours or commissions will be accurate.
+run setZero to set timecards back to Zero for new pay period.
 '''
 
 class updateHours:
@@ -59,8 +60,20 @@ class updateHours:
                             for j in line_list:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
+        with open("employee_file.json", 'w') as file:
+            json.dump(self.data, file)
 
-'''
+    def setTozero(self):
+        for i in self.data:
+            if i["Pay type"] == "Salary" or i["Pay type"] == "Commission" or i["Pay type"] == "Hourly":
+                i["Hours/sales"] = "0"
+        with open("employee_file.json", 'w') as file:
+            json.dump(self.data, file)
+
+
+
 u = updateHours("employee_file.json")
 u.updateHourly("timecards.csv")
+'''
+u.setTozero()
 '''
