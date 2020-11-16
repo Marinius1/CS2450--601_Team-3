@@ -344,8 +344,8 @@ class PayRoll():
             tmp_list.append(i["Last name"])
             tmp_list.append(i["Employee number"])
             tmp_list.append(i["Pay type"])
-            tmp_list.append(0)
             tmp_list.append(i["Pay amount"])
+            tmp_list.append(0)
             tmp_list.append(0)
             tmp_list.append(0)
             staged_data.append(tmp_list)
@@ -403,7 +403,7 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 
-                canvas = tk.Canvas(column, border=0, width=150, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(lyst2[0]))))
+                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(lyst2[0]))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
@@ -431,7 +431,7 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 
-                canvas = tk.Canvas(column, border=0, width=400, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(lyst2[0]))))
+                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(lyst2[0]))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
@@ -543,7 +543,14 @@ class PayRoll():
         print(key)
 
         data = self.get_table_data()
-        sorted_data = sorted(data, key=lambda i: i[key])
+        data_copy = []
+
+        for i in range(len(data)):
+            print(data, "\n\n####\n\n")
+            if not data[i]["First name"] == '':
+                data_copy.append(data[i])
+
+        sorted_data = sorted(data_copy, key=lambda i: i[key])
 
         # print(sorted_data)
         self.set_table_data(sorted_data)
@@ -554,7 +561,14 @@ class PayRoll():
         print(key)
 
         data = self.get_table_data()
-        sorted_data = sorted(data, key=lambda i: i[key], reverse=True)
+        data_copy = []
+
+        for i in range(len(data)):
+            print(data, "\n\n####\n\n")
+            if not data[i]["First name"] == '':
+                data_copy.append(data[i])
+
+        sorted_data = sorted(data_copy, key=lambda i: i[key], reverse=True)
 
         # print(sorted_data)
         self.set_table_data(sorted_data)
