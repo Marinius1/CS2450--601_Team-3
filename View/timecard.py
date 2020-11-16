@@ -206,7 +206,7 @@ class TimeCard():
 
         self.populate_people(results)
 
-
+'''
     def set_values(self, data):
 
         self.field_name.configure(text=data["First name"] + " " + data["Last name"])
@@ -215,10 +215,10 @@ class TimeCard():
 
         self.set_default_display_field(self.display_hours_worked, "10.0")
 
-        thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
+        #thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
 
-        if len(thing) == 0:
-            thing.append(data)
+        #if len(thing) == 0:
+         #   thing.append(data)
 
         # self.set_default_text_field(self.field_pto_total, thing[0]["PTO total"])
         # self.set_default_text_field(self.field_pto_used, thing[0]["PTO used"])
@@ -270,8 +270,8 @@ class TimeCard():
             if self.display_commission is None:
                 self.display_commission = self.create_text_display(self.info_identity_frame, 'Expected Payout:', '', 4)
             self.set_default_display_field(self.display_commission, thing[0]["Total pay"])
-
-
+'''
+'''
     #Get data from save button
     def get_values(self):
         data = {
@@ -297,7 +297,8 @@ class TimeCard():
         print(data)
 
         return data
-
+'''
+'''
     def set_default_display_field(self, field, value):
         field["entry"].configure(text=value)
 
@@ -480,4 +481,4 @@ class TimeCard():
 
         cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
         cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
-
+'''
