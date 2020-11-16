@@ -64,7 +64,25 @@ class Employee_Editer:
                          dicton["Start year"], dicton["Role"], dicton["Position"], dicton["Team"])
         add.add_to_employee_file()
 
-       
+class New_Pay:
+    def __init__(self):
+        Ex=Model.newFile.new("Model/employee_file.json")
+        Ex.stupid_function()
+        Wy=Model.updateHours.updateHours("Model/employee_file.json")
+        Wy.setTozero()
+
+
+class Import_Hourly:
+    def __init__(self, file):
+        FT=Model.updateHours.updateHours('Model/employee_file.json')
+        FT.updateHourly(file)
+
+
+class Import_Sales:
+    def __init__(self, file):
+        FT=Model.updateHours.updateHours('Model/employee_file.json')
+        FT.updateCommission(file)
+        
 
 """ Controller module.
 used to control information between the module and View.

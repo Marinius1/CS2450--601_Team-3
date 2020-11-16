@@ -43,8 +43,8 @@ class People():
                        background=[('active', self.colors.a7)],
                        foreground=[('active', self.colors.background)])
         self.style.configure('Header.TButton',
-                             background=self.colors.background,
-                             foreground=self.colors.foreground,
+                             background=self.colors.a7,
+                             foreground=self.colors.background,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
                              focusthickness=3,
@@ -66,10 +66,10 @@ class People():
 
         self.headers_example = ['First name', 'Last name', 'Employee number', 'Phone', 'Role', 'Position', 'Team']
         self.header_buttons = []
-        self.header_button_actions = [self.sort_ascending for i in range(len(self.headers_example))]
+        self.header_button_actions = [self.sort_descnding for i in range(len(self.headers_example))]
 
         self.table = self.create_table(self.headers_example, self.model_example.data)
-        self.sort_descnding("First name")
+        self.sort_ascending("First name")
         self.scrollbar.configure(command=self.yview)
 
     def button_action(self, event):

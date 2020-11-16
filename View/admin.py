@@ -68,8 +68,8 @@ class Admin():
 
         self.home_frame.rowconfigure(0, weight=1)
 
-        self.home_frame.columnconfigure(0, weight=0)
-        self.home_frame.columnconfigure(1, weight=1)
+        self.home_frame.columnconfigure(0, weight=1)
+        self.home_frame.columnconfigure(1, weight=9)
 
         self.left_frame = tk.Frame(self.home_frame)
         self.left_frame.configure(background=self.colors.background, border=3,
@@ -80,7 +80,7 @@ class Admin():
         self.left_frame.rowconfigure(1, weight=0)
         self.left_frame.rowconfigure(2, weight=21)
 
-        self.left_frame.columnconfigure(0, weight=5)
+        self.left_frame.columnconfigure(0, weight=2)
         self.left_frame.columnconfigure(1, weight=1)
         # self.left_frame.grid_propagate(0)
 
@@ -252,10 +252,10 @@ class Admin():
         self.start_employment_label.grid(row=12, column=0, sticky=tk.E)
         self.date_start_employment = self.create_date_selector(self.info_identity_frame, 12)
 
-        self.info_start_employment_label = tk.Label(self.info_identity_frame, text='Total months with company: ')
+        self.info_start_employment_label = tk.Label(self.info_identity_frame, text='Total months with company: ', background=self.colors.background)
         self.info_start_employment_label.grid(row=12, column=5, sticky=tk.E)
 
-        self.info_start_employment_data = tk.Label(self.info_identity_frame, text='')
+        self.info_start_employment_data = tk.Label(self.info_identity_frame, text='', background=self.colors.background)
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
         self.label_pay_type = tk.Label(self.info_identity_frame, text="Pay type", background=self.colors.background)

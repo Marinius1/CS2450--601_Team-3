@@ -6,6 +6,7 @@ from pynput.mouse import Listener
 import time
 
 from .Colors.color import Color
+import controller as Controller
 
 import random
 
@@ -28,6 +29,10 @@ class PayRoll():
 
         self.master = master
 
+        self.L = Controller.List_Maker()
+        self.people = self.L.data
+        # print(self.people)
+
         self.name = name
         self.colors = Color(theme).colors
         self.style = ttk.Style()
@@ -38,7 +43,6 @@ class PayRoll():
                        foreground=[('active', self.colors.background)])
         self.style.configure('Recent.TLabel',
                              background=self.colors.background,
-                             # background='red',
                              foreground=self.colors.foreground,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
@@ -112,7 +116,8 @@ class PayRoll():
 
         self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
-        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hours worked', 'Pay amount', 'PTO total', 'PTO used']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours/sales']
+        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Hours/sales']
 
         self.model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -126,7 +131,7 @@ class PayRoll():
         ]
 
         self.actions = []
-        self.create_table(self.table_frame, self.headers_example, self.model_example)
+        self.create_table(self.table_frame, self.headers_example, self.values_list)
 
         self.can_listen = False
         self.is_first_draw = True
@@ -149,16 +154,16 @@ class PayRoll():
         self.right_buttons.rowconfigure(2, weight=1)
         self.right_buttons.columnconfigure(0, weight=1)
 
-        self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton')
+        self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_changes))
         self.save_button.grid(row=0, column=1, sticky=tk.NE, padx=10, pady=10)
 
-        self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=self.create_pay_period)
+        self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes? This will set all values to zero", self.create_pay_period))
         self.new_period_button.grid(row=0, column=0, sticky=tk.NW, padx=10, pady=10)
 
-        self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_file)
+        self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_hourly)
         self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
-        self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_file)
+        self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_sales)
         self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.metrics_frame = tk.Frame(self.right_frame, background=self.colors.background)
@@ -167,23 +172,23 @@ class PayRoll():
         self.metrics_frame.rowconfigure((0,1,2,3,4), weight=0)
         self.metrics_frame.columnconfigure(0, weight=1)
 
-        self.metrics_title = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24, 'bold'))
+        self.metrics_title = tk.Label(self.metrics_frame, text="Metrics", font=('Roboto', 24, 'bold'), background=self.colors.background)
         self.metrics_title.grid(row=0, sticky=tk.W)
 
-        self.expected_payout_label = tk.Label(self.metrics_frame, text="Expected payout: ", font=('Roboto', 22))
+        self.expected_payout_label = tk.Label(self.metrics_frame, text="Expected payout: ", font=('Roboto', 22), background=self.colors.background)
         self.expected_payout_label.grid(row=1, sticky=tk.W)
 
         self.expected_payout_data = tk.StringVar()
         self.expected_payout_data.set("$10,000")
-        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.expected_payout_data, font=('Roboto', 22))
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.expected_payout_data, font=('Roboto', 22), background=self.colors.background)
         self.expected_payout_display.grid(row=1, column=1, sticky=tk.W)
 
-        self.last_payout_label= tk.Label(self.metrics_frame, text="Last payout:", font=('Roboto', 22))
+        self.last_payout_label= tk.Label(self.metrics_frame, text="Last payout:", font=('Roboto', 22), background=self.colors.background)
         self.last_payout_label.grid(row=2, sticky=tk.W)
 
         self.last_payout_data = tk.StringVar()
         self.last_payout_data.set("$10,000")
-        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.last_payout_data, font=('Roboto', 22))
+        self.expected_payout_display = tk.Label(self.metrics_frame, textvariable=self.last_payout_data, font=('Roboto', 22), background=self.colors.background)
         self.expected_payout_display.grid(row=2, column=1, sticky=tk.W)
 
         self.pay_frame = tk.Frame(self.right_frame, background=self.colors.background)
@@ -192,12 +197,16 @@ class PayRoll():
         self.pay_frame.rowconfigure(0, weight=1)
         self.pay_frame.columnconfigure(0, weight=1)
 
-        self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton')
+        self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton', command=self.pay)
         self.pay_button.grid(row=0, column=0, sticky=tk.EW+tk.N, padx=10, pady=10)
 
         # self.get_table_data()
 
+    def save_changes(self):
+        print("save")
+
     def search(self, *args):
+
 
         value = self.search_value.get()
 
@@ -205,8 +214,7 @@ class PayRoll():
             return
 
         if value == '':
-            self.set_table_data(self.model_example)
-
+            self.set_table_data(self.people)
 
         self.set_table_data([
             {
@@ -214,7 +222,7 @@ class PayRoll():
                 "Last name": '',
                 "Employee number": '',
                 "Pay type": '',
-                "Hours worked": int(0),
+                "Hours/sales": '',
                 "Pay amount": '',
                 "PTO total": '',
                 "PTO used": ''
@@ -224,7 +232,7 @@ class PayRoll():
 
         search_filter = self.search_option_value.get()
 
-        data = self.get_table_data()
+        data = self.people
 
         for i in data:
             if value in i[search_filter]:
@@ -233,7 +241,26 @@ class PayRoll():
         self.set_table_data(results)
       
     def create_pay_period(self):
-        pass
+        self.NP=Controller.New_Pay
+        self.NP()
+        self.L = Controller.List_Maker()
+        self.people = self.L.data
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours/sales": '',
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+
+        self.set_table_data(self.people)
+
 
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
@@ -251,8 +278,7 @@ class PayRoll():
         return "$" + "{:,}".format(sum(data))
 
     def pay(self):
-        amount = self.current_payroll[2].cget("text")
-        print(amount)
+        print("pay")
 
     def yview(self, *args):
         if time.time() - self.scroll_poll >= .1:
@@ -299,15 +325,16 @@ class PayRoll():
         data = []
 
         for i in rotated_data:
+
             data.append({
                 "First name": i[0],
                 "Last name": i[1],
                 "Employee number": i[2],
                 "Pay type": i[3],
-                "Hours worked": int(i[4]),
-                "Pay amount": i[5],
-                "PTO total": i[6],
-                "PTO used": i[7]
+                "Pay amount": i[4],
+                "PTO total": i[5],
+                "PTO used": i[6],
+                "Hours/sales": i[7],
             })
 
         # print(data)
@@ -317,6 +344,19 @@ class PayRoll():
 
     def set_table_data(self, data):
 
+        # print(data)
+
+        if len(data) <= 1:
+            for i in self.data_columns:
+                for j in range(len(i)):
+                    if isinstance(i[j], tk.Entry):
+                        i[j].delete(0, tk.END)
+                        i[j].insert(tk.END, '')
+                    else:
+                        i[j].configure(text='')
+            if len(data) == 0:
+                return
+
         staged_data = []
 
         for i in data:
@@ -325,24 +365,34 @@ class PayRoll():
             tmp_list.append(i["Last name"])
             tmp_list.append(i["Employee number"])
             tmp_list.append(i["Pay type"])
-            tmp_list.append(i["Hours worked"])
             tmp_list.append(i["Pay amount"])
-            tmp_list.append(i["PTO total"])
-            tmp_list.append(i["PTO used"])
+            tmp_list.append(0)
+            tmp_list.append(0)
+            tmp_list.append(i["Hours/sales"])
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
 
         for i in self.data_columns:
-            for j in range(len(i)):
-                if isinstance(i[j], tk.Entry):
-                    i[j].delete(0, tk.END)
-                    i[j].insert(tk.END, new_data[self.data_columns.index(i)][j])
+            for j in range(len(new_data[self.data_columns.index(i)])):
+                if isinstance(self.data_columns[self.data_columns.index(i)][j], tk.Entry):
+                    self.data_columns[self.data_columns.index(i)][j].delete(0, tk.END)
+                    self.data_columns[self.data_columns.index(i)][j].insert(tk.END, new_data[self.data_columns.index(i)][j])
                 else:
-                    i[j].configure(text=new_data[self.data_columns.index(i)][j])
+                    self.data_columns[self.data_columns.index(i)][j].configure(text=new_data[self.data_columns.index(i)][j])
 
 
     def create_table(self, master, lyst1, lyst2):
+
+        desired_keys = [
+             "First name",
+             "Last name",
+             "Employee number",
+             "Pay type",
+             "Hours worked",
+             "Pay amount",
+             "PTO total",
+             "PTO used"]
 
         lyst1_size = len(lyst1)
 
@@ -362,53 +412,61 @@ class PayRoll():
 
             button = ttk.Button(grid_frame, text=lyst1[i],
                                 style='Header.TButton')
-            button.bind('<Button-1>', self.button_action)
+            if i <= 3:
+                button.bind('<Button-1>', self.button_action)
+
             button.grid(row=0, column=0, sticky=tk.EW)
 
-            if i != 4:
+            if i != 7:
 
-                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, width=150, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
-
-                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+#This line is weird. Future change for dynamic compatability.
+                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
                 data_items = []
-                for j in range(len(lyst2[i])):
+                for j in range(len(self.people)):
                     if j % 2 == 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=lyst2[i][j])
+
+                    try:
+                        new_value = self.people[j][lyst2[i]]
+                    except:
+                        new_value = 0
+
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=new_value)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW, width=200)
                     data_items.append(entry)
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
             else:
-                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
-
-                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+#This line is weird. Future change for dynamic compatability.
+                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
                 data_items = []
-                for j in range(len(lyst2[i])):
+                for j in range(len(self.people)):
                     if j % 2 == 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'))
+                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), width=40)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
-                    entry.insert(tk.END, lyst2[i][j])
+                    entry.insert(tk.END, self.people[j][lyst2[i]])
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
                     data_items.append(entry)
 
@@ -419,7 +477,6 @@ class PayRoll():
 
 
             # column.configure(height=len(lyst2[i]))
-
 
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
@@ -496,11 +553,57 @@ class PayRoll():
                                                title="Select file",
                                                filetypes=(("CSV Files", "*.csv"),)
                                                )
-        print(file_name)
+        return file_name
+
+    def import_hourly(self):
+        file=self.import_file()
+        IO=Controller.Import_Hourly
+        IO(file)
+        self.L = Controller.List_Maker()
+        self.people = self.L.data
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours/sales": '',
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+
+        self.set_table_data(self.people)
+
+    def import_sales(self):
+        file=self.import_file()
+        IO=Controller.Import_Sales
+        IO(file)
+        self.L = Controller.List_Maker()
+        self.people = self.L.data
+
+        self.set_table_data([
+            {
+                "First name": '',
+                "Last name": '',
+                "Employee number": '',
+                "Pay type": '',
+                "Hours/sales": '',
+                "Pay amount": '',
+                "PTO total": '',
+                "PTO used": ''
+            }
+        ])
+
+        self.set_table_data(self.people)
+
 
     def button_action(self, event):
         button_text = event.widget.cget('text')
-        button_index = self.headers_example.index(button_text)
+        button_text = button_text if button_text != "Pay rate" else "Pay amount"
+        button_index = self.values_list.index(button_text)
 
         self.actions[button_index](button_text)
 
@@ -508,20 +611,68 @@ class PayRoll():
         print(key)
 
         data = self.get_table_data()
-        sorted_data = sorted(data, key=lambda i: i[key])
+        data_copy = []
+
+        for i in range(len(data)):
+            # print(data, "\n\n####\n\n")
+            if not data[i]["First name"] == '':
+                data_copy.append(data[i])
+
+        sorted_data = sorted(data_copy, key=lambda i: i[key])
 
         # print(sorted_data)
         self.set_table_data(sorted_data)
 
-        self.actions[self.headers_example.index(key)] = self.sort_descending
+        self.actions[self.values_list.index(key)] = self.sort_descending
 
     def sort_descending(self, key):
         print(key)
 
         data = self.get_table_data()
-        sorted_data = sorted(data, key=lambda i: i[key], reverse=True)
+        data_copy = []
+
+        for i in range(len(data)):
+            # print(data, "\n\n####\n\n")
+            if not data[i]["First name"] == '':
+                data_copy.append(data[i])
+
+        sorted_data = sorted(data_copy, key=lambda i: i[key], reverse=True)
 
         # print(sorted_data)
         self.set_table_data(sorted_data)
 
-        self.actions[self.headers_example.index(key)] = self.sort_ascending
+        self.actions[self.values_list.index(key)] = self.sort_ascending
+
+    def create_are_you_sure(self, message, on_success):
+        top = tk.Toplevel(self.master)
+
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        width = screen_width / 6
+        height = screen_height / 6
+
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
+
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
+
+        top.title("Are You Sure?")
+
+        top.rowconfigure((0,1), weight=1)
+        top.columnconfigure((0,1,2), weight=1)
+
+        question = ttk.Label(top, text=message, background=self.colors.background)
+        question.grid(row=0, column=1)
+
+        button_frame = tk.Frame(top)
+        button_frame.grid(row=1, column=0, columnspan=3, sticky=tk.NSEW, pady=(height / 10, 0))
+        button_frame.columnconfigure((0,1), weight=1)
+
+        yes_button = ttk.Button(button_frame, text="Yes", style='Header.TButton', command=lambda:[on_success(), top.destroy()])
+        yes_button.grid(row=0, column=0, sticky=tk.W, padx=(width / 10, 0))
+
+        cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
+        cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
