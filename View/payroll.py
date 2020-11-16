@@ -117,7 +117,7 @@ class PayRoll():
 
         self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
-        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hours worked', 'Pay amount', 'PTO total', 'PTO used']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Hours worked']
 
         self.model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -389,15 +389,15 @@ class PayRoll():
             button.bind('<Button-1>', self.button_action)
             button.grid(row=0, column=0, sticky=tk.EW)
 
-            if i != 4:
+            if i != 7:
 
-                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, width=150, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 
-                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+                canvas = tk.Canvas(column, border=0, width=150, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(lyst2[0]))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
@@ -420,12 +420,12 @@ class PayRoll():
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
             else:
-                column = tk.Frame(grid_frame, bd=0, width=200, background=self.colors.background, relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 
-                canvas = tk.Canvas(column, border=0, width=200, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,200,(22 * len(lyst2[0]))))
+                canvas = tk.Canvas(column, border=0, width=400, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(lyst2[0]))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
@@ -436,7 +436,7 @@ class PayRoll():
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'))
+                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), width=40)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     entry.insert(tk.END, "")
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
@@ -449,7 +449,6 @@ class PayRoll():
 
 
             # column.configure(height=len(lyst2[i]))
-
 
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
