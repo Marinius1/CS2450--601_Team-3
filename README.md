@@ -1,6 +1,9 @@
 # CS2450--601_Team-3
 
 ## AnyEmployee:<br/>A product by Innovative EmpTrack
-To get started, enter the following command:<br/>`python3 filename.py`
+Before getting started, make sure that you `pip install` the following dependencies: `Ttk`, `pynput`, `pyparsing`, `matplotlib`, and `pandas`
 
-*This is where our startup guide will live, anything after startup will be described in the user manual*
+Driver code lives in **window.py**.
+
+To run the program, type `python3 window.py` into the command line. Make sure you are in the same directory as the file before you run.
+
