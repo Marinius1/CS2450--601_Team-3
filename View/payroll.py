@@ -567,6 +567,10 @@ class PayRoll():
 
     def import_hourly(self):
         file=self.import_file()
+
+        if not file:
+            return
+
         IO=Controller.Import_Hourly
         IO(file)
         self.L = Controller.List_Maker()
@@ -589,6 +593,10 @@ class PayRoll():
 
     def import_sales(self):
         file=self.import_file()
+
+        if not file:
+            return
+
         IO=Controller.Import_Sales
         IO(file)
         self.L = Controller.List_Maker()
