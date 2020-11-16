@@ -104,8 +104,8 @@ class new:
                 with open(file, 'w') as outfile:
                     json.dump(data1, outfile)
 
-n = new("employee_file.json")
-n.stupid_function()
-'''
-n.edit_PTO(Employee ID, Hours used, hours total, file to change)
-'''
+#n = new("employee_file.json")
+#n.stupid_function()
+#'''
+#n.edit_PTO(Employee ID, Hours used, hours total, file to change)
+#'''

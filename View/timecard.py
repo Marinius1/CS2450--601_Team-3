@@ -22,9 +22,7 @@ class TimeCard():
 
         # populate test data
         self.L = Controller.List_Maker()
-        self.P = Controller.PTO_Maker()
         self.people_example = self.L.data
-        self.PTO = self.P.PTO_lyst
         self.click_buffer = []
 
         self.master = master

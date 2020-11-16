@@ -72,8 +72,8 @@ class updateHours:
 
 
 
-u = updateHours("employee_file.json")
-u.updateHourly("timecards.csv")
-'''
-u.setTozero()
-'''
+#u = updateHours("employee_file.json")
+#u.updateHourly("timecards.csv")
+#'''
+#u.setTozero()
+#'''
