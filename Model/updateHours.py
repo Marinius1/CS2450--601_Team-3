@@ -27,7 +27,7 @@ class updateHours:
                             for j in line_list:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
-        with open("employee_file.json", 'w') as file:
+        with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
 
 
@@ -45,7 +45,9 @@ class updateHours:
                             for j in line_list:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
-
+        with open("Model/employee_file.json", 'w') as file:
+            json.dump(self.data, file)
+        
     def updateSalary(self, fileCSV):
         for i in self.data:
             if i["Pay type"] == "Salary":
