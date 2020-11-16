@@ -78,7 +78,6 @@ class Import_Hourly:
         FT.updateHourly(file)
         FT.updateSalary(file)
 
-
 class Import_Sales:
     def __init__(self, file):
         FT=Model.updateHours.updateHours('Model/employee_file.json')

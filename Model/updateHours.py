@@ -28,8 +28,9 @@ class updateHours:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
                             i["Timecard"] = str(total)
-                        with open("Model/employee_file.json", 'w') as file:
-                            json.dump(self.data, file)
+        with open("Model/employee_file.json", 'w') as file:
+            json.dump(self.data, file)
+
 
     def updateCommission(self, file1):
         for i in self.data:
@@ -46,8 +47,8 @@ class updateHours:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
                             i["Timecard"] = str(total)
-                        with open("Model/employee_file.json", 'w') as file:
-                            json.dump(self.data, file)
+        with open("Model/employee_file.json", 'w') as file:
+            json.dump(self.data, file)
 
     def updateSalary(self, file1):
         for i in self.data:
@@ -64,8 +65,8 @@ class updateHours:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
                             i["Timecard"] = str(total)
-                        with open("Model/employee_file.json", 'w') as file:
-                            json.dump(self.data, file)
+        with open("Model/employee_file.json", 'w') as file:
+            json.dump(self.data, file)
 
     def setTozero(self):
         for i in self.data:
