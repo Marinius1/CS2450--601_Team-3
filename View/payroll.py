@@ -43,7 +43,6 @@ class PayRoll():
                        foreground=[('active', self.colors.background)])
         self.style.configure('Recent.TLabel',
                              background=self.colors.background,
-                             # background='red',
                              foreground=self.colors.foreground,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
@@ -117,7 +116,8 @@ class PayRoll():
 
         self.scroll_poll = time.time()
         self.scrollbar = tk.Scrollbar(self.table_frame)
-        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Hours worked']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours worked']
+        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Hours/sales']
 
         self.model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -131,7 +131,7 @@ class PayRoll():
         ]
 
         self.actions = []
-        self.create_table(self.table_frame, self.headers_example, self.model_example)
+        self.create_table(self.table_frame, self.headers_example, self.values_list)
 
         self.can_listen = False
         self.is_first_draw = True
@@ -222,7 +222,7 @@ class PayRoll():
                 "Last name": '',
                 "Employee number": '',
                 "Pay type": '',
-                "Hours worked": int(0),
+                "Hours worked": '',
                 "Pay amount": '',
                 "PTO total": '',
                 "PTO used": ''
@@ -241,7 +241,11 @@ class PayRoll():
         self.set_table_data(results)
       
     def create_pay_period(self):
-        print("create pay period")
+        self.NP=Controller.New_Pay
+        self.NP()
+        self.people = self.L.data
+        self.set_table_data(self.people)
+
 
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
@@ -417,7 +421,7 @@ class PayRoll():
                         background = self.colors.a7
 
                     try:
-                        new_value = self.people[j][lyst1[i]]
+                        new_value = self.people[j][lyst2[i]]
                     except:
                         new_value = 0
 

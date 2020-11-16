@@ -67,7 +67,7 @@ class updateHours:
         for i in self.data:
             if i["Pay type"] == "Salary" or i["Pay type"] == "Commission" or i["Pay type"] == "Hourly":
                 i["Hours/sales"] = "0"
-        with open("employee_file.json", 'w') as file:
+        with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
 
 

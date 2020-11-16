@@ -13,16 +13,16 @@ class new:
 
 
     def stupid_function(self):
-        x1 = "0.json"
-        x2 = "1.json"
-        x3 = "2.json"
-        x4 = "3.json"
-        x5 = "4.json"
-        x6 = "5.json"
-        x7 = "6.json"
-        x8 = "7.json"
-        x9 = "8.json"
-        x10 = "9.json"
+        x1 = "Model/0.json"
+        x2 = "Model/1.json"
+        x3 = "Model/2.json"
+        x4 = "Model/3.json"
+        x5 = "Model/4.json"
+        x6 = "Model/5.json"
+        x7 = "Model/6.json"
+        x8 = "Model/7.json"
+        x9 = "Model/8.json"
+        x10 = "Model/9.json"
 
         with open(x9) as f:
             d9 = json.load(f)
