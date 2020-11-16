@@ -71,6 +71,17 @@ class New_Pay:
         Wy=Model.updateHours.updateHours("Model/employee_file.json")
         Wy.setTozero()
 
+
+class Import_Hourly:
+    def __init__(self, file):
+        FT=Model.updateHours.updateHours('Model/employee_file.json')
+        FT.updateHourly(file)
+
+
+class Import_Sales:
+    def __init__(self, file):
+        FT=Model.updateHours.updateHours('Model/employee_file.json')
+        FT.updateCommission(file)
         
 
 """ Controller module.

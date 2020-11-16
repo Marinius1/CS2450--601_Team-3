@@ -160,10 +160,10 @@ class PayRoll():
         self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=self.create_pay_period)
         self.new_period_button.grid(row=0, column=0, sticky=tk.NW, padx=10, pady=10)
 
-        self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_file)
+        self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_hourly)
         self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
-        self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_file)
+        self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_sales)
         self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.metrics_frame = tk.Frame(self.right_frame, background=self.colors.background)
@@ -353,7 +353,7 @@ class PayRoll():
             tmp_list.append(i["Pay amount"])
             tmp_list.append(0)
             tmp_list.append(0)
-            tmp_list.append(0)
+            tmp_list.append(i["Hours/sales"])
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
@@ -536,7 +536,22 @@ class PayRoll():
                                                title="Select file",
                                                filetypes=(("CSV Files", "*.csv"),)
                                                )
-        print(file_name)
+        return file_name
+
+    def import_hourly(self):
+        file=self.import_file()
+        IO=Controller.Import_Hourly
+        IO(file)
+        self.people = self.L.data
+        self.set_table_data(self.people)
+
+    def import_sales(self):
+        file=self.import_file()
+        IO=Controller.Import_Sales
+        IO(file)
+        self.people = self.L.data
+        self.set_table_data(self.people)
+
 
     def button_action(self, event):
         button_text = event.widget.cget('text')
