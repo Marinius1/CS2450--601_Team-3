@@ -243,6 +243,7 @@ class PayRoll():
     def create_pay_period(self):
         self.NP=Controller.New_Pay
         self.NP()
+        self.L = Controller.List_Maker()
         self.people = self.L.data
         self.set_table_data(self.people)
 
@@ -542,6 +543,7 @@ class PayRoll():
         file=self.import_file()
         IO=Controller.Import_Hourly
         IO(file)
+        self.L = Controller.List_Maker()
         self.people = self.L.data
         self.set_table_data(self.people)
 
@@ -549,6 +551,7 @@ class PayRoll():
         file=self.import_file()
         IO=Controller.Import_Sales
         IO(file)
+        self.L = Controller.List_Maker()
         self.people = self.L.data
         self.set_table_data(self.people)
 
