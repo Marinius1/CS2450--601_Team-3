@@ -154,7 +154,7 @@ class PayRoll():
         self.right_buttons.rowconfigure(2, weight=1)
         self.right_buttons.columnconfigure(0, weight=1)
 
-        self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton')
+        self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_changes))
         self.save_button.grid(row=0, column=1, sticky=tk.NE, padx=10, pady=10)
 
         self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=self.create_pay_period)
@@ -197,10 +197,13 @@ class PayRoll():
         self.pay_frame.rowconfigure(0, weight=1)
         self.pay_frame.columnconfigure(0, weight=1)
 
-        self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton')
+        self.pay_button = ttk.Button(self.pay_frame, text='Pay', style='Header.TButton', command=self.pay)
         self.pay_button.grid(row=0, column=0, sticky=tk.EW+tk.N, padx=10, pady=10)
 
         # self.get_table_data()
+
+    def save_changes(self):
+        print("save")
 
     def search(self, *args):
 
@@ -238,7 +241,7 @@ class PayRoll():
         self.set_table_data(results)
       
     def create_pay_period(self):
-        pass
+        print("create pay period")
 
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
@@ -256,8 +259,7 @@ class PayRoll():
         return "$" + "{:,}".format(sum(data))
 
     def pay(self):
-        amount = self.current_payroll[2].cget("text")
-        print(amount)
+        print("pay")
 
     def yview(self, *args):
         if time.time() - self.scroll_poll >= .1:
@@ -574,3 +576,37 @@ class PayRoll():
         self.set_table_data(sorted_data)
 
         self.actions[self.headers_example.index(key)] = self.sort_ascending
+
+    def create_are_you_sure(self, message, on_success):
+        top = tk.Toplevel(self.master)
+
+        screen_width = self.master.winfo_screenwidth()
+        screen_height = self.master.winfo_screenheight()
+
+        width = screen_width / 6
+        height = screen_height / 6
+
+        x_pos = (screen_width / 2) - (width / 2)
+        y_pos = (screen_height / 2) - (height / 2)
+
+        top.geometry("%dx%d%+d%+d" % (width, height, x_pos, y_pos))
+        top.transient(self.master)
+        top.grab_set()
+
+        top.title("Are You Sure?")
+
+        top.rowconfigure((0,1), weight=1)
+        top.columnconfigure((0,1,2), weight=1)
+
+        question = ttk.Label(top, text=message, background=self.colors.background)
+        question.grid(row=0, column=1)
+
+        button_frame = tk.Frame(top)
+        button_frame.grid(row=1, column=0, columnspan=3, sticky=tk.NSEW, pady=(height / 10, 0))
+        button_frame.columnconfigure((0,1), weight=1)
+
+        yes_button = ttk.Button(button_frame, text="Yes", style='Header.TButton', command=lambda:[on_success(), top.destroy()])
+        yes_button.grid(row=0, column=0, sticky=tk.W, padx=(width / 10, 0))
+
+        cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
+        cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))

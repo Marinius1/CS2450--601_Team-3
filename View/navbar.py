@@ -76,17 +76,13 @@ class NavBar():
         self.nav_people.configure(style='Nav.TButton')
         self.nav_people.grid(row=0, column=2, sticky=tk.NS)
 
-        self.nav_time = ttk.Button(self.nav_frame, text="Time Card", command=window.timecard)
-        self.nav_time.configure(style='Nav.TButton')
-        self.nav_time.grid(row=0, column=3, sticky=tk.NS)
-
         self.nav_pay = ttk.Button(self.nav_frame, text="Payroll", command=window.pay)
         self.nav_pay.configure(style='Nav.TButton')
-        self.nav_pay.grid(row=0, column=4, sticky=tk.NS)
+        self.nav_pay.grid(row=0, column=3, sticky=tk.NS)
 
         self.nav_admin = ttk.Button(self.nav_frame, text="Admin", command=window.admin)
         self.nav_admin.configure(style='Nav.TButton')
-        self.nav_admin.grid(row=0, column=5, sticky=tk.NS)
+        self.nav_admin.grid(row=0, column=4, sticky=tk.NS)
 
         # help button
         self.nav_frame.columnconfigure(6, weight=1)
