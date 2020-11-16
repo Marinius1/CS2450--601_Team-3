@@ -205,6 +205,16 @@ class PayRoll():
     def save_changes(self):
         print("save")
 
+        staged_data = self.get_table_data()
+
+        data = []
+
+        for i in staged_data:
+            if i["First name"] != '':
+                data.append(i)
+
+        print(data)
+
     def search(self, *args):
 
 
