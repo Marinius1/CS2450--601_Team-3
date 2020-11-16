@@ -290,11 +290,17 @@ class PayRoll():
         return "$" + "{:,}".format(sum(data))
 
     def pay(self):
-        print("pay")
+        self.pay=Controller.payPay
+        self.pay()
 
-        data = "ok"
+        with open('./Payroll.csv') as infile:
+            data = infile.readlines()
+            datastr = ""
+            for i in data:
+                datastr += i
+            print(data)
 
-        self.create_pay_modal("This is your payroll data", data)
+        self.create_pay_modal("This is your payroll data\n", datastr)
 
     def yview(self, *args):
         if time.time() - self.scroll_poll >= .1:

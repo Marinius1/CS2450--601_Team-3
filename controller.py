@@ -11,6 +11,7 @@ from Model.Delete_Employee import delete_employee
 import Model.newFile
 import Model.updateHours
 import Model.EditEmployeeFile
+import Model.payRoll
 
 
 #Creates employee list for input into View
@@ -88,6 +89,13 @@ class Save_Payroll_Shits:
     def __init__(self, lyst):
         SPS=Model.EditEmployeeFile.editThis(lyst)
         SPS.edit()
+
+
+class payPay:
+    def __init__(self):
+        PP=Model.payRoll.payRoll("Payroll.csv")
+        PP.payroll()
+
 
         
 
