@@ -319,7 +319,7 @@ class PayRoll():
                 "Pay amount": i[4],
                 "PTO total": i[5],
                 "PTO used": i[6],
-                "Hours worked": i[7],
+                "Hours/sales": i[7],
             })
 
         # print(data)
@@ -329,7 +329,7 @@ class PayRoll():
 
     def set_table_data(self, data):
 
-
+        print(data)
 
         if len(data) <= 1:
             for i in self.data_columns:
@@ -449,7 +449,7 @@ class PayRoll():
                         background = self.colors.a7
                     entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), width=40)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
-                    entry.insert(tk.END, "")
+                    entry.insert(tk.END, self.people[j][lyst2[i]])
                     canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
                     data_items.append(entry)
 
@@ -555,7 +555,8 @@ class PayRoll():
 
     def button_action(self, event):
         button_text = event.widget.cget('text')
-        button_index = self.headers_example.index(button_text)
+        button_text = button_text if button_text != "Pay rate" else "Pay amount"
+        button_index = self.values_list.index(button_text)
 
         self.actions[button_index](button_text)
 
