@@ -1,4 +1,5 @@
 import json
+import os
 
 '''
 Updates employee pay info and stores.
@@ -26,86 +27,87 @@ class new:
 
         with open(x9) as f:
             d9 = json.load(f)
-            with open(x10, 'w') as f1:
-                json.dump(d9, f1)
+            os.remove(x10)
+            with open(x10, 'w') as f3:
+                json.dump(d9, f3)
 
         with open(x8) as f:
             d8 = json.load(f)
-            with open(x9, 'w') as f1:
-                json.dump(d8, f1)
+            os.remove(x9)
+            with open(x9, 'w') as f3:
+                json.dump(d8, f3)
 
         with open(x7) as f:
             d7 = json.load(f)
-            with open(x8, 'w') as f1:
-                json.dump(d7, f1)
+            os.remove(x8)
+            with open(x8, 'w') as f3:
+                json.dump(d7, f3)
 
         with open(x6) as f:
             d6 = json.load(f)
-            with open(x7, 'w') as f1:
-                json.dump(d6, f1)
+            os.remove(x7)
+            with open(x7, 'w') as f3:
+                json.dump(d6, f3)
 
         with open(x5) as f:
             d5 = json.load(f)
-            with open(x6, 'w') as f1:
-                json.dump(d5, f1)
+            os.remove(x6)
+            with open(x6, 'w') as f3:
+                json.dump(d5, f3)
 
         with open(x4) as f:
             d4 = json.load(f)
-            with open(x5, 'w') as f1:
-                json.dump(d4, f1)
+            os.remove(x5)
+            with open(x5, 'w') as f3:
+                json.dump(d4, f3)
 
         with open(x3) as f:
             d3 = json.load(f)
-            with open(x4, 'w') as f1:
-                json.dump(d3, f1)
+            os.remove(x4)
+            with open(x4, 'w') as f3:
+                json.dump(d3, f3)
 
         with open(x2) as f:
             d2 = json.load(f)
-            with open(x3, 'w') as f1:
-                json.dump(d2, f1)
+            os.remove(x3)
+            with open(x3, 'w') as f3:
+                json.dump(d2, f3)
+
 
         with open(x1) as f:
             d1 = json.load(f)
-            with open(x2, 'w') as f1:
-                json.dump(d1, f1)
+            os.remove(x2)
+            with open(x2, 'w') as f3:
+                json.dump(d1, f3)
 
-        with open(x1) as f:
-            d1 = json.load(f)
-            for i in self.data:
-                if i["Pay type"] == "Hourly":
-                    z = float(i["Pay amount"]) * float(i["Hours/sales"])
-                    zz = float(i["Hours/sales"]) // 8 #Hourly accrue 1 hour per 8 hours worked.
-                    zzz = zz // 3 #random amount time used
+        os.remove(x1)
+        d = []
+        for i in self.data:
+            if i["Pay type"] == "Hourly":
+                z = float(i["Pay amount"]) * float(i["Hours/sales"])
 
-                elif i["Pay type"] == "Commission":
-                    z = float(i["Pay amount"]) * float(i["Hours/sales"])
-                    zz = z // 100 #Commission earn an 1 for every $100
-                    zzz = zz // 3  # random amount time used
+            elif i["Pay type"] == "Commission":
+                z = float(i["Pay amount"]) * float(i["Hours/sales"])
 
-                elif i["Pay type"] == "Salary":
-                    z = float(i["Pay amount"]) / 12
-                    zz = 25
-                    zzz = zz  // 3 # random amount time used
+            elif i["Pay type"] == "Salary":
+                z = float(i["Pay amount"]) / 12
 
-                d1.append({"Employee number": i["Employee number"], "First name": i["First name"],
-                           "Last name": i["Last name"], "Total pay": str(round(z,2)), "PTO used": str(zzz), "PTO total":str(zz)})
-            with open(x1, 'w') as f:
-                json.dump(d1, f)
+            d.append({"Employee number": i["Employee number"], "First name": i["First name"],
+                           "Last name": i["Last name"], "Total pay": str(round(z,2))})
+        with open(x1, 'w') as f:
+            json.dump(d, f)
 
-    def edit_PTO(self, employeeId, hours_used, hours_remain, file):
-        with open(file) as f:
-            data1 = json.load(f)
-        for i in data1:
+    def edit_PTO(self, employeeId, hours_used, hours_remain):
+        for i in self.data:
             if i["Employee number"] == employeeId:
-                z = data1.index(i)
-                data1.pop(z)
-                data1.append({"Employee number": i["Employee number"], "Total pay": i["Total pay"],
-                              "PTO total": hours_remain, "PTO used": hours_used})
-                with open(file, 'w') as outfile:
-                    json.dump(data1, outfile)
+                i["PTO"] = hours_remain
+                i["PTOused"] = hours_used
+
+        with open("employee_file.json", 'w') as outfile:
+            json.dump(self.data, outfile)
+
+
 
 n = new("employee_file.json")
+#n.edit_PTO("55-555555", '3', '3')
 n.stupid_function()
-'''
-n.edit_PTO(Employee ID, Hours used, hours total, file to change)
-'''

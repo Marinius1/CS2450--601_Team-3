@@ -13,11 +13,11 @@ class updateHours:
         with open(filename) as file:
             self.data = json.load(file)
 
-    def updateHourly(self, fileCSV):
+    def updateHourly(self):
         for i in self.data:
             if i["Pay type"] == "Hourly":
                 p = i["Employee number"]
-                with open(fileCSV, 'r') as f:
+                with open("timecards.csv", 'r') as f:
                     for line in f:
                         strippedLine = line.strip()
                         line_list = strippedLine.split(',')
@@ -27,15 +27,15 @@ class updateHours:
                             for j in line_list:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
-        with open("employee_file.json", 'w') as file:
-            json.dump(self.data, file)
+                            i["Timecard"] = str(total)
+                        with open("employee_file.json", 'w') as file:
+                            json.dump(self.data, file)
 
-
-    def updateCommission(self, fileCSV):
+    def updateCommission(self):
         for i in self.data:
             if i["Pay type"] == "Commission":
                 p = i["Employee number"]
-                with open(fileCSV, 'r') as f:
+                with open("timecards.csv", 'r') as f:
                     for line in f:
                         strippedLine = line.strip()
                         line_list = strippedLine.split(',')
@@ -45,12 +45,15 @@ class updateHours:
                             for j in line_list:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
+                            i["Timecard"] = str(total)
+                        with open("employee_file.json", 'w') as file:
+                            json.dump(self.data, file)
 
-    def updateSalary(self, fileCSV):
+    def updateSalary(self):
         for i in self.data:
             if i["Pay type"] == "Salary":
                 p = i["Employee number"]
-                with open(fileCSV, 'r') as f:
+                with open("timecards.csv", 'r') as f:
                     for line in f:
                         strippedLine = line.strip()
                         line_list = strippedLine.split(',')
@@ -60,20 +63,22 @@ class updateHours:
                             for j in line_list:
                                 total.append(float(j))
                             i["Hours/sales"] = str(sum(total))
-        with open("employee_file.json", 'w') as file:
-            json.dump(self.data, file)
+                            i["Timecard"] = str(total)
+                        with open("employee_file.json", 'w') as file:
+                            json.dump(self.data, file)
 
     def setTozero(self):
         for i in self.data:
             if i["Pay type"] == "Salary" or i["Pay type"] == "Commission" or i["Pay type"] == "Hourly":
                 i["Hours/sales"] = "0"
+                i["Timecards"] = "[]"
         with open("employee_file.json", 'w') as file:
             json.dump(self.data, file)
 
 
 
 u = updateHours("employee_file.json")
-u.updateHourly("timecards.csv")
-'''
-u.setTozero()
-'''
+u.updateHourly()
+u.updateCommission()
+u.updateSalary()
+#u.setTozero()

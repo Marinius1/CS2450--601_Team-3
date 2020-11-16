@@ -29,7 +29,6 @@ class payRoll:
                 f1.write('\n')
 
 
-'''
+
 p = payRoll()
 p.payroll("payroll.csv")
-'''

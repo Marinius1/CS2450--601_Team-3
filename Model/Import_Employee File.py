@@ -11,7 +11,10 @@ class addToEmployeeFile:
 
     def __init__(self, number, first, last, type, amount, address, state,
                  city, zip, bDay, bMonth, bYear, social, pNumber, sDay, sMonth, sYear,
-                 hours_sales, role, pos, team):
+                 hours_sales, role, pos, team, timecard, PTO, PTOused):
+        self.PTO = PTO
+        self.PTOused = PTOused
+        self.timecard = timecard
         self.pos = pos
         self.team = team
         self.role = role
@@ -44,7 +47,7 @@ class addToEmployeeFile:
                        "Birth day": self.bDay, "Birth month": self.bMonth, "Birth year": self.bYear,
                  "Social security": self.social, "Phone": self.pNumber, "Start day": self.sDay,
                  "Start month": self.sMonth, "Start year": self.sYear, "Hours/sales": self.hours_sales,
-                 "Role": self.role, "Position": self.pos, "Team": self.team})
+                 "Role": self.role, "Position": self.pos, "Team": self.team, "Timecard": self.timecard,"PTO": self.PTO, "PTOused": self.PTOused})
 
 
         with open('employee_file.json', 'w') as outfile:
@@ -145,7 +148,9 @@ class getData:
 
                 i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification),
                                       str(address), str(state),str(city), str(empZip), str(day1), str(month1), str(year1), str(social()),
-                                      str(phone()),str(day2), str(month2), str(year2),str(hours_sales),str(role()),str(position()),str(teams()))
+                                      str(phone()),str(day2), str(month2), str(year2),
+                                      str(hours_sales),str(role()),str(position()),str(teams()), str([]),
+                                      str(random.randint(2,8)), str(random.randint(0,2)))
                 i.add_to_employee_file()
 
 

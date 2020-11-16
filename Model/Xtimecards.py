@@ -1,9 +1,15 @@
 import json
 
+with open("0.json") as f:
+    a = json.load(f)
+    a.clear()
+with open("0.json", 'w') as f1:
+    json.dump(a, f1)
+
 '''
 IGNORE
 '''
-
+'''
 class timeCards:
 
     def __init__(self, filename):
@@ -70,3 +76,4 @@ class timeCards:
 t = timeCards("employee_file.json")
 t.employee_list_time_cards()
 #t.edit_time_card("47-2771794", 50)
+'''
