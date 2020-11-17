@@ -21,9 +21,10 @@ class Color:
         # os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
         self.scheme = scheme
-        self.scheme_path = "./View/Colors/thirdparty/iTerm2-Color-Schemes/schemes" \
-                           "/" + self.scheme + ".itermcolors"
-
+#        self.scheme_path = "./View/Colors/thirdparty/iTerm2-Color-Schemes/schemes" \
+#                           "/" + self.scheme + ".itermcolors"
+        self.scheme_path = "./View/Colors/Builtin Light.itermcolors"
+        
         self.tree = xml.parse(self.scheme_path)
         self.root = self.tree.getroot()
 
