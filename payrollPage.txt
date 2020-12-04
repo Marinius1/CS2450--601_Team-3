@@ -1,0 +1,13 @@
+Payroll:
+First name - First name of the employee. Default sorting is by this name.
+Last name - Last name of the employee.
+Employee number - Identification number of employee. Unique for every employee.
+Pay type - Type of compensation the employee receives (Hourly, Salary, Commission)
+Pay amount - Base pay for the employee. This will be reflected in the pay stub depending on their pay type. 
+PTO Total - Total PTO accrued
+PTO Uses - Total PTO used by the employee
+Hours worked - Total hours worked in the pay period
+
+Search - Search bar that allows you to search for specific employees. Search option allows you to modify your search by First name, Last name, or Employee number
+
+Period - Allows you to change the viewed pay period. 
