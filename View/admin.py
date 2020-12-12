@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
+from View.resize_utility import ResizeUtility
 import controller as Controller
 import datetime
 
@@ -31,6 +32,8 @@ class Admin():
         self.screen_width = self.master.winfo_screenwidth()
         self.screen_height = self.master.winfo_screenheight()
 
+        self.resize_utility = ResizeUtility(self.master)
+
         self.name = name
         self.colors = Color(theme).colors
         self.style = ttk.Style()
@@ -48,6 +51,9 @@ class Admin():
                              font=('Roboto', 24)
                              )
 
+        self.style.configure(style='Recent.TLabel', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Recent.TLabel', "body")
+
         self.style.map('Header.TButton',
                        background=[('active', self.colors.a8)],
                        foreground=[('active', self.colors.background)])
@@ -60,6 +66,9 @@ class Admin():
                              focuscolor=self.colors.a10,
                              font=('Roboto', 16)
                              )
+
+        self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Header.TButton', "body")
 
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3,
@@ -119,6 +128,8 @@ class Admin():
                                          font=('Roboto', 16))
         self.people_listbox.grid(row=2, column=0, columnspan=2, sticky=tk.NSEW)
 
+        self.resize_utility.register_element(self.people_listbox, "body")
+
         self.populate_people(self.people_example)
 
         self.right_frame = tk.Frame(self.home_frame)
@@ -150,6 +161,7 @@ class Admin():
 
         self.section_info = tk.Label(self.info_identity_frame, text="Employee Info", font=('Roboto', 20), foreground=self.colors.background, background=self.colors.a7)
         self.section_info.grid(row=0, column=0, pady=self.screen_height * 0.025, columnspan=5, sticky=tk.EW)
+        self.resize_utility.register_element(self.section_info, "body")
 
         self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', '', 1)
         self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', '', 1, 2)
@@ -242,6 +254,7 @@ class Admin():
 
         self.section_job_info = tk.Label(self.info_identity_frame, text="Job Info", font=('Roboto', 20), foreground=self.colors.background, background=self.colors.a7)
         self.section_job_info.grid(row=8, column=0, pady=self.screen_height * 0.025, columnspan=5, sticky=tk.EW)
+        self.resize_utility.register_element(self.section_job_info, "body")
 
         self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 9)
         self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9, 2)
@@ -464,18 +477,18 @@ class Admin():
             self.people_listbox.itemconfigure(i, background=background)
 
     def create_text_entry(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
-        label = ttk.Label(master, text=label)
+        label = ttk.Label(master, text=label, style='Recent.TLabel')
         label.configure(background=self.colors.background)
         label.grid(row=row, column=column_start, sticky=sticky)
 
-        entry = ttk.Entry(master)
+        entry = ttk.Entry(master, style='Recent.TLabel')
         entry.insert(0, placeholder)
         entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
         return {"label": label, "entry": entry}
 
     def create_dropdown_menu(self, master, label, options, row, column_start=0):
 
-        label = ttk.Label(master, text=label)
+        label = ttk.Label(master, text=label, style='Recent.TLabel')
         label.configure(background=self.colors.background)
         label.grid(row=row, column=column_start, sticky=tk.E)
 
