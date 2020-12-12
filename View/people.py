@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
+from View.resize_utility import ResizeUtility
 import controller as Controller
 import random
 
@@ -57,8 +58,12 @@ class People():
 
         self.home_frame.rowconfigure(0, weight=1)
 
+        self.resize_utility = ResizeUtility(self.master)
+        self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
+
         self.scrollbar = tk.Scrollbar(self.home_frame)
 
+        self.buttons = []
         self.data_columns = []
 
         self.model_example = Controller.List_Maker()
@@ -71,6 +76,7 @@ class People():
         self.table = self.create_table(self.headers_example, self.model_example.data)
         self.sort_ascending("First name")
         self.scrollbar.configure(command=self.yview)
+
 
     def button_action(self, event):
         button_text = event.widget.cget('text')
@@ -191,11 +197,11 @@ class People():
                                 background=self.colors.background,
                                 relief=tk.FLAT,
                                 yscrollcommand=self.sync_yview,
-                                font=('Roboto', 16))
+                                font=('Roboto', self.resize_utility.body_text()))
             column.grid(row=1, column=0, sticky=tk.NS)
 
-            table.append(column)
 
+            table.append(column)
 
 
 
@@ -207,4 +213,15 @@ class People():
         self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, sticky=tk.N+tk.S+tk.E)
 
+        # self.home_frame.bind('<Configure>', lambda event: self.resize(event=event))
+
+        for i in self.data_columns:
+            self.resize_utility.register_element(i, "body")
+
+        self.resize_utility.register_style(self.style, "Header.TButton", "body")
+
         return table
+
+    def resize(self, event):
+        for i in self.data_columns:
+            i.configure(font=('Roboto', int(event.height * .02)))

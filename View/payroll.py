@@ -447,7 +447,7 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,(22 * len(self.people))))
+                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,((24 + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
@@ -463,9 +463,9 @@ class PayRoll():
                     except:
                         new_value = 0
 
-                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), text=new_value)
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '24'), text=new_value)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
-                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW, width=200)
+                    canvas.create_window(0, ((24 + 6) * j), window=entry, anchor=tk.NW, width=200)
                     data_items.append(entry)
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
@@ -475,7 +475,7 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,(22 * len(self.people))))
+                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((24 + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
@@ -486,10 +486,10 @@ class PayRoll():
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '16'), width=40)
+                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '24'), width=40)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     entry.insert(tk.END, self.people[j][lyst2[i]])
-                    canvas.create_window(0, (22 * j), window=entry, anchor=tk.NW)
+                    canvas.create_window(0, ((24 + 6) * j), window=entry, anchor=tk.NW)
                     data_items.append(entry)
 
                 self.data_columns.append(data_items)

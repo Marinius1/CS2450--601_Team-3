@@ -7,6 +7,8 @@ On application init
 
 import tkinter as tk
 from tkinter import ttk
+from pynput.mouse import Listener
+
 from controller import *
 from View.menu import Menu
 from View.Colors.color import Color
@@ -17,6 +19,8 @@ from View.admin import Admin
 from View.login import Login
 from View.timecard import TimeCard
 from View.payroll import PayRoll
+
+from View.resize_utility import ResizeUtility
 
 
 class Window():
@@ -59,6 +63,10 @@ class Window():
         self.page_home = Login(self.master, theme=theme, window=self)
         # self.nav = NavBar(self.master, name="nav", theme=theme, window=self)
         # self.page_home = Homepage(self.master, name="homepage", theme=theme)
+
+        # self.master.bind('<Configure>', lambda event: self.resize(event=event))
+
+        # self.resize_utility = ResizeUtility(self.master)
 
     @property
     def size(self):
@@ -108,6 +116,8 @@ class Window():
         self.nav.help_content = "./View/help_files/payroll.txt"
         self.page_home = PayRoll(self.master, theme=self.theme)
         self.master.update()
+
+
 
 if __name__=="__main__":
     root = tk.Tk()
