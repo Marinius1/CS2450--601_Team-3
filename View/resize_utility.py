@@ -8,6 +8,7 @@ class ResizeUtility:
 
         self.element_callbacks = []
         self.style_callbacks = []
+        self.canvas_callbacks = []
 
         self.can_listen = False
         self.is_first_draw = True
@@ -24,6 +25,9 @@ class ResizeUtility:
 
     def register_style(self, style, tag, mode):
         self.style_callbacks.append([style, tag, mode])
+
+    def register_canvas(self, canvas, len):
+        self.canvas_callbacks.append([canvas, len])
 
     def on_click(self, x, y, button, pressed):
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
@@ -48,6 +52,9 @@ class ResizeUtility:
                     # print(i[0])
                     # print(self.body_text())
                     i[0].configure(style=i[1], font=('Roboto', self.body_text()))
+
+            for i in self.canvas_callbacks:
+                i[0].configure(scrollregion=(i[1][0], i[1][2], self.body_text(), i[1][3]))
 
             self.can_listen = False
             self.listener.stop()

@@ -5,6 +5,7 @@ from tkinter import filedialog
 from pynput.mouse import Listener
 import time
 
+from View.resize_utility import ResizeUtility
 from .Colors.color import Color
 import controller as Controller
 
@@ -29,6 +30,8 @@ class PayRoll():
 
         self.master = master
 
+        self.resize_utility = ResizeUtility(self.master)
+
         self.L = Controller.List_Maker()
         self.people = self.L.data
         # print(self.people)
@@ -49,6 +52,9 @@ class PayRoll():
                              font=('Roboto', 24)
                              )
 
+        self.style.configure(style='Recent.TLabel', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Recent.TLabel', "body")
+
         self.style.map('Pay.TButton',
                        background=[('active', self.colors.a2)],
                        foreground=[('active', self.colors.background)])
@@ -61,7 +67,24 @@ class PayRoll():
                              focuscolor=self.colors.a11,
                              font=('Roboto', 24)
                              )
+        self.style.configure(style='Pay.TButton', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Pay.TButton', "body")
 
+        self.style.map('Header.TButton',
+                       background=[('active', self.colors.a8)],
+                       foreground=[('active', self.colors.background)])
+        self.style.configure('Header.TButton',
+                             background=self.colors.a7,
+                             foreground=self.colors.background,
+                             borderwidth=0,
+                             bordercolor=self.colors.a0,
+                             focusthickness=3,
+                             focuscolor=self.colors.a10,
+                             font=('Roboto', 16)
+                             )
+
+        self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Header.TButton', "body")
 
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3, relief=tk.RIDGE)
@@ -447,13 +470,14 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,((24 + 6) * len(self.people))))
+                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
+                self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
                 data_items = []
                 for j in range(len(self.people)):
-                    if j % 2 == 0:
+                    if j % 2 != 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
@@ -463,9 +487,10 @@ class PayRoll():
                     except:
                         new_value = 0
 
-                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '24'), text=new_value)
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
-                    canvas.create_window(0, ((24 + 6) * j), window=entry, anchor=tk.NW, width=200)
+                    self.resize_utility.register_element(entry, "body")
+                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=200)
                     data_items.append(entry)
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
@@ -475,21 +500,25 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((24 + 6) * len(self.people))))
+                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
+                self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
                 data_items = []
                 for j in range(len(self.people)):
-                    if j % 2 == 0:
+                    if j % 2 != 0:
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Entry(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', '24'), width=40)
+                    entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
+
+
+                    self.resize_utility.register_element(entry, "body")
                     entry.insert(tk.END, self.people[j][lyst2[i]])
-                    canvas.create_window(0, ((24 + 6) * j), window=entry, anchor=tk.NW)
+                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW)
                     data_items.append(entry)
 
                 self.data_columns.append(data_items)
@@ -497,8 +526,8 @@ class PayRoll():
 
 
 
-
             # column.configure(height=len(lyst2[i]))
+
 
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
