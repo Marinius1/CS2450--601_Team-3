@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from .Colors.color import Color
+from View.resize_utility import ResizeUtility
 from .button import Button
 import os
 
@@ -21,6 +22,8 @@ class NavBar():
         methods as needed.
         """
         self.master = master
+
+        self.resize_utility = ResizeUtility(window.master)
 
         self.name = name
 
@@ -54,6 +57,10 @@ class NavBar():
                              focusthickness=3,
                              focuscolor=self.colors.a10
                              )
+
+        self.style.configure(style='Nav.TButton', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Nav.TButton', "body")
+
         self.style.map('Help.TButton', background=[('active', self.colors.a8)],
                        foreground=[('active', self.colors.background)])
         self.style.configure('Help.TButton',
@@ -64,6 +71,8 @@ class NavBar():
                              focusthickness=3,
                              focuscolor=self.colors.a10
                              )
+        self.style.configure(style='Help.TButton', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Help.TButton', "body")
 
         self.style.map('Help.TLabel')
         self.style.configure('Help.TLabel', font=('Roboto', 24))
@@ -88,6 +97,7 @@ class NavBar():
         self.nav_frame.columnconfigure(6, weight=1)
         self.button_help = ttk.Button(self.nav_frame, text="Help", style='Help.TButton', command=self.help)
         self.button_help.grid(row=0, column = 6, sticky=tk.E, padx=(0, 25))
+
 
     def help(self):
         self.create_help_modal("This is the help modal.")
