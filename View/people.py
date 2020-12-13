@@ -74,7 +74,7 @@ class People():
         self.header_button_actions = [self.sort_descnding for i in range(len(self.headers_example))]
 
         self.table = self.create_table(self.headers_example, self.model_example.data)
-        self.sort_ascending("First name")
+        self.sort_ascending("Last name")
         self.scrollbar.configure(command=self.yview)
 
 

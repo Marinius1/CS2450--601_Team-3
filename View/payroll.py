@@ -156,6 +156,8 @@ class PayRoll():
         self.actions = []
         self.create_table(self.table_frame, self.headers_example, self.values_list)
 
+        self.sort_ascending("Last name")
+
         self.can_listen = False
         self.is_first_draw = True
         self.listener = None
