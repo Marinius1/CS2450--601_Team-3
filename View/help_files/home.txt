@@ -1,1 +1,18 @@
 Home page help file
+
+Welcome to AnyEmployee, a product of Innovative EmpTrack.
+
+Navigation Bar:
+Home - Current page. Gives an overview of company information for easy review. 
+People - Provides identification for each employee including Name, Employee Number, Phone Number, Role, Position, and assigned Team (basically a company directory).
+Payroll - Gives payroll information for each employee including Pay type, Pay amount, and PTO.
+Admin - Allows the admin to adjust employee information.
+
+Home page:
+Recent Actions - Gives a real time update of recent adjustments made to any employees within the company. Will provide a description and date of the action.
+Weekly Hours Worked - Displays the total weekly hours worked within the company. Additional information can be accessed in the Payroll tab.
+Employees - Lists the total number of employees within the company. Additional information can be found in the People tab. 
+Average Wage - Displays the average wage of all employees. Additional information can be found in the Payroll tab
+Next Payout - Gives the estimated cost of payout for the upcoming pay period. Based on estimates from the Payroll tab. 
+Deductibles - 
+Quarterly Overtime - Displays total quarterly overtime payouts expected currently. Based on information from the Payroll tab. 

@@ -1,1 +1,10 @@
 People page help file
+
+People Page:
+First Name - First name of the employee listed in alphabetical order. This can be adjusted in the Admin page.
+Last Name - Last name of the employee. This can be adjusted in the Admin page.
+Employee Number - Unique identification for each employee. Allows for quick lookup of employees within the company. 
+Phone - Contact number for the employee. This can be adjusted in the Admin page.
+Role - Employee's role within the company. Manager, Team lead, and Worker are the respective order for the hierarchy of the roles.
+Position - Where the employee is located. Corporate indicates company HQ.
+Team - Which team the employee belongs to. Teams are designated by a unique number and are assigned work per their number. 
