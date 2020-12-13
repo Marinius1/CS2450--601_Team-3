@@ -146,7 +146,7 @@ class NavBar():
         with open(self.help_content, 'r') as f:
             text = f.read()
 
-        text_help = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set)
+        text_help = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set, wrap=tk.WORD)
         text_help.insert(tk.END, text)
 
         text_help.bind("<Key>", lambda x: "break")
