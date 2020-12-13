@@ -464,7 +464,7 @@ class PayRoll():
 
             button.grid(row=0, column=0, sticky=tk.EW)
 
-            if i != 7:
+            if i < 5:
 
                 column = tk.Frame(grid_frame, bd=0, width=150, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
@@ -502,7 +502,7 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=400, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
+                canvas = tk.Canvas(column, border=0, width=150, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
 
