@@ -21,7 +21,8 @@ class Admin():
         bounds.
         """
 
-
+        #potential changes detected flag
+        self.changes_detected = False
         # populate test data
         self.L = Controller.List_Maker()
         self.people_example = self.L.data
@@ -348,7 +349,6 @@ class Admin():
 
         #if len(thing) == 0:
             #thing.append(data)
-
    
 
         # self.dropdown_pay_type["value"].set(data["Pay type"])
@@ -431,6 +431,7 @@ class Admin():
         self.save_action = self.save_employee
 
     def save_employee(self):
+        self.changes_detected = False
         datax = self.get_values()
         Controller.Employee_Adder(datax)
         self.L.reload()
@@ -440,6 +441,7 @@ class Admin():
         self.populate_people(self.people_example)
 
     def edit_employee(self):
+        self.changes_detected = False
         datax = self.get_values()
         Controller.Employee_Editer(self.click_buffer, datax)
         self.L.reload()
@@ -449,6 +451,9 @@ class Admin():
         self.populate_people(self.people_example)
 
     def listbox_select(self, event, lyst):
+        if (self.changes_detected):
+            self.create_are_you_sure("Would you like to save your changes?", self.save_action) #requires addition of cancellation handler that will perform the original desired option and scrap the changes if they user decides to cancel
+            return
         widget = event.widget
         selection = widget.curselection()
         value = widget.get(tk.ACTIVE)
@@ -482,6 +487,7 @@ class Admin():
         label.grid(row=row, column=column_start, sticky=sticky)
 
         entry = ttk.Entry(master, style='Recent.TLabel')
+        entry.bind('<Key>', lambda event: self.setChangesFlag())
         entry.insert(0, placeholder)
         entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
         return {"label": label, "entry": entry}
@@ -496,6 +502,7 @@ class Admin():
         value.set(options[0])
         menu = ttk.Combobox(master, textvariable=value, value=options[0], values=options, height=3)
         menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
+        menu.bind('<Button>', lambda event: self.setChangesFlag())
         return {"label": label, "menu": menu, "value": value}
 
     def create_date_selector(self, master, row):
@@ -517,7 +524,7 @@ class Admin():
             "year": {"label": years_dropdown["label"], "dropdown": years_dropdown["menu"], "value": years_dropdown["value"]},
         }
 
-    def create_are_you_sure(self, message, on_success):
+    def create_are_you_sure(self, message, on_success, on_cancel=None):
         top = tk.Toplevel(self.master)
 
         screen_width = self.master.winfo_screenwidth()
@@ -547,7 +554,10 @@ class Admin():
 
         yes_button = ttk.Button(button_frame, text="Yes", style='Header.TButton', command=lambda:[on_success(), top.destroy()])
         yes_button.grid(row=0, column=0, sticky=tk.W, padx=(width / 10, 0))
-
-        cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=top.destroy)
+        if on_cancel: cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=lambda:[on_cancel(),top.destroy()])
+        else: cancel_button = ttk.Button(button_frame, text="Cancel", style='Header.TButton',command=lambda:top.destroy())
         cancel_button.grid(row=0, column=1, sticky=tk.E, padx=(0, width / 10))
 
+
+    def setChangesFlag(self):
+        self.changes_detected = True
