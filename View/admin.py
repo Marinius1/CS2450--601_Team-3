@@ -161,7 +161,7 @@ class Admin():
 
         self.section_info = tk.Label(self.info_identity_frame, text="Employee Info", font=('Roboto', 20), foreground=self.colors.background, background=self.colors.a7)
         self.section_info.grid(row=0, column=0, pady=self.screen_height * 0.025, columnspan=5, sticky=tk.EW)
-        self.resize_utility.register_element(self.section_info, "body")
+        self.resize_utility.register_element(self.section_info, "heading-large")
 
         self.field_first_name = self.create_text_entry(self.info_identity_frame, 'First Name', '', 1)
         self.field_last_name = self.create_text_entry(self.info_identity_frame, 'Last Name', '', 1, 2)
@@ -254,7 +254,7 @@ class Admin():
 
         self.section_job_info = tk.Label(self.info_identity_frame, text="Job Info", font=('Roboto', 20), foreground=self.colors.background, background=self.colors.a7)
         self.section_job_info.grid(row=8, column=0, pady=self.screen_height * 0.025, columnspan=5, sticky=tk.EW)
-        self.resize_utility.register_element(self.section_job_info, "body")
+        self.resize_utility.register_element(self.section_job_info, "heading-large")
 
         self.field_job_title = self.create_text_entry(self.info_identity_frame, 'Job Title', '', 9)
         self.field_team = self.create_text_entry(self.info_identity_frame, 'Team', '', 9, 2)

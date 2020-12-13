@@ -19,6 +19,15 @@ class ResizeUtility:
         width = self.master.winfo_width()
         height = self.master.winfo_height()
         return int((height/9 + width/32) * 0.08)
+    def heading_text(self):
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        return int((height/9 + width/32) * 0.1)
+
+    def large_heading_text(self):
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        return int((height/9 + width/32) * 0.12)
 
     def register_element(self, callback, mode):
         self.element_callbacks.append([callback, mode])
@@ -43,15 +52,19 @@ class ResizeUtility:
 
             for i in self.element_callbacks:
                 if i[1] == "body":
-                    # print(i[0])
-                    # print(self.body_text())
                     i[0].configure(font=('Roboto', self.body_text()))
+                if i[1] == "heading":
+                    i[0].configure(font=('Roboto', self.heading_text()))
+                if i[1] == "heading-large":
+                    i[0].configure(font=('Roboto', self.large_heading_text()))
 
             for i in self.style_callbacks:
                 if i[2] == "body":
-                    # print(i[0])
-                    # print(self.body_text())
                     i[0].configure(style=i[1], font=('Roboto', self.body_text()))
+                if i[1] == "heading":
+                    i[0].configure(font=('Roboto', self.heading_text()))
+                if i[1] == "heading-large":
+                    i[0].configure(font=('Roboto', self.large_heading_text()))
 
             for i in self.canvas_callbacks:
                 i[0].configure(scrollregion=(i[1][0], i[1][2], self.body_text(), i[1][3]))
