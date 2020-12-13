@@ -86,7 +86,7 @@ class Window():
 
     def home(self):
         self.nav.help_content = "./View/help_files/home.txt"
-        self.page_home = Homepage(self.master, name="Home", theme=self.theme)
+        self.page_home = Homepage(self.master, name="Home", theme=self.theme, window=self)
         self.master.update()
 
     def people(self):
