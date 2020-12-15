@@ -58,13 +58,12 @@ class Admin():
 
         self.style.map('Entry.TEntry')
         self.style.configure(
-            'Entry.TLabel',
+            'Entry.TEntry',
             foreground=self.colors.foreground,
-            background=self.colors.background,
+            fieldbackground=self.colors.background,
             borderwidth=1,
             bordercolor=self.colors.foreground,
             relief=tk.SUNKEN,
-            padding=[10,1,1,1],
             font=('Roboto', self.resize_utility.heading_three_text())
         )
         self.resize_utility.register_style(self.style, 'Entry.TEntry', "h3")
@@ -82,8 +81,10 @@ class Admin():
                              font=('Roboto', 16)
                              )
 
+
         self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
         self.resize_utility.register_style(self.style, 'Header.TButton', "body")
+
 
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3,
@@ -455,7 +456,7 @@ class Admin():
 
     def add_employee(self):
         if (self.changes_detected):
-            self.create_are_you_sure("Would you like to save your changes?", self.save_action, self.set_changes_flag)
+            self.create_are_you_sure("Would you like to save your changes?", self.save_action)
         else:
             default_data = {
                 "Employee number": "xx-xxxxx",
@@ -508,7 +509,7 @@ class Admin():
 
     def listbox_select(self, event, lyst):
         if (self.changes_detected):
-            self.create_are_you_sure("Would you like to save your changes?", self.save_action, self.set_changes_flag)
+            self.create_are_you_sure("Would you like to save your changes?", self.save_action)
         else:
             widget = event.widget
             selection = widget.curselection()
@@ -519,6 +520,7 @@ class Admin():
 
             self.set_values(lyst[selection[0]])
             self.click_buffer = self.get_values()
+            print(self.click_buffer)
             self.save_action = self.edit_employee
 
     def toggle_pay_fields(self, data):
@@ -574,11 +576,10 @@ class Admin():
 
     def create_text_entry(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
         label = ttk.Label(master, text=label, style='Recent.TLabel')
-        label.configure(background=self.colors.background)
         label.grid(row=row, column=column_start, sticky=sticky)
 
         entry = ttk.Entry(master, style='Entry.TEntry')
-        entry.bind('<Key>', lambda event: self.set_changes_flag(True))
+        # entry.bind('<Key>', lambda event: self.set_changes_flag(True))
         entry.insert(0, placeholder)
         entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
         return {"label": label, "entry": entry}
@@ -593,7 +594,7 @@ class Admin():
         value.set(options[0])
         menu = ttk.Combobox(master, textvariable=value, value=options[0], values=options, height=3)
         menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
-        menu.bind('<Button>', lambda event: self.set_changes_flag(True))
+        # menu.bind('<Button>', lambda event: self.set_changes_flag(True))
         return {"label": label, "menu": menu, "value": value}
 
     def create_date_selector(self, master, row):

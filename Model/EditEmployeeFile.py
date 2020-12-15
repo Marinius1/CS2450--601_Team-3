@@ -91,8 +91,8 @@ class editThis:
                 empID = str(i["Employee number"])
                 for j in data:
                     if j["Employee number"] == empID:
-                        j["PTO total"] = i["PTO total"]
-                        j["PTO used"] = i["PTO used"]
+                        j["PTO"] = i["PTO"]
+                        j["PTOused"] = i["PTOused"]
                         j["Hours/sales"] = i["Hours/sales"]
 
         with open("Model/employee_file.json", 'w') as f:
