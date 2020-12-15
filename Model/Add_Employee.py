@@ -60,7 +60,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
                         outfile.close()
 
@@ -73,7 +73,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
                         outfile.close()
 
@@ -87,7 +87,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
                         outfile.close()
 
@@ -99,7 +99,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
                         outfile.close()
 
@@ -114,7 +114,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
                         outfile.close()
 
@@ -126,7 +126,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
                         outfile.close()
 
