@@ -563,10 +563,10 @@ class PayRoll():
                         entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
                     elif i ==7:
-                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT)
+                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=250)
                     else:
-                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
+                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
 
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
