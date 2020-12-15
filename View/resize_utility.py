@@ -18,11 +18,28 @@ class ResizeUtility:
 
         self.master.bind('<Configure>', lambda event: self.resize(event=event))
 
-    def body_text(self):
+    def title_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
         return int((height/9 + width/32) * 0.08)
-    def heading_text(self):
+
+    def subtitle_text(self):
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        return int((height/9 + width/32) * 0.08)
+
+
+    def heading_one_text(self):
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        return int((height/9 + width/32) * 0.1)
+
+    def heading_two_text(self):
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        return int((height/9 + width/32) * 0.1)
+
+    def heading_three_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
         return int((height/9 + width/32) * 0.1)
@@ -31,6 +48,11 @@ class ResizeUtility:
         width = self.master.winfo_width()
         height = self.master.winfo_height()
         return int((height/9 + width/32) * 0.2)
+
+    def body_text(self):
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        return int((height/9 + width/32) * 0.08)
 
     def register_element(self, callback, mode):
         self.element_callbacks.append([callback, mode])

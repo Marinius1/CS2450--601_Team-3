@@ -33,7 +33,7 @@ class List_Maker:
 class Employee_Adder:
     def __init__(self, dicton):
         add = add_employee(dicton["Employee number"], dicton["First name"], dicton["Last name"], 
-                         dicton["Pay type"], dicton["Salary"], dicton["Comission"], dicton["Hourly"],
+                         dicton["Pay type"], dicton["Salary"], dicton["Commission"], dicton["Hourly"],
                          dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
                          dicton["Phone"], dicton["Zip"], dicton["Birth day"],
                          dicton["Birth month"], dicton["Birth year"], dicton["Start day"], dicton["Start month"],
