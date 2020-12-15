@@ -454,6 +454,17 @@ class PayRoll():
             tmp_list.append(i["PTOused"])
             new_hours_str = i["Hours/sales"].replace("[","")
             new_hours_str = new_hours_str.replace("]","")
+
+            if new_hours_str != '':
+
+                hours_list = new_hours_str.split(',')
+
+                hours_list = ["{:.2f}".format(float(i)) for i in hours_list]
+                new_hours_str = ",".join(hours_list)
+
+                new_hours_str = new_hours_str.replace("[","")
+                new_hours_str = new_hours_str.replace("]","")
+
             tmp_list.append(new_hours_str)
             tmp_list.append("-")
             staged_data.append(tmp_list)
