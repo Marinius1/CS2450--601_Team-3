@@ -286,7 +286,7 @@ class PayRoll():
 
             # print(results)
             self.set_table_data(results)
-      
+
     def create_pay_period(self):
         self.NP=Controller.New_Pay
         self.NP()
@@ -355,7 +355,6 @@ class PayRoll():
             data_columns_copy.pop(i)
 
             sync_check = [self.canvas_columns[i].yview() == j.yview() for j in data_columns_copy]
-            print(sync_check)
 
             if not all(sync_check):
                 for k in range(len(self.canvas_columns)):
@@ -429,7 +428,7 @@ class PayRoll():
             new_hours_str = i["Hours/sales"].replace("[","")
             new_hours_str = new_hours_str.replace("]","")
             tmp_list.append(new_hours_str)
-            tmp_list.append("-")
+            tmp_list.append(self.calculate_total_pay(new_hours_str, i["Pay amount"], i["Pay type"]))
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
@@ -447,8 +446,16 @@ class PayRoll():
 
 
 
-    def calculate_total_pay(self):
-        pass
+    def calculate_total_pay(self, hours, pay, type):
+
+        if hours != '' and type == "Hourly":
+            total_hours = sum([float(i) for i in hours.replace(" ","").split(',')]) * float(pay)
+            return "{:.2f}".format(total_hours)
+        elif hours != '' and type == "Commission":
+            total_receipt = sum([float(i) for i in hours.replace(" ","").split(',')]) * float(pay)
+            return "{:.2f}".format(total_receipt + (float(pay) * 40))
+        else:
+            return "-"
 
     def create_table(self, master, lyst1, lyst2):
 
