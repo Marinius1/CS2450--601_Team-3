@@ -467,6 +467,10 @@ class PayRoll():
 
         lyst1_size = len(lyst1)
 
+        # width = self.master.winfo_screenwidth()
+        # height = self.master.winfo_screenheight()
+        # ratio = 7.0/8.0
+
         for i in range(lyst1_size):
             self.actions.append(self.sort_ascending)
 
