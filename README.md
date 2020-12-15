@@ -1,5 +1,6 @@
-# CS2450--601_Team-3 
-## AnyEmployee:<br/>A product by Innovative EmpTrack
+# AnyEmployee:<br/>A product by Innovative EmpTrack
+
+## CS2450--601_Team-3 
 
 In order to access the git repository, make sure that `git` is installed on your machine. Installation can be done at [https://git-scm.com/downloads](https://git-scm.com/downloads).
 
