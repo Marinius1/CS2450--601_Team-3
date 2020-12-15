@@ -12,6 +12,7 @@ class ResizeUtility:
         self.element_callbacks = []
         self.style_callbacks = []
         self.canvas_callbacks = []
+        self.frame_callbacks = []
 
         self.can_listen = False
         self.is_first_draw = True
@@ -57,6 +58,9 @@ class ResizeUtility:
     def register_canvas(self, canvas, length):
         self.canvas_callbacks.append([canvas, length])
 
+    def register_frame(self, frame):
+        self.frame_callbacks.append(frame)
+
     def on_click(self, x, y, button, pressed):
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
         if not pressed:
@@ -97,10 +101,21 @@ class ResizeUtility:
                 if i[2] == "h5":
                     i[0].configure(style=i[1], font=('Roboto', self.body_text()))
 
+            width = self.master.winfo_width()
+            height = self.master.winfo_height()
+            ratio = 7.0/8.0
+
+            new_width = (width * ratio) / len(self.canvas_callbacks)
+
+            for i in self.frame_callbacks:
+                i.configure(width = new_width)
+
             for i in self.canvas_callbacks:
-                i[0].configure(scrollregion=i[0].bbox("all"))
+                i[0].configure(scrollregion=i[0].bbox("all"), width=new_width, height=height)
                 if self.scrollbar is not None:
                     self.scrollbar.configure(command=self.yview)
+
+
 
             self.can_listen = False
             self.listener.stop()
