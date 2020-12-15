@@ -516,10 +516,11 @@ class PayRoll():
                     except:
                         new_value = 0
 
-                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value, anchor=tk.CENTER)
+
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     self.resize_utility.register_element(entry, "body")
-                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=200)
+                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
                     data_items.append(entry)
 
                 bbox = canvas.bbox("all")
@@ -552,13 +553,13 @@ class PayRoll():
                         foreground = "#000000" if self.theme == "Builtin Light" else self.colors.background
                     if i == 10:
                         new_value = 12
-                        entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
+                        entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value, anchor=tk.CENTER)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
                     elif i ==9:
-                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT)
+                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT, justify=tk.CENTER)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=250)
                     else:
-                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
+                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT, justify=tk.CENTER)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
 
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
