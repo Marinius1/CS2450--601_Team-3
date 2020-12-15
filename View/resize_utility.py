@@ -101,7 +101,7 @@ class ResizeUtility:
                     i[0].configure(style=i[1], font=('Roboto', self.heading_three_text()))
                 if i[2] == "h4":
                     i[0].configure(style=i[1], font=('Roboto', self.heading_four_text()))
-                if i[2] == "h5":
+                if i[2] == "body":
                     i[0].configure(style=i[1], font=('Roboto', self.body_text()))
 
             width = self.master.winfo_width()
