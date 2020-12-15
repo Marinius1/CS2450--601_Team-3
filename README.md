@@ -35,7 +35,7 @@ To run the program, type `python3 window.py` into the command line. Make sure yo
 **Search** - Search bar that allows you to search for specific employees. Search option allows you to modify your search by First name, Last name, or Employee number<br/>
 **Period** - Allows you to change the viewed pay period. <br/>
 
-#### What can you do?
+*What can you do?*</br>
 
 **Adjust PTO** - To change PTO values, you can directly influence the values in the PTO total and PTO used columns.</br>
 
@@ -67,7 +67,7 @@ To run the program, type `python3 window.py` into the command line. Make sure yo
 **Delete** - if you wish to delete an employee from the company database you can delete them by clicking the delete button. <br/>
 **Save** - if you are pleased with the adjustments that you have made, you can save the information by clicking the save button.<br/>
 
-*What can you do?* 
+*What can you do?* </br>
 **Add an employee** - To add an employee you simply click the "Add" button. Enter all the information of the employee. If you wish to scrap changes, simply click "Delete". If you wish to save the employee data, click "Save". If you try to move away from the page, you will be met with an "are you sure" popup that will either save the data or take you back to the open editor to allow you to change information or scrap changes.</br>
 
 **Edit an existing employee** - Simply double click an employee's name from the list on the left side. Change the information you wish to change. If you try to move away from the page, you will be met with an "are you sure" popup that will either save or scrap your changes. </br>
