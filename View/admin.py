@@ -160,8 +160,7 @@ class Admin():
 
         self.resize_utility.register_element(self.field_name, "title")
 
-        self.save_action = self.save_employee
-
+        self.save_action = self.edit_employee
         self.people_save = ttk.Button(self.right_frame, text="Save",
                                          style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_action))
         self.people_save.grid(row=0, column=2, sticky=tk.E)
@@ -455,35 +454,37 @@ class Admin():
         self.populate_people(self.people_example)
 
     def add_employee(self):
+        if (self.changes_detected):
+            self.create_are_you_sure("Would you like to save your changes?", self.save_action, self.set_changes_flag)
+        else:
+            default_data = {
+                "Employee number": "xx-xxxxx",
+                "First name": "First Name",
+                "Last name": "Last Name",
+                "Pay type": "Hourly",
+                "Hourly": "00.00",
+                "Salary": "00.00",
+                "Commission": "00.00",
+                "Address": "123 Example St.",
+                "State": "Alaska",
+                "City": "Anchorage",
+                "Zip": "00000",
+                "Birth day": "1",
+                "Birth month": "1",
+                "Birth year": "2000",
+                "Social security": "xxx-xx-xxxx",
+                "Phone": "xxx-xxx-xxxx",
+                "Start day": "1",
+                "Start month": "1",
+                "Start year": "2000",
+                "Hours/sales": "1",
+                "Role": "Example Role",
+                "Position": "Example",
+                "Team": "Example Team",
+            }
 
-        default_data = {
-            "Employee number": "xx-xxxxx",
-            "First name": "First Name",
-            "Last name": "Last Name",
-            "Pay type": "Hourly",
-            "Hourly": "00.00",
-            "Salary": "00.00",
-            "Commission": "00.00",
-            "Address": "123 Example St.",
-            "State": "Alaska",
-            "City": "Anchorage",
-            "Zip": "00000",
-            "Birth day": "1",
-            "Birth month": "1",
-            "Birth year": "2000",
-            "Social security": "xxx-xx-xxxx",
-            "Phone": "xxx-xxx-xxxx",
-            "Start day": "1",
-            "Start month": "1",
-            "Start year": "2000",
-            "Hours/sales": "1",
-            "Role": "Example Role",
-            "Position": "Example",
-            "Team": "Example Team",
-        }
-
-        self.set_values(default_data)
-        self.save_action = self.save_employee
+            self.set_values(default_data)
+            self.save_action = self.save_employee
 
     def save_employee(self):
         self.changes_detected = False
