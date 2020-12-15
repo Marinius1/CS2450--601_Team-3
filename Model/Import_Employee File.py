@@ -6,6 +6,9 @@ Imports a list of employees from csv file
 '''
 EMPLOYEE_FILE = "employees.csv"
 lyst = []
+f = open('employee_file.json', "x")
+f.write("[]")
+f.close()
 
 
 class addToEmployeeFile:

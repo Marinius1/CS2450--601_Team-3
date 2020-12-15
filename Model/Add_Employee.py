@@ -40,8 +40,9 @@ class add_employee:
     def add_to_employee_file(self):
         data = []
         j = True
-        with open('employee_file.json') as infile:
+        with open('Model/employee_file.json') as infile:
             data1 = json.load(infile)
+            infile.close()
             for i in data1:
                 if self.eNum == i['Employee number'] and self.first == i["First name"] and self.last == i["Last name"]:
                     raise Exception("Sorry, employee already exists.")
@@ -61,6 +62,8 @@ class add_employee:
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
                     with open('employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
+                        outfile.close()
+
 
                 else:
                     data.append({"Employee number": self.eNum,"First name": self.first, "Last name": self.last, "Phone": self.phone,
@@ -72,6 +75,7 @@ class add_employee:
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
                     with open('employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
+                        outfile.close()
 
             elif self.type == "Commission":
                 self.hourly = "None"
@@ -85,6 +89,7 @@ class add_employee:
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
                     with open('employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
+                        outfile.close()
 
                 else:
                     data.append({"Employee number": self.eNum,"First name": self.first, "Last name": self.last, "Phone": self.phone,
@@ -96,6 +101,7 @@ class add_employee:
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
                     with open('employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
+                        outfile.close()
 
             if self.type == "Hourly":
                 self.salary = "None"
@@ -110,6 +116,7 @@ class add_employee:
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
                     with open('employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
+                        outfile.close()
 
                 else:
                     data.append({"Employee number": self.eNum,"First name": self.first, "Last name": self.last, "Phone": self.phone,
@@ -121,6 +128,7 @@ class add_employee:
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
                     with open('employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
+                        outfile.close()
 
             elif j == False:
                 pass

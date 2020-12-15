@@ -12,6 +12,7 @@ class updateHours:
         self.filename = filename
         with open(filename) as file:
             self.data = json.load(file)
+            file.close()
 
 
     def updateHourly(self, file1):
@@ -31,6 +32,7 @@ class updateHours:
                             i["Timecard"] = str(total)
         with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
+            file.close()
 
 
     def updateCommission(self, file1):
@@ -50,6 +52,7 @@ class updateHours:
                             i["Timecard"] = str(total)
         with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
+            file.close()
 
 
     def updateSalary(self, file1):
@@ -69,6 +72,7 @@ class updateHours:
                             i["Timecard"] = str(total)
         with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
+            file.close()
 
 
     def setTozero(self):
@@ -78,6 +82,7 @@ class updateHours:
                 i["Timecard"] = "[]"
         with open("Model/employee_file.json", 'w') as file:
             json.dump(self.data, file)
+            file.close()
 
 
 
