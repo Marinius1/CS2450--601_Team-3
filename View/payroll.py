@@ -467,9 +467,11 @@ class PayRoll():
 
         lyst1_size = len(lyst1)
 
-        # width = self.master.winfo_screenwidth()
-        # height = self.master.winfo_screenheight()
-        # ratio = 7.0/8.0
+        width = self.master.winfo_screenwidth()
+        height = self.master.winfo_screenheight()
+        ratio = 7.0/8.0
+
+        initial_width = (width * ratio) / lyst1_size
 
         for i in range(lyst1_size):
             self.actions.append(self.sort_ascending)
@@ -497,17 +499,19 @@ class PayRoll():
 
             if i < 7:
 
-                column = tk.Frame(grid_frame, bd=0, width=150, background=self.colors.background, relief=tk.SUNKEN)
+                column = tk.Frame(grid_frame, bd=0, width=initial_width, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
                 column.grid(row=1, column=0, sticky=tk.NS, pady=(0, 0))
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
+                self.resize_utility.register_frame(column)
+
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=150, height=1080, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
+                canvas = tk.Canvas(column, border=0, width=initial_width, height=height, highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
-                self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
+                self.resize_utility.register_canvas(canvas, (0,0,initial_width,((self.resize_utility.body_text() + 6) * len(self.people))))
                 data_items = []
                 for j in range(len(self.people)):
                     if j % 2 == 0:
@@ -526,7 +530,7 @@ class PayRoll():
 
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     self.resize_utility.register_element(entry, "body")
-                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
+                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
                     data_items.append(entry)
 
                 bbox = canvas.bbox("all")
@@ -541,11 +545,11 @@ class PayRoll():
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
                 if i == 9:
-                    canvas = tk.Canvas(column, border=0, width=250, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
+                    canvas = tk.Canvas(column, border=0, width=initial_width, height=height,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
                 else:
-                    canvas = tk.Canvas(column, border=0, width=150, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
+                    canvas = tk.Canvas(column, border=0, width=initial_width, height=height,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
-                self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
+                self.resize_utility.register_canvas(canvas, (0,0,initial_width,((self.resize_utility.body_text() + 6) * len(self.people))))
 
                 canvas.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
@@ -560,13 +564,13 @@ class PayRoll():
                     if i == 10:
                         new_value = 12
                         entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value, anchor=tk.CENTER)
-                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
+                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
                     elif i ==9:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT, justify=tk.CENTER)
-                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=250)
+                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
                     else:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT, justify=tk.CENTER)
-                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
+                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
 
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
