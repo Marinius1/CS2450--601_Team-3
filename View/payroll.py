@@ -150,7 +150,7 @@ class PayRoll():
 
         self.scroll_poll = time.time()
         self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hourly', 'Salary', 'Commission', 'PTO total', 'PTO used', 'Hours/sales','Total']
-        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hourly', 'Salary', 'Commission', 'PTO total', 'PTO used', 'Timecard','Total']
+        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hourly', 'Salary', 'Commission', 'PTO', 'PTOused', 'Timecard','Total']
 
         self.model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -187,19 +187,20 @@ class PayRoll():
         self.right_buttons.rowconfigure(0, weight=1)
         self.right_buttons.rowconfigure(1, weight=1)
         self.right_buttons.rowconfigure(2, weight=1)
+        self.right_buttons.rowconfigure(3, weight=1)
         self.right_buttons.columnconfigure(0, weight=1)
 
         self.save_button = ttk.Button(self.right_buttons, text='Save', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes?", self.save_changes))
-        self.save_button.grid(row=0, column=1, sticky=tk.NE, padx=10, pady=10)
+        self.save_button.grid(row=0, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.new_period_button = ttk.Button(self.right_buttons, text='New Pay Period', style='Header.TButton', command=lambda: self.create_are_you_sure("Confirm Changes? This will set all values to zero", self.create_pay_period))
-        self.new_period_button.grid(row=0, column=0, sticky=tk.NW, padx=10, pady=10)
+        self.new_period_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.import_time_button = ttk.Button(self.right_buttons, text='Import Timecards', style='Header.TButton', command=self.import_hourly)
-        self.import_time_button.grid(row=1, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
+        self.import_time_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         self.import_reciept_button = ttk.Button(self.right_buttons, text='Import Reciepts', style='Header.TButton', command=self.import_sales)
-        self.import_reciept_button.grid(row=2, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
+        self.import_reciept_button.grid(row=3, sticky=tk.NSEW, padx=10, pady=10, columnspan=2)
 
         # self.metrics_frame = tk.Frame(self.right_frame, background=self.colors.background)
         # self.metrics_frame.grid(row=1, column=0, sticky=tk.EW)
@@ -268,10 +269,13 @@ class PayRoll():
                     "Last name": '',
                     "Employee number": '',
                     "Pay type": '',
+                    "Hourly": '',
+                    "Salary": '',
+                    "Commission": '',
+                    "PTO": '',
+                    "PTOused": '',
                     "Hours/sales": '',
-                    "Pay amount": '',
-                    "PTO total": '',
-                    "PTO used": ''
+                    "Total": '',
                 }
             ])
             results = []
@@ -301,10 +305,13 @@ class PayRoll():
                 "Last name": '',
                 "Employee number": '',
                 "Pay type": '',
+                "Hourly": '',
+                "Salary": '',
+                "Commission": '',
+                "PTO": '',
+                "PTOused": '',
                 "Hours/sales": '',
-                "Pay amount": '',
-                "PTO total": '',
-                "PTO used": ''
+                "Total": '',
             }
         ])
 
@@ -390,10 +397,13 @@ class PayRoll():
                 "Last name": i[1],
                 "Employee number": i[2],
                 "Pay type": i[3],
-                "Pay amount": i[4],
-                "PTO total": i[5],
-                "PTO used": i[6],
-                "Hours/sales": i[7],
+                "Hourly": i[4],
+                "Salary": i[5],
+                "Commission": i[6],
+                "PTO": i[7],
+                "PTOused": i[8],
+                "Hours/sales": i[9],
+                "Total": i[10],
             })
 
         # print(data)
@@ -423,14 +433,15 @@ class PayRoll():
             tmp_list.append(i["Last name"])
             tmp_list.append(i["Employee number"])
             tmp_list.append(i["Pay type"])
-            tmp_list.append(i["Pay amount"])
-            tmp_list.append("-")
-            tmp_list.append("-")
-
+            tmp_list.append(i["Hourly"])
+            tmp_list.append(i["Salary"])
+            tmp_list.append(i["Commission"])
+            tmp_list.append(i["PTO"])
+            tmp_list.append(i["PTOused"])
             new_hours_str = i["Hours/sales"].replace("[","")
             new_hours_str = new_hours_str.replace("]","")
             tmp_list.append(new_hours_str)
-            tmp_list.append(i["Pay total"])
+            tmp_list.append("-")
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
@@ -451,15 +462,6 @@ class PayRoll():
     def create_table(self, master, lyst1, lyst2):
 
         # print(self.people)
-        desired_keys = [
-             "First name",
-             "Last name",
-             "Employee number",
-             "Pay type",
-             "Hours worked",
-             "Pay amount",
-             "PTO total",
-             "PTO used"]
 
         lyst1_size = len(lyst1)
 
@@ -672,10 +674,13 @@ class PayRoll():
                 "Last name": '',
                 "Employee number": '',
                 "Pay type": '',
+                "Hourly": '',
+                "Salary": '',
+                "Commission": '',
+                "PTO": '',
+                "PTOused": '',
                 "Hours/sales": '',
-                "Pay amount": '',
-                "PTO total": '',
-                "PTO used": ''
+                "Total": '',
             }
         ])
         self.set_table_data(self.people)
@@ -697,10 +702,13 @@ class PayRoll():
                 "Last name": '',
                 "Employee number": '',
                 "Pay type": '',
+                "Hourly": '',
+                "Salary": '',
+                "Commission": '',
+                "PTO": '',
+                "PTOused": '',
                 "Hours/sales": '',
-                "Pay amount": '',
-                "PTO total": '',
-                "PTO used": ''
+                "Total": '',
             }
         ])
 
