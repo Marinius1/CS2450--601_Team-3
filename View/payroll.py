@@ -98,7 +98,17 @@ class PayRoll():
                              )
 
         self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
-
+        self.style.map('Entry.TEntry')
+        self.style.configure(
+            'Entry.TEntry',
+            foreground=self.colors.foreground,
+            fieldbackground=self.colors.background,
+            borderwidth=1,
+            bordercolor=self.colors.foreground,
+            relief=tk.SUNKEN,
+            font=('Roboto', self.resize_utility.body_text())
+        )
+        self.resize_utility.register_style(self.style, 'Entry.TEntry', "body")
         #Sizing utility
         self.resize_utility.register_style(self.style, 'Header.TButton', "body")
 
@@ -126,7 +136,7 @@ class PayRoll():
         self.search_value = tk.StringVar()
         self.search_value.set("Search")
         self.search_value.trace("w", self.search)
-        self.entry_search = ttk.Entry(self.nav_frame, textvariable=self.search_value)
+        self.entry_search = ttk.Entry(self.nav_frame, textvariable=self.search_value, style="Entry.TEntry")
         # self.entry_search.bind("<Key>", self.search)
         # self.entry_search.bind("<Button-1>", lambda x: "break")
         self.entry_search.grid(row=0, column=0)
@@ -137,8 +147,8 @@ class PayRoll():
         self.dropdown_search = ttk.OptionMenu(self.nav_frame, self.search_option_value, self.search_options[0], *self.search_options)
         self.dropdown_search.grid(row=0, column=1, sticky=tk.W)
 
-        self.pay_periods = ['1', '2', '3']
-        self.period_select = self.create_dropdown_menu(self.nav_frame, "Period", self.pay_periods, 0, 2)
+        # self.pay_periods = ['1', '2', '3']
+        # self.period_select = self.create_dropdown_menu(self.nav_frame, "Period", self.pay_periods, 0, 2)
 
         self.font_config = ('Roboto', 16)
 
@@ -531,7 +541,7 @@ class PayRoll():
                     self.resize_utility.register_frame(entry)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     self.resize_utility.register_element(entry, "body")
-                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
+                    canvas_window = canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
                     data_items.append(entry)
 
                 bbox = canvas.bbox("all")
@@ -565,13 +575,13 @@ class PayRoll():
                     if i == 10:
                         new_value = 12
                         entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value, anchor=tk.CENTER)
-                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
+                        canvas_window = canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
                     elif i ==9:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT, justify=tk.CENTER)
-                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
+                        canvas_window = canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
                     else:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT, justify=tk.CENTER)
-                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
+                        canvas_window = canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
 
                     self.resize_utility.register_frame(entry)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
