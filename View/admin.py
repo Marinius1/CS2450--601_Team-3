@@ -293,16 +293,19 @@ class Admin():
         # self.dropdown_pay_type = self.create_dropdown_menu(self.info_identity_frame, 'Pay Type', self.pay_types, 15)
         self.value_pay_type = tk.StringVar()
 
-        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1], background=self.colors.background);
+        self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
+        self.field_pay_salary = self.create_text_entry(self.info_identity_frame, 'Salary', '', 16, 2)
+
+        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1], background=self.colors.background, command=lambda: self.toggle_hourly_fields());
         self.radio_hourly.grid(row=15, column=1)
 
-        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0], background=self.colors.background);
+        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0], background=self.colors.background, command=lambda: self.toggle_salary_fields());
         self.radio_salary.grid(row=15, column=2)
 
-        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2], background=self.colors.background);
+        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2], background=self.colors.background, command=lambda: self.toggle_commission_fields());
         self.radio_commission.grid(row=15, column=3)
 
-        self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
+
 
         self.set_values(self.people_example[0])
 
@@ -332,6 +335,7 @@ class Admin():
 
 
     def set_values(self, data):
+
         self.field_name.configure(text=data["First name"] + " " + data["Last name"])
         self.set_default_text_field(self.field_first_name, data["First name"])
         self.set_default_text_field(self.field_last_name, data["Last name"])
@@ -367,7 +371,18 @@ class Admin():
 
         # self.dropdown_pay_type["value"].set(data["Pay type"])
         self.value_pay_type.set(data["Pay type"])
-        self.set_default_text_field(self.field_pay_rate, data["Pay amount"])
+
+        if data["Commission"] == "None" and data["Salary"] == "None":
+
+            self.set_default_text_field(self.field_pay_rate, data["Hourly"])
+        elif data["Hourly"] == "None" and data["Commission"] != "None":
+
+            self.set_default_text_field(self.field_pay_rate, data["Commission"])
+            self.set_default_text_field(self.field_pay_salary, data["Salary"])
+        else:
+
+            self.set_default_text_field(self.field_pay_salary, data["Salary"])
+
 
 
     #Get data from save button
@@ -393,7 +408,9 @@ class Admin():
             "Start year": self.date_start_employment["year"]["value"].get(),
             # "Pay type": self.dropdown_pay_type["value"].get(),
             "Pay type": self.value_pay_type.get(),
-            "Pay amount": self.field_pay_rate["entry"].get()
+            "Hourly": self.field_pay_rate["entry"].get(),
+            "Commission": self.field_pay_rate["entry"].get(),
+            "Salary": self.field_pay_salary["entry"].get(),
         }
 
     def set_default_text_field(self, field, value):
@@ -473,8 +490,49 @@ class Admin():
         self.click_buffer = self.get_values()
         # print("selection:", selection[0], ": '%s'" % value)
 
+        self.toggle_pay_fields(lyst[selection[0]])
+
         self.set_values(lyst[selection[0]])
         self.save_action = self.edit_employee
+
+    def toggle_pay_fields(self, data):
+        if data["Commission"] == "None" and data["Salary"] == "None":
+            self.field_pay_salary["label"].grid_remove()
+            self.field_pay_salary["entry"].grid_remove()
+
+            self.field_pay_rate["label"].grid()
+            self.field_pay_rate["entry"].grid()
+
+        elif data["Hourly"] == "None" and data["Commission"] != "None":
+            self.field_pay_salary["label"].grid()
+            self.field_pay_salary["entry"].grid()
+            self.field_pay_rate["label"].grid()
+            self.field_pay_rate["entry"].grid()
+
+        else:
+            self.field_pay_salary["label"].grid()
+            self.field_pay_salary["entry"].grid()
+            self.field_pay_rate["label"].grid_remove()
+            self.field_pay_rate["entry"].grid_remove()
+
+    def toggle_salary_fields(self):
+        self.field_pay_salary["label"].grid()
+        self.field_pay_salary["entry"].grid()
+        self.field_pay_rate["label"].grid_remove()
+        self.field_pay_rate["entry"].grid_remove()
+
+    def toggle_commission_fields(self):
+        self.field_pay_salary["label"].grid()
+        self.field_pay_salary["entry"].grid()
+        self.field_pay_rate["label"].grid()
+        self.field_pay_rate["entry"].grid()
+
+    def toggle_hourly_fields(self):
+        self.field_pay_salary["label"].grid_remove()
+        self.field_pay_salary["entry"].grid_remove()
+
+        self.field_pay_rate["label"].grid()
+        self.field_pay_rate["entry"].grid()
 
     def clear_listbox(self):
         self.people_listbox.delete(0, tk.END)
