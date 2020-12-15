@@ -8,7 +8,7 @@ Creates CSV file with payment info for each employee.
 class payRoll:
 
     def __init__(self):
-        with open("employee_file.json") as f:
+        with open("Model/employee_file.json") as f:
             self.data = json.load(f)
 
     def payroll(self, fyle):
