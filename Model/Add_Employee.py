@@ -137,12 +137,12 @@ class add_employee:
 
 
 '''
-employee_num = "66-555555"
-first = "Sean"
-last = "McNees"
+employee_num = "66-855555"
+first = "Arnold"
+last = "Rimmer"
 phone = "385-225-8880"
-pay_type = "Salary"
-hourly = "1"
+pay_type = "Commission"
+hourly = "None"
 commission = "2"
 salary = "3"
 birth_day = "06"
