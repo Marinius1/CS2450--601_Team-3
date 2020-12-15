@@ -29,18 +29,11 @@ class List_Maker:
             self.data = json.load(infile)
 
 
-class PTO_Maker:
-    def __init__(self):
-        self.PTO_lyst = []
-
-        with open('Model/cur_period.json') as infile:
-            self.PTO_lyst = json.load(infile)
-
 
 class Employee_Adder:
     def __init__(self, dicton):
-        add = add_employee(dicton["Employee number"], dicton["First name"],
-                         dicton["Last name"], dicton["Pay type"], dicton["Pay amount"],
+        add = add_employee(dicton["Employee number"], dicton["First name"], dicton["Last name"], 
+                         dicton["Pay type"], dicton["Pay type"], dicton["Hourly"], dicton["Comission"], dicton["Salary"],
                          dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
                          dicton["Phone"], dicton["Zip"], dicton["Birth day"],
                          dicton["Birth month"], dicton["Birth year"], dicton["Start day"], dicton["Start month"],
@@ -59,7 +52,7 @@ class Employee_Editer:
         d = delete_employee()
         d.delete_this(dicton1["Employee number"], dicton1["First name"], dicton1["Last name"])
         add = add_employee(dicton["Employee number"], dicton["First name"],
-                         dicton["Last name"], dicton["Pay type"], dicton["Pay amount"],
+                         dicton["Last name"], dicton["Pay type"], dicton["Hourly"], dicton["Comission"], dicton["Salary"],
                          dicton["Address"], dicton["State"], dicton["City"], dicton["Social security"],
                          dicton["Phone"], dicton["Zip"], dicton["Birth day"],
                          dicton["Birth month"], dicton["Birth year"], dicton["Start day"], dicton["Start month"],
