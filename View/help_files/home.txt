@@ -1,8 +1,9 @@
-Home page help file
-
 Welcome to AnyEmployee, a product of Innovative EmpTrack.
 
 Home page:
+
 People - Provides identification for each employee including Name, Employee Number, Phone Number, Role, Position, and assigned Team (basically a company directory).
+
 Payroll - Gives payroll information for each employee including Pay type, Pay amount, and PTO.
+
 Admin - Allows the admin to adjust employee information.
