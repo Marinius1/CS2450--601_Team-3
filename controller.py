@@ -45,9 +45,11 @@ class Employee_Adder:
 
 class Employee_Deleter:
     def __init__(self, dicton):
+        x = Model.EditEmployeeFile
+        x.archive_employee(dicton["Employee number"])
         d = delete_employee()
         d.delete_this(dicton["Employee number"], dicton["First name"], dicton["Last name"])
-
+        
 
 class Employee_Editer:
     def __init__(self, dicton1, dicton):

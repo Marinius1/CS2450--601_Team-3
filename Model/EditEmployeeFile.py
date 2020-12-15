@@ -3,13 +3,16 @@ import json
 def archive_employee(empID):
     with open("Model/employee_file.json") as file:
         data = json.load(file)
+        file.close()
         for i in data:
             if empID == i["Employee number"]:
-                with open('deleted_employees.json') as infile:
+                with open('Model/deleted_employees.json') as infile:
                     data = json.load(infile)
                     data.append(i)
-                with open('deleted_employees.json', 'w') as outfile:
+                    infile.close()
+                with open('Model/deleted_employees.json', 'w') as outfile:
                     json.dump(data, outfile)
+                    outfile.close()
 
 
 def edit_employee(empID, change, info):
