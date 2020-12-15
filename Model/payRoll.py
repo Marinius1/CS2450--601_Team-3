@@ -7,13 +7,12 @@ Creates CSV file with payment info for each employee.
 '''
 class payRoll:
 
-    def __init__(self, fyle):
-        with open("Model/0.json") as f:
+    def __init__(self):
+        with open("employee_file.json") as f:
             self.data = json.load(f)
-            self.fyle = fyle
 
-    def payroll(self):
-        with open(self.fyle, 'w') as f1:
+    def payroll(self, fyle):
+        with open(fyle, 'w') as f1:
             for i in self.data:
                 f1.write(i["Employee number"])
                 f1.write(" ")
@@ -22,19 +21,21 @@ class payRoll:
                 f1.write(i["Last name"])
                 f1.write(" ")
                 f1.write("Pay for this period:")
+                k = i["Timecard"].strip('][').split(', ')
+                r = [float(ele) for ele in k]
+                hours = (sum(r))
+
                 if i["Pay type"] == "Hourly":
-                    f1.write(str(round(float(i["Hourly"])*sum(i["Timecard"]),2)))
+                    f1.write(str(round(float(i["Hourly"])*hours,2)))
                 elif i["Pay type"] == "Salary":
                     f1.write(str(round(float(i["Salary"])/2,2)))
                 elif i["Pay type"] == "Commission":
-                    f1.write(str(round(float((i["Commission"]*sum(i["Timecards"]/100) + i["Salary"]/24)))))
-#                z = float(i["PTO total"]) - float(i["PTO used"])
-#                f1.write(" ")
-#                f1.write("Remaining PTO:")
-#                f1.write(str(round(z, 2)))
-                f1.write(',\n')
+                    f1.write(str(round((float(i["Commission"]) * (hours/100)) + float(i["Salary"])/24,2)))
+                f1.write('\n')
 
 
 
-#p = payRoll()
-#p.payroll("payroll.csv")
+'''
+p = payRoll()
+p.payroll("payroll.csv")
+'''

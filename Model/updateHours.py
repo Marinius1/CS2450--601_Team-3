@@ -80,14 +80,14 @@ class updateHours:
             if i["Pay type"] == "Salary" or i["Pay type"] == "Commission" or i["Pay type"] == "Hourly":
                 i["Hours/sales"] = "0"
                 i["Timecard"] = "[]"
-        with open("Model/employee_file.json", 'w') as file:
+        with open("employee_file.json", 'w') as file:
             json.dump(self.data, file)
             file.close()
 
 
 
 #u = updateHours("employee_file.json")
-#u.updateHourly()
-#u.updateCommission()
-#u.updateSalary()
+#u.updateHourly("timecards.csv")
+#u.updateCommission("timecards.csv")
+#u.updateSalary("timecards.csv")
 #u.setTozero()
