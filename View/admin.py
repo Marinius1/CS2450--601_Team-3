@@ -508,16 +508,17 @@ class Admin():
     def listbox_select(self, event, lyst):
         if (self.changes_detected):
             self.create_are_you_sure("Would you like to save your changes?", self.save_action, self.set_changes_flag)
-        widget = event.widget
-        selection = widget.curselection()
-        value = widget.get(tk.ACTIVE)
-        # print("selection:", selection[0], ": '%s'" % value)
+        else:
+            widget = event.widget
+            selection = widget.curselection()
+            value = widget.get(tk.ACTIVE)
+            # print("selection:", selection[0], ": '%s'" % value)
 
-        self.toggle_pay_fields(lyst[selection[0]])
+            self.toggle_pay_fields(lyst[selection[0]])
 
-        self.set_values(lyst[selection[0]])
-        self.click_buffer = self.get_values()
-        self.save_action = self.edit_employee
+            self.set_values(lyst[selection[0]])
+            self.click_buffer = self.get_values()
+            self.save_action = self.edit_employee
 
     def toggle_pay_fields(self, data):
         if data["Pay type"] == "Hourly":
