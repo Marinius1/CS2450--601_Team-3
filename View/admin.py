@@ -29,7 +29,7 @@ class Admin():
         self.click_buffer = []
       
         self.master = master
-
+        self.theme=theme
         self.screen_width = self.master.winfo_screenwidth()
         self.screen_height = self.master.winfo_screenheight()
 
@@ -475,10 +475,10 @@ class Admin():
 
             if i % 2 == 0:
                 background = self.colors.background
-                foreground = self.colors.a7
+                foreground = "#000000" if self.theme == "Builtin Light" else self.colors.a7
             else:
                 background = self.colors.a7
-                foreground = self.colors.background
+                foreground = "#000000" if self.theme == "Builtin Light" else self.colors.background
 
             self.people_listbox.itemconfigure(i, background=background, foreground=foreground)
 

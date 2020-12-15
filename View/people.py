@@ -22,7 +22,7 @@ class People():
         """
 
         self.master = master
-
+        self.theme=theme
         self.name = name
         self.colors = Color(theme).colors
         self.style = ttk.Style()
@@ -106,10 +106,10 @@ class People():
 
                         if count % 2 == 0:
                             background = self.colors.background
-                            foreground = self.colors.a7
+                            foreground = "#000000" if self.theme == "Builtin Light" else self.colors.a7
                         else:
                             background = self.colors.a7
-                            foreground = self.colors.background
+                            foreground = "#000000" if self.theme == "Builtin Light" else self.colors.background
 
                         self.table[k].itemconfigure(tk.END, background=background, foreground=foreground)
                     count += 1

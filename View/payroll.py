@@ -37,6 +37,7 @@ class PayRoll():
         self.people = self.L.data
         # print(self.people)
 
+        self.theme = theme
         self.name = name
         self.colors = Color(theme).colors
         self.style = ttk.Style()
@@ -514,10 +515,10 @@ class PayRoll():
                 for j in range(len(self.people)):
                     if j % 2 == 0:
                         background = self.colors.background
-                        foreground = self.colors.a7
+                        foreground = "#000000" if self.theme == "Builtin Light" else self.colors.a7
                     else:
                         background = self.colors.a7
-                        foreground = self.colors.background
+                        foreground = "#000000" if self.theme == "Builtin Light" else self.colors.background
 
                     try:
                         new_value = self.people[j][lyst2[i]]
@@ -554,10 +555,10 @@ class PayRoll():
                 for j in range(len(self.people)):
                     if j % 2 == 0:
                         background = self.colors.background
-                        foreground = self.colors.a7
+                        foreground = "#000000" if self.theme == "Builtin Light" else self.colors.a7
                     else:
                         background = self.colors.a7
-                        foreground = self.colors.background
+                        foreground = "#000000" if self.theme == "Builtin Light" else self.colors.background
                     if i == 8:
                         new_value = 12
                         entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
