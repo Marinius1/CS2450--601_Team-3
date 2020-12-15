@@ -511,12 +511,12 @@ class Admin():
         widget = event.widget
         selection = widget.curselection()
         value = widget.get(tk.ACTIVE)
-        self.click_buffer = self.get_values()
         # print("selection:", selection[0], ": '%s'" % value)
 
         self.toggle_pay_fields(lyst[selection[0]])
 
         self.set_values(lyst[selection[0]])
+        self.click_buffer = self.get_values()
         self.save_action = self.edit_employee
 
     def toggle_pay_fields(self, data):
