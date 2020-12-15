@@ -348,7 +348,7 @@ class PayRoll():
         return "$" + "{:,}".format(sum(data))
 
     def pay(self):
-        self.pay=Controller.payPay
+        self.pay = Controller.payPay
         self.pay()
 
         with open('./Payroll.csv') as infile:

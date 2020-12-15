@@ -11,8 +11,8 @@ class payRoll:
         with open("Model/employee_file.json") as f:
             self.data = json.load(f)
 
-    def payroll(self, fyle):
-        with open(fyle, 'w') as f1:
+    def payroll(self):
+        with open('./Payroll.csv', 'w') as f1:
             for i in self.data:
                 f1.write(i["Employee number"])
                 f1.write(" ")

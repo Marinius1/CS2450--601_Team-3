@@ -4,8 +4,8 @@
     "\\.idea",
     "\\Model",
     "\\View",
-    "\\View\\Colors"
+    "\\View\\help_files"
   ],
-  "SelectedNode": "\\View\\admin.py",
+  "SelectedNode": "\\Model\\0.json",
   "PreviewInSolutionExplorer": true
 }

@@ -90,7 +90,7 @@ class Save_Payroll_Shits:
 
 class payPay:
     def __init__(self):
-        PP=Model.payRoll.payRoll("Payroll.csv")
+        PP=Model.payRoll.payRoll()
         PP.payroll()
 
 
