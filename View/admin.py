@@ -308,6 +308,7 @@ class Admin():
 
 
         self.set_values(self.people_example[0])
+        self.toggle_pay_fields(self.people_example[0])
 
     def search(self, *args):
 
@@ -372,21 +373,38 @@ class Admin():
         # self.dropdown_pay_type["value"].set(data["Pay type"])
         self.value_pay_type.set(data["Pay type"])
 
-        if data["Commission"] == "None" and data["Salary"] == "None":
 
+        if data["Pay type"] == "Hourly":
             self.set_default_text_field(self.field_pay_rate, data["Hourly"])
-        elif data["Hourly"] == "None" and data["Commission"] != "None":
 
+        elif data["Pay type"] == "Commission":
             self.set_default_text_field(self.field_pay_rate, data["Commission"])
             self.set_default_text_field(self.field_pay_salary, data["Salary"])
-        else:
 
+        elif data["Pay type"] == "Salary":
             self.set_default_text_field(self.field_pay_salary, data["Salary"])
 
 
 
     #Get data from save button
     def get_values(self):
+
+        pay_type = self.value_pay_type.get()
+
+        hourly = None
+        commission = None
+        salary = None
+
+        if pay_type == "Hourly":
+            hourly = self.field_pay_rate["entry"].get()
+
+        elif pay_type == "Commission":
+            hourly = self.field_pay_rate["entry"].get()
+            salary = self.field_pay_salary["entry"].get()
+
+        elif pay_type == "Salary":
+            salary = self.field_pay_salary["entry"].get()
+
         return {
             "First name": self.field_first_name["entry"].get(),
             "Last name": self.field_last_name["entry"].get(),
@@ -408,9 +426,9 @@ class Admin():
             "Start year": self.date_start_employment["year"]["value"].get(),
             # "Pay type": self.dropdown_pay_type["value"].get(),
             "Pay type": self.value_pay_type.get(),
-            "Hourly": self.field_pay_rate["entry"].get(),
-            "Commission": self.field_pay_rate["entry"].get(),
-            "Salary": self.field_pay_salary["entry"].get(),
+            "Hourly": hourly,
+            "Commission": commission,
+            "Salary": salary,
         }
 
     def set_default_text_field(self, field, value):
@@ -498,24 +516,14 @@ class Admin():
         self.save_action = self.edit_employee
 
     def toggle_pay_fields(self, data):
-        if data["Commission"] == "None" and data["Salary"] == "None":
-            self.field_pay_salary["label"].grid_remove()
-            self.field_pay_salary["entry"].grid_remove()
+        if data["Pay type"] == "Hourly":
+            self.toggle_hourly_fields()
 
-            self.field_pay_rate["label"].grid()
-            self.field_pay_rate["entry"].grid()
+        elif data["Pay type"] == "Commission":
+            self.toggle_commission_fields()
 
-        elif data["Hourly"] == "None" and data["Commission"] != "None":
-            self.field_pay_salary["label"].grid()
-            self.field_pay_salary["entry"].grid()
-            self.field_pay_rate["label"].grid()
-            self.field_pay_rate["entry"].grid()
-
-        else:
-            self.field_pay_salary["label"].grid()
-            self.field_pay_salary["entry"].grid()
-            self.field_pay_rate["label"].grid_remove()
-            self.field_pay_rate["entry"].grid_remove()
+        elif data["Pay type"] == "Salary":
+            self.toggle_salary_fields()
 
     def toggle_salary_fields(self):
         self.field_pay_salary["label"].grid()
@@ -527,6 +535,7 @@ class Admin():
         self.field_pay_salary["label"].grid()
         self.field_pay_salary["entry"].grid()
         self.field_pay_rate["label"].grid()
+        self.field_pay_rate["label"].config(text="Commission Rate")
         self.field_pay_rate["entry"].grid()
 
     def toggle_hourly_fields(self):
@@ -534,6 +543,7 @@ class Admin():
         self.field_pay_salary["entry"].grid_remove()
 
         self.field_pay_rate["label"].grid()
+        self.field_pay_rate["label"].config(text="Hourly Rate")
         self.field_pay_rate["entry"].grid()
 
     def clear_listbox(self):
