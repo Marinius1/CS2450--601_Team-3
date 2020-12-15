@@ -22,7 +22,12 @@ class payRoll:
                 f1.write(i["Last name"])
                 f1.write(" ")
                 f1.write("Pay for this period:")
-                f1.write(str(round(float(i["Total pay"]),2)))
+                if i["Pay type"] == "Hourly":
+                    f1.write(str(round(float(i["Hourly"])*sum(i["Timecard"]),2)))
+                elif i["Pay type"] == "Salary":
+                    f1.write(str(round(float(i["Salary"])/2,2)))
+                elif i["Pay type"] == "Commission":
+                    f1.write(str(round(float((i["Commission"]*sum(i["Timecards"]/100) + i["Salary"]/24)))))
 #                z = float(i["PTO total"]) - float(i["PTO used"])
 #                f1.write(" ")
 #                f1.write("Remaining PTO:")
