@@ -58,8 +58,8 @@ class NavBar():
                              focuscolor=self.colors.a10
                              )
 
-        self.style.configure(style='Nav.TButton', font=('Roboto', self.resize_utility.body_text()))
-        self.resize_utility.register_style(self.style, 'Nav.TButton', "body")
+        self.style.configure(style='Nav.TButton', font=('Roboto', self.resize_utility.heading_three_text()))
+        self.resize_utility.register_style(self.style, 'Nav.TButton', "h3")
 
         self.style.map('Help.TButton', background=[('active', self.colors.a8)],
                        foreground=[('active', self.colors.background)])
@@ -72,10 +72,10 @@ class NavBar():
                              focuscolor=self.colors.a10
                              )
         self.style.configure(style='Help.TButton', font=('Roboto', self.resize_utility.body_text()))
-        self.resize_utility.register_style(self.style, 'Help.TButton', "body")
+        self.resize_utility.register_style(self.style, 'Help.TButton', "h3")
 
         self.style.map('Help.TLabel')
-        self.style.configure('Help.TLabel', font=('Roboto', 24))
+        self.style.configure('Help.TLabel', font=('Roboto', self.resize_utility.heading_three_text()))
 
 
         self.nav_home = ttk.Button(self.nav_frame, text="Home", command=window.home)

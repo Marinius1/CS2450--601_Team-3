@@ -5,7 +5,7 @@ test_window.py
 import pytest
 
 import tkinter as tk
-from window import Window
+from main import Window
 
 
 @pytest.fixture(scope="module")

@@ -40,11 +40,11 @@ class Homepage():
                              foreground=self.colors.foreground,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
-                             font=('Roboto', 24)
+                             font=('Roboto', self.resize_utility.title_text())
                              )
 
 
-        self.resize_utility.register_style(self.style, "Recent.TLabel", "body")
+        self.resize_utility.register_style(self.style, "Recent.TLabel", "title")
 
         self.style.configure('HomePage.TButton',
                              background=self.colors.background,
@@ -53,10 +53,10 @@ class Homepage():
                              bordercolor=self.colors.a0,
                              focusthickness=3,
                              focuscolor=self.colors.a10,
-                             font=('Roboto', self.resize_utility.large_heading_text())
+                             font=('Roboto', self.resize_utility.title_text())
                              )
 
-        self.resize_utility.register_style(self.style, "HomePage.TButton", "heading-large")
+        self.resize_utility.register_style(self.style, "HomePage.TButton", "title")
 
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3,

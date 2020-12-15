@@ -21,18 +21,12 @@ class ResizeUtility:
     def title_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
-        return int((height/9 + width/32) * 0.08)
-
-    def subtitle_text(self):
-        width = self.master.winfo_width()
-        height = self.master.winfo_height()
-        return int((height/9 + width/32) * 0.08)
-
+        return int((height/9 + width/32) * 0.2)
 
     def heading_one_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
-        return int((height/9 + width/32) * 0.1)
+        return int((height/9 + width/32) * 0.15)
 
     def heading_two_text(self):
         width = self.master.winfo_width()
@@ -42,12 +36,12 @@ class ResizeUtility:
     def heading_three_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
-        return int((height/9 + width/32) * 0.1)
+        return int((height/9 + width/32) * 0.09)
 
-    def large_heading_text(self):
+    def heading_four_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
-        return int((height/9 + width/32) * 0.2)
+        return int((height/9 + width/32) * 0.085)
 
     def body_text(self):
         width = self.master.winfo_width()
@@ -75,21 +69,33 @@ class ResizeUtility:
             #     i.configure(font=('Roboto', int(size_ratio)), width=int(size_ratio))
 
             for i in self.element_callbacks:
+                if i[1] == "title":
+                    i[0].configure(font=('Roboto', self.title_text()))
+                if i[1] == "h1":
+                    i[0].configure(font=('Roboto', self.heading_one_text()))
+                if i[1] == "h2":
+                    i[0].configure(font=('Roboto', self.heading_two_text()))
+                if i[1] == "h3":
+                    i[0].configure(font=('Roboto', self.heading_three_text()))
+                if i[1] == "h4":
+                    i[0].configure(font=('Roboto', self.heading_four_text()))
                 if i[1] == "body":
                     i[0].configure(font=('Roboto', self.body_text()))
-                if i[1] == "heading":
-                    i[0].configure(font=('Roboto', self.heading_text()))
-                if i[1] == "heading-large":
-                    i[0].configure(font=('Roboto', self.large_heading_text()))
 
             for i in self.style_callbacks:
                 print(i)
-                if i[2] == "body":
+                if i[2] == "title":
+                    i[0].configure(style=i[1], font=('Roboto', self.title_text()))
+                if i[2] == "h1":
+                    i[0].configure(style=i[1], font=('Roboto', self.heading_one_text()))
+                if i[2] == "h2":
+                    i[0].configure(style=i[1], font=('Roboto', self.heading_two_text()))
+                if i[2] == "h3":
+                    i[0].configure(style=i[1], font=('Roboto', self.heading_three_text()))
+                if i[2] == "h4":
+                    i[0].configure(style=i[1], font=('Roboto', self.heading_four_text()))
+                if i[2] == "h5":
                     i[0].configure(style=i[1], font=('Roboto', self.body_text()))
-                if i[2] == "heading":
-                    i[0].configure(style=i[1], font=('Roboto', self.heading_text()))
-                if i[2] == "heading-large":
-                    i[0].configure(style=i[1], font=('Roboto', self.large_heading_text()))
 
             for i in self.canvas_callbacks:
                 i[0].configure(scrollregion=i[0].bbox("all"))
