@@ -26,23 +26,16 @@ class delete_employee:
         for i in self.data:
             if (i['Employee number'], i['First name'], i['Last name']) == c.delEmployee():
                 z = self.data.index(i)
-                del_emp = self.data.pop(z)
-                with open('deleted_employees.json') as infile:
-                    data = json.load(infile)
-                    data.append(del_emp)
-                with open('deleted_employees.json', 'w') as outfile:
-                    json.dump(data, outfile)
+                self.data.pop(z)
 
-            with open('employee_file.json', 'w') as outfile:
+            with open('Model/employee_file.json', 'w') as outfile:
                 json.dump(self.data, outfile)
 
         with open('Model/employee_file.json', 'w') as outfile:
             json.dump(self.data, outfile)
 
-    def clean_files(self):
-        pass
 
-'''
-d = delete_employee
-d.delete_this(employee ID, First name, Last name)
-'''
+
+d = delete_employee()
+d.delete_this("51-4678119", "Issie", "Scholard")
+

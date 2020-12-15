@@ -6,10 +6,7 @@ Imports a list of employees from csv file
 '''
 EMPLOYEE_FILE = "employees.csv"
 lyst = []
-receipts = []
-with open("receipts.csv", "r") as fyle:
-    for i in fyle:
-        receipts.append(i)
+
 
 class addToEmployeeFile:
 
@@ -153,16 +150,11 @@ class getData:
                     hours_sales = None
                 elif classification == "2":  # classification
                     empClass = "Commission"
-                    for i in receipts:
-                        for j in i:
-                            if j == empId:
-                                for _ in range(4):
-                                    total.append(i)
                     empClassification1 = None
                     empClassification2 = (str(commission))
                     empClassification3 = (str(salary))
-                    total = []
-                    hours_sales = sum(total)
+
+
 
                 i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification1), str(empClassification2), str(empClassification3),
                                       str(address), str(state),str(city), str(empZip), str(day1), str(month1), str(year1), str(social()),
@@ -171,8 +163,7 @@ class getData:
                                       str(random.randint(2,8)), str(random.randint(0,2)))
                 i.add_to_employee_file()
 
-'''
+
 a = getData(EMPLOYEE_FILE)
 
 a.load_employees()
-'''

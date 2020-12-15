@@ -1,26 +1,18 @@
 import json
 
-class editThis:
-
-    def __init__(self, data):
-        self.data = data
-
-    def edit(self):
-        with open("Model/employee_file.json") as file:
-            data = json.load(file)
-            for i in self.data:
-                empID = str(i["Employee number"])
-                for j in data:
-                    if j["Employee number"] == empID:
-                        j["PTO total"] = i["PTO total"]
-                        j["PTO used"] = i["PTO used"]
-                        j["Hours/sales"] = i["Hours/sales"]
-
-        with open("Model/employee_file.json", 'w') as f:
-            json.dump(data, f)
-
-
+def archive_employee(empID):
+    with open("Model/employee_file.json") as file:
+        data = json.load(file)
+        for i in data:
+            if empID == i["Employee number"]:
+                with open('deleted_employees.json') as infile:
+                    data = json.load(infile)
+                    data.append(i)
+                with open('deleted_employees.json', 'w') as outfile:
+                    json.dump(data, outfile)
 '''
-e = editThis("51-4678119")
-e.edit()
+archive_employee("51-4678119")
 '''
+
+
+
