@@ -42,7 +42,7 @@ class add_employee:
 
             for i in data1:
                 if self.eNum == i['Employee number'] and self.first == i["First name"] and self.last == i["Last name"]:
-                    j = False
+                    raise Exception("Sorry, employee already exists.")
 
             if j == True:
 
