@@ -84,13 +84,13 @@ class new:
         d = []
         for i in self.data:
             if i["Pay type"] == "Hourly":
-                z = float(i["Pay amount"]) * float(i["Hours/sales"])
+                z = float(i["Hourly"]) * float(i["Hours/sales"])
 
             elif i["Pay type"] == "Commission":
-                z = float(i["Pay amount"]) * float(i["Hours/sales"])
+                z = float((i["Salary"])/24) +  ((float(i["Hours/sales"] * float(i["Commission"])/100)))
 
             elif i["Pay type"] == "Salary":
-                z = float(i["Pay amount"]) / 12
+                z = float(i["Salary"]) / 24
 
             d.append({"Employee number": i["Employee number"], "First name": i["First name"],
                            "Last name": i["Last name"], "Total pay": str(round(z,2))})
