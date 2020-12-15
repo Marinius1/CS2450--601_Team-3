@@ -340,6 +340,8 @@ class Admin():
         self.set_values(self.people_example[0])
         self.toggle_pay_fields(self.people_example[0])
 
+        self.resize_utility.morph()
+
     def search(self, *args):
 
 

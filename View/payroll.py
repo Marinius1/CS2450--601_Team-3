@@ -250,6 +250,8 @@ class PayRoll():
 
         # self.get_table_data()
 
+        self.resize_utility.morph()
+
     def save_changes(self):
         print("save")
 
