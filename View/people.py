@@ -77,6 +77,8 @@ class People():
         self.sort_ascending("Last name")
         self.scrollbar.configure(command=self.yview)
 
+        self.resize_utility.morph()
+
 
     def button_action(self, event):
         button_text = event.widget.cget('text')

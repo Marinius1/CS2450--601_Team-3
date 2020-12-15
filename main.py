@@ -15,7 +15,6 @@ from View.homepage import Homepage
 from View.people import People
 from View.admin import Admin
 from View.login import Login
-from View.timecard import TimeCard
 from View.payroll import PayRoll
 
 

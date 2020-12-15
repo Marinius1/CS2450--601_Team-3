@@ -26,7 +26,7 @@ class Admin():
         # populate test data
         self.L = Controller.List_Maker()
         self.people_example = self.L.data
-        self.click_buffer = []
+
       
         self.master = master
         self.theme=theme
@@ -40,7 +40,9 @@ class Admin():
         self.style = ttk.Style()
         self.style.theme_use('alt')
 
-        self.style.map('Recent.TLabel',
+
+        self.style.map(''
+                       'Recent.TLabel',
                        background=[('active', self.colors.a7)],
                        foreground=[('active', self.colors.background)])
         self.style.configure('Recent.TLabel',
@@ -49,25 +51,24 @@ class Admin():
                              foreground=self.colors.foreground,
                              borderwidth=0,
                              bordercolor=self.colors.a0,
-                             font=('Roboto', self.resize_utility.heading_three_text())
+                             font=('Roboto', self.resize_utility.body_text())
                              )
 
         self.style.configure(style='Recent.TLabel', font=('Roboto', self.resize_utility.body_text()))
-        self.resize_utility.register_style(self.style, 'Recent.TLabel', "h3")
+        self.resize_utility.register_style(self.style, 'Recent.TLabel', "body")
 
 
         self.style.map('Entry.TEntry')
         self.style.configure(
-            'Entry.TLabel',
+            'Entry.TEntry',
             foreground=self.colors.foreground,
-            background=self.colors.background,
+            fieldbackground=self.colors.background,
             borderwidth=1,
             bordercolor=self.colors.foreground,
             relief=tk.SUNKEN,
-            padding=[10,1,1,1],
-            font=('Roboto', self.resize_utility.heading_three_text())
+            font=('Roboto', self.resize_utility.body_text())
         )
-        self.resize_utility.register_style(self.style, 'Entry.TEntry', "h3")
+        self.resize_utility.register_style(self.style, 'Entry.TEntry', "body")
 
         self.style.map('Header.TButton',
                        background=[('active', self.colors.a8)],
@@ -82,8 +83,37 @@ class Admin():
                              font=('Roboto', 16)
                              )
 
+
         self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
         self.resize_utility.register_style(self.style, 'Header.TButton', "body")
+
+        self.style.map('Radio.TButton')
+        self.style.configure('Radio.TButton',
+                         background=self.colors.background,
+                         foreground = "#000000" if self.theme == "Builtin Light" else self.colors.a7,
+                         borderwidth=2,
+                         bordercolor=self.colors.a0,
+                         focusthickness=3,
+                         focuscolor=self.colors.a10,
+                         font=('Roboto', 16)
+                         )
+
+
+        self.style.configure(style='Radio.TButton', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'Header.TButton', "body")
+
+        self.style.map('TCombobox')
+        self.style.configure('TCombobox',
+                         fieldbackground=self.colors.background,
+                         selectforeground = self.colors.a1 if self.theme == "Builtin Light" else self.colors.a7,
+                         foreground = "#000000" if self.theme == "Builtin Light" else self.colors.a7,
+                         font=('Roboto', 16),
+                         )
+
+        self.style.configure(style='TCombobox', font=('Roboto', self.resize_utility.body_text()))
+        self.resize_utility.register_style(self.style, 'TCombobox', "body")
+
+        self.master.option_add("*TCombobox*Listbox*Background", "#ffffff" if self.theme == "Builtin Light" else self.colors.a7)
 
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3,
@@ -123,8 +153,8 @@ class Admin():
         self.search_value = tk.StringVar()
         self.search_value.set("Search")
         self.search_value.trace("w", self.search)
-        self.entry_search = ttk.Entry(self.frame_search, textvariable=self.search_value)
-        # self.entry_search.bind("<Key>", self.search)
+        self.entry_search = ttk.Entry(self.frame_search, textvariable=self.search_value, style="Entry.TEntry")
+        self.entry_search.bind("<Key>", self.search)
         # self.entry_search.bind("<Button-1>", lambda x: "break")
 
         self.entry_search.grid(row=0, column=0)
@@ -283,7 +313,7 @@ class Admin():
         self.info_start_employment_label = ttk.Label(self.info_identity_frame, text='Total months with company: ', style="Recent.TLabel")
         self.info_start_employment_label.grid(row=12, column=5, sticky=tk.E)
 
-        self.info_start_employment_data = tk.Label(self.info_identity_frame, text='', background=self.colors.background)
+        self.info_start_employment_data = ttk.Label(self.info_identity_frame, text='', style="Recent.TLabel")
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
         self.label_pay_type = ttk.Label(self.info_identity_frame, text="Pay type", style="Recent.TLabel")
@@ -296,22 +326,22 @@ class Admin():
         self.field_pay_rate = self.create_text_entry(self.info_identity_frame, 'Pay Rate', '', 16)
         self.field_pay_salary = self.create_text_entry(self.info_identity_frame, 'Salary', '', 16, 2)
 
-        self.radio_hourly = tk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1], background=self.colors.background, command=lambda: self.toggle_hourly_fields());
+        self.radio_hourly = ttk.Radiobutton(self.info_identity_frame, text="Hourly", variable=self.value_pay_type, value=self.pay_types[1], command=lambda: self.toggle_hourly_fields(), style='Radio.TButton');
         self.radio_hourly.grid(row=15, column=1)
-        self.resize_utility.register_element(self.radio_hourly, "h3")
 
-        self.radio_salary = tk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0], background=self.colors.background, command=lambda: self.toggle_salary_fields());
+        self.radio_salary = ttk.Radiobutton(self.info_identity_frame, text="Salary", variable=self.value_pay_type, value=self.pay_types[0], command=lambda: self.toggle_salary_fields(), style='Radio.TButton');
         self.radio_salary.grid(row=15, column=2)
-        self.resize_utility.register_element(self.radio_salary, "h3")
 
-        self.radio_commission = tk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2], background=self.colors.background, command=lambda: self.toggle_commission_fields());
+        self.radio_commission = ttk.Radiobutton(self.info_identity_frame, text="Commission", variable=self.value_pay_type, value=self.pay_types[2], command=lambda: self.toggle_commission_fields(), style='Radio.TButton');
         self.radio_commission.grid(row=15, column=3)
-        self.resize_utility.register_element(self.radio_commission, "h3")
 
 
 
         self.set_values(self.people_example[0])
+        self.click_buffer = self.get_values()
         self.toggle_pay_fields(self.people_example[0])
+
+        self.resize_utility.morph()
 
     def search(self, *args):
 
@@ -455,7 +485,7 @@ class Admin():
 
     def add_employee(self):
         if (self.changes_detected):
-            self.create_are_you_sure("Would you like to save your changes?", self.save_action, self.set_changes_flag)
+            self.create_are_you_sure("Would you like to save your changes?", self.save_action)
         else:
             default_data = {
                 "Employee number": "xx-xxxxx",
@@ -508,7 +538,7 @@ class Admin():
 
     def listbox_select(self, event, lyst):
         if (self.changes_detected):
-            self.create_are_you_sure("Would you like to save your changes?", self.save_action, self.set_changes_flag)
+            self.create_are_you_sure("Would you like to save your changes?", self.save_action)
         else:
             widget = event.widget
             selection = widget.curselection()
@@ -519,6 +549,7 @@ class Admin():
 
             self.set_values(lyst[selection[0]])
             self.click_buffer = self.get_values()
+            print(self.click_buffer)
             self.save_action = self.edit_employee
 
     def toggle_pay_fields(self, data):
@@ -574,7 +605,6 @@ class Admin():
 
     def create_text_entry(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
         label = ttk.Label(master, text=label, style='Recent.TLabel')
-        label.configure(background=self.colors.background)
         label.grid(row=row, column=column_start, sticky=sticky)
 
         entry = ttk.Entry(master, style='Entry.TEntry')

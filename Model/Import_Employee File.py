@@ -1,5 +1,6 @@
 import json
 import random
+import os
 
 '''
 Imports a list of employees from csv file
@@ -44,7 +45,7 @@ class addToEmployeeFile:
         self.zip = zip
 
     def add_to_employee_file(self):
-        with open('Model/employee_file.json') as infile:
+        with open('employee_file.json') as infile:
             data1 = json.load(infile)
             data1.append(
                 {"Employee number": self.number, "First name": self.first,
@@ -56,7 +57,7 @@ class addToEmployeeFile:
                  "Role": self.role, "Position": self.pos, "Team": self.team, "Timecard": self.timecard,"PTO": self.PTO, "PTOused": self.PTOused})
 
 
-        with open('Model/employee_file.json', 'w') as outfile:
+        with open('employee_file.json', 'w') as outfile:
             json.dump(data1, outfile)
 
 
@@ -165,9 +166,7 @@ class getData:
                                       str(hours_sales),str(role()),str(position()),str(teams()), str([]),
                                       str(random.randint(2,8)), str(random.randint(0,2)))
                 i.add_to_employee_file()
-
 '''
 a = getData(EMPLOYEE_FILE)
-
 a.load_employees()
 '''

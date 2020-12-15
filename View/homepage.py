@@ -117,6 +117,8 @@ class Homepage():
         self.button_1.bind("<Button-1>", lambda event: window.people())
         self.button_2.bind("<Button-1>", lambda event: window.admin())
 
+        self.resize_utility.morph()
+
     def create_homepage_button(self, parent, title, content, row, column):
         button = ttk.Button(parent, text=title, style="HomePage.TButton")
         button.grid(row=row, column=column, padx=25, pady=25, ipady=50)
