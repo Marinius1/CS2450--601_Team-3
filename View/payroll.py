@@ -465,8 +465,19 @@ class PayRoll():
                 new_hours_str = new_hours_str.replace("[","")
                 new_hours_str = new_hours_str.replace("]","")
 
+
+
             tmp_list.append(new_hours_str)
-            tmp_list.append("-")
+
+            total = "-"
+            if i["Pay type"] == "Hourly":
+                total = "{:.2f}".format(sum([float(i) for i in hours_list]) * float(i["Hourly"]))
+            elif i["Pay type"] == "Salary":
+                total = "{:.2f}".format(float(i["Salary"]) / 24.0)
+            elif i["Pay type"] == "Commission":
+                total = "{:.2f}".format(float(i["Salary"]) + sum([float(i) for i in hours_list]) * (float(i["Commission"]) / 100))
+
+            tmp_list.append(total)
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
