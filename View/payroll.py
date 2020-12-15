@@ -526,6 +526,10 @@ class PayRoll():
                     self.resize_utility.register_element(entry, "body")
                     canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=200)
                     data_items.append(entry)
+
+                bbox = canvas.bbox("all")
+                canvas.configure(scrollregion=bbox)
+
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
             else:
@@ -534,7 +538,10 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                canvas = tk.Canvas(column, border=0, width=150, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
+                if i == 7:
+                    canvas = tk.Canvas(column, border=0, width=250, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
+                else:
+                    canvas = tk.Canvas(column, border=0, width=150, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
                 canvas.grid(row=0, column=0, sticky=tk.NSEW)
                 self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
 
@@ -550,9 +557,13 @@ class PayRoll():
                     if i == 8:
                         new_value = 12
                         entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
-
+                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
+                    elif i ==7:
+                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT)
+                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=250)
                     else:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
+                        canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
 
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
@@ -560,9 +571,10 @@ class PayRoll():
                     self.resize_utility.register_element(entry, "body")
                     if i != 8:
                         entry.insert(tk.END, self.people[j][lyst2[i]])
-                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
                     data_items.append(entry)
 
+                bbox = canvas.bbox("all")
+                canvas.configure(scrollregion=bbox)
                 self.data_columns.append(data_items)
                 self.canvas_columns.append(canvas)
 
