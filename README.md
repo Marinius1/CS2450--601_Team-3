@@ -4,7 +4,7 @@
 
 In order to access the git repository, make sure that `git` is installed on your machine. Installation can be done at [https://git-scm.com/downloads](https://git-scm.com/downloads).
 
-Download zip file from the [Google Drive](https://drive.google.com/drive/u/0/folders/1aDR2mxddIfSnpGMEloqt5N2Lgkpl8-iT).
+Download zip file from [https://drive.google.com/drive/u/0/folders/1aDR2mxddIfSnpGMEloqt5N2Lgkpl8-iT](https://drive.google.com/drive/u/0/folders/1aDR2mxddIfSnpGMEloqt5N2Lgkpl8-iT).
 
 Before getting started, make sure that you `pip install` the following dependencies: `Ttk`, `pynput`, `pyparsing`, `matplotlib`, and `pandas`.
 
