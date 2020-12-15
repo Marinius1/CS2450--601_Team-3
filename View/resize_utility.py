@@ -105,16 +105,18 @@ class ResizeUtility:
             height = self.master.winfo_height()
             ratio = 7.0/8.0
 
-            new_width = (width * ratio) / len(self.canvas_callbacks)
 
-            for i in self.frame_callbacks:
-                i.configure(width = new_width)
+            if len(self.canvas_callbacks) > 0:
+                new_width = (width * ratio) / len(self.canvas_callbacks)
+                for i in self.canvas_callbacks:
+                    i[0].configure(scrollregion=i[0].bbox("all"), width=new_width, height=height)
+                    if self.scrollbar is not None:
+                        self.scrollbar.configure(command=self.yview)
 
-            for i in self.canvas_callbacks:
-                i[0].configure(scrollregion=i[0].bbox("all"), width=new_width, height=height)
-                if self.scrollbar is not None:
-                    self.scrollbar.configure(command=self.yview)
-
+            if len(self.frame_callbacks) > 0:
+                new_width = (width * ratio) / len(self.canvas_callbacks)
+                for i in self.frame_callbacks:
+                    i.configure(width = new_width)
 
 
             self.can_listen = False
