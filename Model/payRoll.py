@@ -8,7 +8,7 @@ Creates CSV file with payment info for each employee.
 class payRoll:
 
     def __init__(self, fyle):
-        with open("Model/0.json") as f:
+        with open("Model/employee_file.json") as f:
             self.data = json.load(f)
             self.fyle = fyle
 
@@ -23,11 +23,11 @@ class payRoll:
                 f1.write(" ")
                 f1.write("Pay for this period:")
                 if i["Pay type"] == "Hourly":
-                    f1.write(str(round(float(i["Hourly"])*sum(i["Timecard"]),2)))
+                    f1.write(str(round(float(i["Hourly"])*sum(float(i["Timecard"])),2)))
                 elif i["Pay type"] == "Salary":
                     f1.write(str(round(float(i["Salary"])/2,2)))
                 elif i["Pay type"] == "Commission":
-                    f1.write(str(round(float((i["Commission"]*sum(i["Timecards"]/100) + i["Salary"]/24)))))
+                    f1.write(str(round(float((float(i["Commission"])*sum(float(i["Timecards"])/100) + float(i["Salary"])/24)))))
 #                z = float(i["PTO total"]) - float(i["PTO used"])
 #                f1.write(" ")
 #                f1.write("Remaining PTO:")
