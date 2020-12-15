@@ -32,26 +32,26 @@ class PayRoll():
         self.master = master
 
 
-
+        #Grabs data from the controller
         self.L = Controller.List_Maker()
         self.people = self.L.data
-        # print(self.people)
 
+        #Sets the theme of the window
         self.theme = theme
         self.name = name
         self.colors = Color(theme).colors
         self.style = ttk.Style()
         self.style.theme_use('alt')
+
+        #grabs needed TK and TTK widgets for frame creation
+
         self.home_frame = tk.Frame(self.master)
-
         self.left_frame = tk.Frame(self.home_frame, background=self.colors.background)
-
         self.table_frame = tk.Frame(self.left_frame, background=self.colors.background)
-
         self.scrollbar = tk.Scrollbar(self.table_frame)
         self.resize_utility = ResizeUtility(self.master, scrollbar=self.scrollbar, yView=self.yview)
 
-
+        #Styling
         self.style.map('Recent.TLabel',
                        background=[('active', self.colors.a7)],
                        foreground=[('active', self.colors.background)])
@@ -98,6 +98,8 @@ class PayRoll():
                              )
 
         self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
+
+        #Sizing utility
         self.resize_utility.register_style(self.style, 'Header.TButton', "body")
 
         self.home_frame.configure(background=self.colors.background, border=3, relief=tk.RIDGE)
