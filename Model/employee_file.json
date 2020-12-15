@@ -2795,7 +2795,7 @@
     "Role": "Manager",
     "Position": "Warehouse",
     "Team": "Team 1",
-    "Timecard": "[437.58, 505.03, 499.4, 804.83, 969.84]",
+    "Timecard": "[]",
     "PTO": "8",
     "PTOused": "1"
   }
