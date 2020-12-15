@@ -402,7 +402,7 @@ class Admin():
             hourly = self.field_pay_rate["entry"].get()
 
         elif pay_type == "Commission":
-            hourly = self.field_pay_rate["entry"].get()
+            commission = self.field_pay_rate["entry"].get()
             salary = self.field_pay_salary["entry"].get()
 
         elif pay_type == "Salary":
