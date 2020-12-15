@@ -13,7 +13,7 @@ class Admin():
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, theme=None):
+                 height: int = 10, theme=None, window=None):
         """
         init(name: str, children[]: List<varies>): void
         calls super(). needs to populate the horizontal View. also needs to bind either
@@ -475,10 +475,12 @@ class Admin():
 
             if i % 2 == 0:
                 background = self.colors.background
+                foreground = self.colors.a7
             else:
                 background = self.colors.a7
+                foreground = self.colors.background
 
-            self.people_listbox.itemconfigure(i, background=background)
+            self.people_listbox.itemconfigure(i, background=background, foreground=foreground)
 
     def create_text_entry(self, master, label, placeholder, row, column_start=0, sticky=tk.E):
         label = ttk.Label(master, text=label, style='Recent.TLabel')

@@ -21,7 +21,7 @@ class PayRoll():
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, theme=None):
+                 height: int = 10, theme=None, window=None):
         """
         init(name: str, children[]: List<varies>): void
         calls super(). needs to populate the horizontal View. also needs to bind either
@@ -512,17 +512,19 @@ class PayRoll():
                 self.resize_utility.register_canvas(canvas, (0,0,150,((self.resize_utility.body_text() + 6) * len(self.people))))
                 data_items = []
                 for j in range(len(self.people)):
-                    if j % 2 != 0:
+                    if j % 2 == 0:
                         background = self.colors.background
+                        foreground = self.colors.a7
                     else:
                         background = self.colors.a7
+                        foreground = self.colors.background
 
                     try:
                         new_value = self.people[j][lyst2[i]]
                     except:
                         new_value = 0
 
-                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
+                    entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     self.resize_utility.register_element(entry, "body")
                     canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=200)
@@ -550,14 +552,15 @@ class PayRoll():
 
                 data_items = []
                 for j in range(len(self.people)):
-                    if j % 2 != 0:
+                    if j % 2 == 0:
                         background = self.colors.background
+                        foreground = self.colors.a7
                     else:
                         background = self.colors.a7
-
+                        foreground = self.colors.background
                     if i == 8:
                         new_value = 12
-                        entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
+                        entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
                     elif i ==7:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT)

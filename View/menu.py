@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
+from View.Colors.color import Color
 
 class Menu():
     """
@@ -24,7 +25,8 @@ class Menu():
         self.menu = tk.Menu(self.master)
 
         self.menu_file = tk.Menu(self.menu, tearoff=0)
-        self.menu_file.add_command(label="Import...", command=self.import_file)
+        self.menu_file.add_command(label="Dark Mode", command=self.set_dark_mode)
+        self.menu_file.add_command(label="Light Mode", command=self.set_light_mode)
         self.menu_file.add_separator()
 
         self.menu_file.add_command(label="Logout", command=self.logout)
@@ -34,12 +36,30 @@ class Menu():
 
         self.master.configure(menu=self.menu)
 
-    def import_file(self):
-        file_name = filedialog.askopenfilename(initialdir="/",
-                                               title="Select file",
-                                               filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*"))
-                                               )
-        print(file_name)
+    def set_dark_mode(self):
+        self.window.colors = Color(scheme="Builtin Dark").colors
+        self.window.theme = "Builtin Dark"
+
+        self.window.page_home.__init__(self.master, theme=self.window.theme, window=self.window)
+
+        self.window.page_home.colors = self.window.colors
+
+
+
+        if self.window.nav is not None:
+            self.window.create_nav()
+
+
+    def set_light_mode(self):
+        self.window.colors = Color(scheme="Builtin Light").colors
+        self.window.theme = "Builtin Light"
+
+        self.window.page_home.__init__(self.master, theme=self.window.theme, window=self.window)
+        self.window.page_home.colors = self.window.colors
+
+        if self.window.nav is not None:
+            self.window.create_nav()
+
 
     def logout(self):
         self.window.login()

@@ -13,7 +13,7 @@ class People():
     """
 
     def __init__(self, master=None, name: str = "", width: int = 10,
-                 height: int = 10, theme=None):
+                 height: int = 10, theme=None, window=None):
         """
         init(name: str, children[]: List<varies>): void
         calls super(). needs to populate the horizontal View. also needs to bind either
@@ -106,10 +106,12 @@ class People():
 
                         if count % 2 == 0:
                             background = self.colors.background
+                            foreground = self.colors.a7
                         else:
                             background = self.colors.a7
+                            foreground = self.colors.background
 
-                        self.table[k].itemconfigure(tk.END, background=background)
+                        self.table[k].itemconfigure(tk.END, background=background, foreground=foreground)
                     count += 1
 
                     model_copy.pop(model_copy.index(j))
