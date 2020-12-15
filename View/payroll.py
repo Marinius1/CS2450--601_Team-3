@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from pynput.mouse import Listener
 import time
+import os
 
 from View.resize_utility import ResizeUtility
 from .Colors.color import Color
@@ -655,7 +656,7 @@ class PayRoll():
             return False
 
     def import_file(self):
-        file_name = filedialog.askopenfilename(initialdir="/",
+        file_name = filedialog.askopenfilename(initialdir=os.getcwd(),
                                                title="Select file",
                                                filetypes=(("CSV Files", "*.csv"),)
                                                )
