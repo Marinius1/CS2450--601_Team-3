@@ -27,7 +27,7 @@ class ResizeUtility:
     def large_heading_text(self):
         width = self.master.winfo_width()
         height = self.master.winfo_height()
-        return int((height/9 + width/32) * 0.12)
+        return int((height/9 + width/32) * 0.2)
 
     def register_element(self, callback, mode):
         self.element_callbacks.append([callback, mode])
@@ -42,7 +42,6 @@ class ResizeUtility:
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
         if not pressed:
             # Stop listener
-
 
             # size_ratio = ((width + height) / 2) * .01
 
@@ -59,12 +58,13 @@ class ResizeUtility:
                     i[0].configure(font=('Roboto', self.large_heading_text()))
 
             for i in self.style_callbacks:
+                print(i)
                 if i[2] == "body":
                     i[0].configure(style=i[1], font=('Roboto', self.body_text()))
-                if i[1] == "heading":
-                    i[0].configure(font=('Roboto', self.heading_text()))
-                if i[1] == "heading-large":
-                    i[0].configure(font=('Roboto', self.large_heading_text()))
+                if i[2] == "heading":
+                    i[0].configure(style=i[1], font=('Roboto', self.heading_text()))
+                if i[2] == "heading-large":
+                    i[0].configure(style=i[1], font=('Roboto', self.large_heading_text()))
 
             for i in self.canvas_callbacks:
                 i[0].configure(scrollregion=(i[1][0], i[1][2], self.body_text(), i[1][3]))

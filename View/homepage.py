@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+
+from View.resize_utility import ResizeUtility
 from .Colors.color import Color
 
 
@@ -26,6 +28,9 @@ class Homepage():
         self.style = ttk.Style()
         self.style.theme_use('alt')
 
+
+        self.resize_utility = ResizeUtility(self.master)
+
         self.style.map('Recent.TLabel',
                        background=[('active', self.colors.a7)],
                        foreground=[('active', self.colors.background)])
@@ -37,6 +42,21 @@ class Homepage():
                              bordercolor=self.colors.a0,
                              font=('Roboto', 24)
                              )
+
+
+        self.resize_utility.register_style(self.style, "Recent.TLabel", "body")
+
+        self.style.configure('HomePage.TButton',
+                             background=self.colors.background,
+                             foreground=self.colors.foreground,
+                             borderwidth=7,
+                             bordercolor=self.colors.a0,
+                             focusthickness=3,
+                             focuscolor=self.colors.a10,
+                             font=('Roboto', self.resize_utility.large_heading_text())
+                             )
+
+        self.resize_utility.register_style(self.style, "HomePage.TButton", "heading-large")
 
         self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3,
@@ -84,41 +104,40 @@ class Homepage():
         self.right_frame.grid(row=0, column=1, sticky=tk.NSEW)
 
         self.right_frame.columnconfigure((0, 1, 2), weight=1)
-        self.right_frame.rowconfigure((0, 1), weight=1)
+        self.right_frame.rowconfigure((0, 1, 2), weight=1)
 
-        self.summary_0 = self.create_summary_frame(parent=self.right_frame, title="Payroll", content="153", row=0, column=0)
-        self.summary_1 = self.create_summary_frame(parent=self.right_frame, title="People", content="42", row=0, column=1)
-        self.summary_2 = self.create_summary_frame(parent=self.right_frame, title="Admin", content="$3.50", row=0, column=2)
+        self.button_0 = self.create_homepage_button(parent=self.right_frame, title="Payroll", content="153", row=1, column=0)
+        self.button_1 = self.create_homepage_button(parent=self.right_frame, title="People", content="42", row=1, column=1)
+        self.button_2 = self.create_homepage_button(parent=self.right_frame, title="Admin", content="$3.50", row=1, column=2)
         # self.summary_3 = self.create_summary_frame(parent=self.right_frame, title="Next Payout", content="$2500", row=1, column=0)
         # self.summary_4 = self.create_summary_frame(parent=self.right_frame, title="Deductibles", content="$5000", row=1, column=1)
         # self.summary_5 = self.create_summary_frame(parent=self.right_frame, title="Quarterly Overtime", content="$18", row=1, column=2)
 
-        self.summary_0[0].bind("<Button-1>", lambda event: window.pay())
-        self.summary_1[0].bind("<Button-1>", lambda event: window.people())
-        self.summary_2[0].bind("<Button-1>", lambda event: window.admin())
+        self.button_0.bind("<Button-1>", lambda event: window.pay())
+        self.button_1.bind("<Button-1>", lambda event: window.people())
+        self.button_2.bind("<Button-1>", lambda event: window.admin())
 
-    def create_summary_frame(self, parent, title, content, row, column):
-        summary_frame = tk.Frame(parent)
-        summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
-        summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
+    def create_homepage_button(self, parent, title, content, row, column):
+        button = ttk.Button(parent, text=title, style="HomePage.TButton")
+        button.grid(row=row, column=column, padx=25, pady=25, ipady=50)
 
-        summary_frame.rowconfigure(0, weight=1)
-        summary_frame.columnconfigure(0, weight=1)
+        button.rowconfigure(0, weight=1)
+        button.columnconfigure(0, weight=1)
 
-        summary_frame.grid_propagate(0)
+        # button.grid_propagate(0)
 
-        summary_frame_title = ttk.Label(summary_frame, text=title, style='Recent.TLabel')
-        summary_frame_title.configure(font=('Roboto', 52, 'bold'))
-        summary_frame_title.grid(row=0, column=0)
+        # summary_frame_title = ttk.Label(button, text=title, style='Recent.TLabel')
+        # summary_frame_title.configure(font=('Roboto', 52, 'bold'))
+        # summary_frame_title.grid(row=0, column=0)
 
-        # summary_frame_content = ttk.Label(summary_frame, text=content, style='Recent.TLabel')
+        # summary_frame_content = ttk.Label(button, text=content, style='Recent.TLabel')
         # summary_frame_content.configure(font=('Roboto', 150, 'bold'))
         # summary_frame_content.grid(row=1, column=0)
 
-        summary_frame.bind('<Configure>', lambda event: self.resize_summary_frame(event=event, title=summary_frame_title))
+        # button.bind('<Configure>', lambda event: self.resize_summary_frame(event=event, button=button))
 
 
-        return [summary_frame, summary_frame_title]
+        return button
 
-    def resize_summary_frame(self, event, title):
-        title.configure(font=('Roboto', int(event.height * .1)))
+    def resize_summary_frame(self, event, button):
+        button.configure(font=('Roboto', int(event.height * .1)))
