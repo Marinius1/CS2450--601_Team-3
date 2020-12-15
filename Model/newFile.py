@@ -87,7 +87,7 @@ class new:
                 z = float(i["Hourly"]) * float(i["Hours/sales"])
 
             elif i["Pay type"] == "Commission":
-                z = float(float(i["Salary"])/24) +  ((float(i["Hours/sales"]) * float(i["Commission"])/100))
+                z = float((i["Salary"])/24) +  ((float(i["Hours/sales"]) * float(i["Commission"])/100))
 
             elif i["Pay type"] == "Salary":
                 z = float(i["Salary"]) / 24
