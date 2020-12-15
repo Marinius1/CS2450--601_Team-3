@@ -26,7 +26,7 @@ class Admin():
         # populate test data
         self.L = Controller.List_Maker()
         self.people_example = self.L.data
-        self.click_buffer = []
+
       
         self.master = master
         self.theme=theme
@@ -338,6 +338,7 @@ class Admin():
 
 
         self.set_values(self.people_example[0])
+        self.click_buffer = self.get_values()
         self.toggle_pay_fields(self.people_example[0])
 
         self.resize_utility.morph()

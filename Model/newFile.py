@@ -84,13 +84,35 @@ class new:
         d = []
         for i in self.data:
             if i["Pay type"] == "Hourly":
-                z = float(i["Hourly"]) * float(i["Hours/sales"])
+                hrly = i["Hourly"]
+                if hrly == "None":
+                    hrly = 0
+                hrsls = i['Hours/sales']
+                if hrsls == "None":
+                    hrsls = 0
+                if hrsls == "":
+                    hrsls = 0
+                z = float(hrly) * float(hrsls)
 
             elif i["Pay type"] == "Commission":
-                z = float((i["Salary"])/24) +  ((float(i["Hours/sales"]) * float(i["Commission"])/100))
+                slry = i["Salary"]
+                if slry == "None":
+                    slry = 0
+                hrsls = i['Hours/sales']
+                if hrsls == "None":
+                    hrsls = 0
+                cmmsn = i["Commission"]
+                if cmmsn == "None":
+                    cmmsn = 0
+                if cmmsn == "":
+                    cmmsn = 0
+                z = ((float(slry)/24) +  ((float(hrsls)) * (int(cmmsn)/100)))
 
             elif i["Pay type"] == "Salary":
-                z = float(i["Salary"]) / 24
+                slry = i["Salary"]
+                if slry == "None":
+                    slry = 0
+                z = float(slry) / 24
 
             d.append({"Employee number": i["Employee number"], "First name": i["First name"],
                            "Last name": i["Last name"], "Total pay": str(round(z,2))})
