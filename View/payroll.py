@@ -149,8 +149,8 @@ class PayRoll():
         self.data_columns = []
 
         self.scroll_poll = time.time()
-        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours/sales','Total']
-        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Timecard','Total']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hourly', 'Salary', 'Commission', 'PTO total', 'PTO used', 'Hours/sales','Total']
+        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Hourly', 'Salary', 'Commission', 'PTO total', 'PTO used', 'Timecard','Total']
 
         self.model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -487,7 +487,7 @@ class PayRoll():
 
             button.grid(row=0, column=0, sticky=tk.EW)
 
-            if i < 5:
+            if i < 7:
 
                 column = tk.Frame(grid_frame, bd=0, width=150, background=self.colors.background, relief=tk.SUNKEN)
                 column.grid(row=1, column=0, sticky=tk.NS)
@@ -531,7 +531,7 @@ class PayRoll():
                 column.rowconfigure(0, weight=1)
                 column.columnconfigure(0, weight=1)
 #This line is weird. Future change for dynamic compatability.
-                if i == 7:
+                if i == 9:
                     canvas = tk.Canvas(column, border=0, width=250, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
                 else:
                     canvas = tk.Canvas(column, border=0, width=150, height=1080,highlightthickness=0, yscrollcommand=self.sync_yview, scrollregion=(0,0,400,((self.resize_utility.body_text() + 6) * len(self.people))))
@@ -548,11 +548,11 @@ class PayRoll():
                     else:
                         background = self.colors.a7
                         foreground = "#000000" if self.theme == "Builtin Light" else self.colors.background
-                    if i == 8:
+                    if i == 10:
                         new_value = 12
                         entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
-                    elif i ==7:
+                    elif i ==9:
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=50, relief=tk.FLAT)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=250)
                     else:
@@ -563,7 +563,7 @@ class PayRoll():
 
 
                     self.resize_utility.register_element(entry, "body")
-                    if i != 8:
+                    if i != 10:
                         entry.insert(tk.END, self.people[j][lyst2[i]])
                     data_items.append(entry)
 
