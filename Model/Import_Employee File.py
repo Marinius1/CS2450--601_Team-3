@@ -166,6 +166,7 @@ class getData:
                                       str(hours_sales),str(role()),str(position()),str(teams()), str([]),
                                       str(random.randint(2,8)), str(random.randint(0,2)))
                 i.add_to_employee_file()
-
+'''
 a = getData(EMPLOYEE_FILE)
 a.load_employees()
+'''
