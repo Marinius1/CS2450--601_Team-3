@@ -35,6 +35,20 @@ To run the program, type `python3 window.py` into the command line. Make sure yo
 **Search** - Search bar that allows you to search for specific employees. Search option allows you to modify your search by First name, Last name, or Employee number<br/>
 **Period** - Allows you to change the viewed pay period. <br/>
 
+##### What can you do?
+
+**Adjust PTO** - To change PTO values, you can directly influence the values in the PTO total and PTO used columns.</br>
+
+**Create a new time period** - Click the button labeled "New Pay Period", doing so will archive the current pay information and bring up a fresh page with new data. </br>
+
+**Upload sales made by commissioned employees** - Click the button labeled "import receipts", select the file where your receipts are and they will be added to the employees' database. You can also manually adjust the values in the Hours/Sales column to reflect the changes you desire. </br>
+
+**Upload timecards for salaried and hourly employees** - Click the button labeled "Import Timecards", select your timecard files and the changes will be uploaded. Like with the receipts option, you can also manually adjust the values in the Hours/Sales column.</br>
+
+**Issue Payments** - The "Pay" button will issue payments to all employees, sending them the total payment reflected in the total column </br>
+
+**Save your changes** - The "save" button on the top right will save your changes. WARNING: no changes made to the page will be kept if they aren't saved.</br>
+
 ### People
 
 **First Name** - First name of the employee listed in alphabetical order. This can be adjusted in the Admin page.<br/>
@@ -52,3 +66,10 @@ To run the program, type `python3 window.py` into the command line. Make sure yo
 **Job Info** - Allows you to edit everything that can be seen on the Payroll page. You can edit The job title, Team, role, Employee ID, Start Date, pay type, and pay rate. <br/>
 **Delete** - if you wish to delete an employee from the company database you can delete them by clicking the delete button. <br/>
 **Save** - if you are pleased with the adjustments that you have made, you can save the information by clicking the save button.<br/>
+
+##### What can you do? 
+**Add an employee** - To add an employee you simply click the "Add" button. Enter all the information of the employee. If you wish to scrap changes, simply click "Delete". If you wish to save the employee data, click "Save". If you try to move away from the page, you will be met with an "are you sure" popup that will either save the data or take you back to the open editor to allow you to change information or scrap changes.</br>
+
+**Edit an existing employee** - Simply double click an employee's name from the list on the left side. Change the information you wish to change. If you try to move away from the page, you will be met with an "are you sure" popup that will either save or scrap your changes. </br>
+
+**Search an employee** - Simply type the parameter you want to search by, select it in the select box, and the list below will populate with results. </br>
