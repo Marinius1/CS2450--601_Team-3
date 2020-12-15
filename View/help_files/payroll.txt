@@ -1,15 +1,39 @@
-Payroll page help file
-
 Payroll:
+
 First name - First name of the employee. Default sorting is by this name.
+
 Last name - Last name of the employee.
+
 Employee number - Identification number of employee. Unique for every employee.
+
 Pay type - Type of compensation the employee receives (Hourly, Salary, Commission)
-Pay amount - Base pay for the employee. This will be reflected in the pay stub depending on their pay type. 
+
+Pay amount - Base pay for the employee. This will be reflected in the pay stub depending on their pay type. (Divided into Hourly, Salary, and Commission)
+
 PTO Total - Total PTO accrued
-PTO Uses - Total PTO used by the employee
-Hours worked - Total hours worked in the pay period
+
+PTO Used - Total PTO used by the employee
+
+Hours/Sales - Total hours worked in the pay period or total sales made
+
 Search - Search bar that allows you to search for specific employees. Search option allows you to modify your search by First name, Last name, or Employee number
+
+Total - Total pay for the employee.
+
 Period - Allows you to change the viewed pay period. 
 
-#place our walkthrough
+
+What can you do?
+
+Adjust PTO - To change PTO values, you can directly influence the values in the PTO total and PTO used columns. 
+
+Create a new time period - Click the button labeled "New Pay Period", doing so will archive the current pay information and bring up a fresh page with new data. 
+
+Upload sales made by commissioned employees - Click the button labeled "import receipts", select the file where your receipts are and they will be added to the employees' database. You can also manually adjust the values in the Hours/Sales column to reflect the changes you desire.
+
+Upload timecards for salaried and hourly employees - Click the button labeled "Import Timecards", select your timecard files and the changes will be uploaded. Like with the receipts option, you can also manually adjust the values in the Hours/Sales column.
+
+Issue Payments - The "Pay" button will issue payments to all employees, sending them the total payment reflected in the total column
+
+Save your changes - The "save" button on the top right will save your changes. WARNING: no changes made to the page will be kept if they aren't saved. 
+

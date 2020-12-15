@@ -101,7 +101,7 @@ class NavBar():
 
 
     def help(self):
-        self.create_help_modal("This is the help modal.")
+        self.create_help_modal("Innovative EmpTrack")
 
     def set_help_content(self, path):
         self.help_content = path
@@ -146,7 +146,7 @@ class NavBar():
         with open(self.help_content, 'r') as f:
             text = f.read()
 
-        text_help = tk.Text(frames[1], font=('Roboto', 14), highlightthickness=0, yscrollcommand=text_scrollbar.set, wrap=tk.WORD)
+        text_help = tk.Text(frames[1], font=('Roboto', 20), highlightthickness=0, yscrollcommand=text_scrollbar.set, wrap=tk.WORD)
         text_help.insert(tk.END, text)
 
         text_help.bind("<Key>", lambda x: "break")

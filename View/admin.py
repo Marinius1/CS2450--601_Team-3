@@ -26,7 +26,7 @@ class Admin():
         # populate test data
         self.L = Controller.List_Maker()
         self.people_example = self.L.data
-        self.click_buffer = []
+
       
         self.master = master
         self.theme=theme
@@ -313,7 +313,7 @@ class Admin():
         self.info_start_employment_label = ttk.Label(self.info_identity_frame, text='Total months with company: ', style="Recent.TLabel")
         self.info_start_employment_label.grid(row=12, column=5, sticky=tk.E)
 
-        self.info_start_employment_data = tk.Label(self.info_identity_frame, text='', background=self.colors.background)
+        self.info_start_employment_data = ttk.Label(self.info_identity_frame, text='', style="Recent.TLabel")
         self.info_start_employment_data.grid(row=12, column=6, sticky=tk.E)
 
         self.label_pay_type = ttk.Label(self.info_identity_frame, text="Pay type", style="Recent.TLabel")
@@ -338,7 +338,10 @@ class Admin():
 
 
         self.set_values(self.people_example[0])
+        self.click_buffer = self.get_values()
         self.toggle_pay_fields(self.people_example[0])
+
+        self.resize_utility.morph()
 
     def search(self, *args):
 

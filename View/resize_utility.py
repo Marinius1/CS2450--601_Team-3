@@ -68,67 +68,62 @@ class ResizeUtility:
     def on_click(self, x, y, button, pressed):
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
         if not pressed:
-            # Stop listener
 
-            # size_ratio = ((width + height) / 2) * .01
-
-            # print(size_ratio)
-            # for i in self.canvas_columns:
-            #     i.configure(font=('Roboto', int(size_ratio)), width=int(size_ratio))
-
-            for i in self.element_callbacks:
-                if i[1] == "title":
-                    i[0].configure(font=('Roboto', self.title_text()))
-                if i[1] == "h1":
-                    i[0].configure(font=('Roboto', self.heading_one_text()))
-                if i[1] == "h2":
-                    i[0].configure(font=('Roboto', self.heading_two_text()))
-                if i[1] == "h3":
-                    i[0].configure(font=('Roboto', self.heading_three_text()))
-                if i[1] == "h4":
-                    i[0].configure(font=('Roboto', self.heading_four_text()))
-                if i[1] == "body":
-                    i[0].configure(font=('Roboto', self.body_text()))
-
-            for i in self.style_callbacks:
-                if i[2] == "title":
-                    i[0].configure(style=i[1], font=('Roboto', self.title_text()))
-                if i[2] == "h1":
-                    i[0].configure(style=i[1], font=('Roboto', self.heading_one_text()))
-                if i[2] == "h2":
-                    i[0].configure(style=i[1], font=('Roboto', self.heading_two_text()))
-                if i[2] == "h3":
-                    i[0].configure(style=i[1], font=('Roboto', self.heading_three_text()))
-                if i[2] == "h4":
-                    i[0].configure(style=i[1], font=('Roboto', self.heading_four_text()))
-                if i[2] == "body":
-                    i[0].configure(style=i[1], font=('Roboto', self.body_text()))
-
-            width = self.master.winfo_width()
-            height = self.master.winfo_height()
-            ratio = 7.0/8.0
-
-
-            if len(self.canvas_callbacks) > 0:
-                new_width = (width * ratio) / len(self.canvas_callbacks)
-                for i in self.canvas_callbacks:
-                    i[0].configure(scrollregion=i[0].bbox("all"), width=new_width, height=height)
-                    if self.scrollbar is not None:
-                        self.scrollbar.configure(command=self.yview)
-                    for j in i[0].find_all():
-                        i[0].itemconfig(j, width=new_width)
-
-            if len(self.frame_callbacks) > 0:
-                new_width = (width * ratio) / len(self.canvas_callbacks)
-                for i in self.frame_callbacks:
-                    i.configure(width = int(new_width))
-
+            self.morph()
 
             self.can_listen = False
             self.listener.stop()
             self.listener = None
 
             return False
+
+    def morph(self):
+        for i in self.element_callbacks:
+            if i[1] == "title":
+                i[0].configure(font=('Roboto', self.title_text()))
+            if i[1] == "h1":
+                i[0].configure(font=('Roboto', self.heading_one_text()))
+            if i[1] == "h2":
+                i[0].configure(font=('Roboto', self.heading_two_text()))
+            if i[1] == "h3":
+                i[0].configure(font=('Roboto', self.heading_three_text()))
+            if i[1] == "h4":
+                i[0].configure(font=('Roboto', self.heading_four_text()))
+            if i[1] == "body":
+                i[0].configure(font=('Roboto', self.body_text()))
+
+        for i in self.style_callbacks:
+            if i[2] == "title":
+                i[0].configure(style=i[1], font=('Roboto', self.title_text()))
+            if i[2] == "h1":
+                i[0].configure(style=i[1], font=('Roboto', self.heading_one_text()))
+            if i[2] == "h2":
+                i[0].configure(style=i[1], font=('Roboto', self.heading_two_text()))
+            if i[2] == "h3":
+                i[0].configure(style=i[1], font=('Roboto', self.heading_three_text()))
+            if i[2] == "h4":
+                i[0].configure(style=i[1], font=('Roboto', self.heading_four_text()))
+            if i[2] == "body":
+                i[0].configure(style=i[1], font=('Roboto', self.body_text()))
+
+        width = self.master.winfo_width()
+        height = self.master.winfo_height()
+        ratio = 7.0/8.0
+
+
+        if len(self.canvas_callbacks) > 0:
+            new_width = (width * ratio) / len(self.canvas_callbacks)
+            for i in self.canvas_callbacks:
+                i[0].configure(scrollregion=i[0].bbox("all"), width=new_width, height=height)
+                if self.scrollbar is not None:
+                    self.scrollbar.configure(command=self.yview)
+                for j in i[0].find_all():
+                    i[0].itemconfig(j, width=new_width)
+
+        if len(self.frame_callbacks) > 0:
+            new_width = (width * ratio) / len(self.canvas_callbacks)
+            for i in self.frame_callbacks:
+                i.configure(width = int(new_width))
 
     def resize(self, event):
 

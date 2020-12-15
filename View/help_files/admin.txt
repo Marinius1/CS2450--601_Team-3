@@ -9,3 +9,12 @@ Job Info - Allows you to edit everything that can be seen on the Payroll page. Y
 Delete - if you wish to delete an employee from the company database you can delete them by clicking the delete button. 
 
 Save - if you are pleased with the adjustments that you have made, you can save the information by clicking the save button.
+
+
+What can you do?
+
+Add an employee - To add an employee you simply click the "Add" button. Enter all the information of the employee. If you wish to scrap changes, simply click "Delete". If you wish to save the employee data, click "Save". If you try to move away from the page, you will be met with an "are you sure" popup that will either save the data or take you back to the open editor to allow you to change information or scrap changes.
+
+Edit an existing employee - Simply double click an employee's name from the list on the left side. Change the information you wish to change. If you try to move away from the page, you will be met with an "are you sure" popup that will either save or scrap your changes. 
+
+Search an employee - Simply type the parameter you want to search by, select it in the select box, and the list below will populate with results. 
