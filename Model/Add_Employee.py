@@ -40,7 +40,7 @@ class add_employee:
     def add_to_employee_file(self):
         data = []
         j = True
-        with open('employee_file.json') as infile:
+        with open('Model/employee_file.json') as infile:
             data1 = json.load(infile)
             for i in data1:
                 if self.eNum == i['Employee number'] and self.first == i["First name"] and self.last == i["Last name"]:
@@ -59,7 +59,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
 
                 else:
@@ -70,7 +70,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
 
             elif self.type == "Commission":
@@ -83,7 +83,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
 
                 else:
@@ -94,7 +94,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
 
             if self.type == "Hourly":
@@ -108,7 +108,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data1, outfile)
 
                 else:
@@ -119,7 +119,7 @@ class add_employee:
                                         "Start day": self.sDay, "Start month": self.sMonth, "Start year": self.sYear ,
                                       "Zip": self.zip, "Role": self.role, "Position": self.pos, "Team": self.team,
                                      "Timecard": self.timecard, "PTO": self.PTO, "PTOused": self.PTOused})
-                    with open('employee_file.json', 'w') as outfile:
+                    with open('Model/employee_file.json', 'w') as outfile:
                         json.dump(data, outfile)
 
             elif j == False:
