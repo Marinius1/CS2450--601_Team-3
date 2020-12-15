@@ -30,7 +30,7 @@ class PayRoll():
 
         self.master = master
 
-        self.resize_utility = ResizeUtility(self.master)
+
 
         self.L = Controller.List_Maker()
         self.people = self.L.data
@@ -40,6 +40,15 @@ class PayRoll():
         self.colors = Color(theme).colors
         self.style = ttk.Style()
         self.style.theme_use('alt')
+        self.home_frame = tk.Frame(self.master)
+
+        self.left_frame = tk.Frame(self.home_frame, background=self.colors.background)
+
+        self.table_frame = tk.Frame(self.left_frame, background=self.colors.background)
+
+        self.scrollbar = tk.Scrollbar(self.table_frame)
+        self.resize_utility = ResizeUtility(self.master, scrollbar=self.scrollbar, yView=self.yview)
+
 
         self.style.map('Recent.TLabel',
                        background=[('active', self.colors.a7)],
@@ -54,6 +63,9 @@ class PayRoll():
 
         self.style.configure(style='Recent.TLabel', font=('Roboto', self.resize_utility.body_text()))
         self.resize_utility.register_style(self.style, 'Recent.TLabel', "body")
+
+
+
 
         self.style.map('Pay.TButton',
                        background=[('active', self.colors.a2)],
@@ -86,7 +98,6 @@ class PayRoll():
         self.style.configure(style='Header.TButton', font=('Roboto', self.resize_utility.body_text()))
         self.resize_utility.register_style(self.style, 'Header.TButton', "body")
 
-        self.home_frame = tk.Frame(self.master)
         self.home_frame.configure(background=self.colors.background, border=3, relief=tk.RIDGE)
         self.home_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
@@ -96,7 +107,6 @@ class PayRoll():
         self.home_frame.columnconfigure(0, weight=0)
         self.home_frame.columnconfigure(1, weight=1)
 
-        self.left_frame = tk.Frame(self.home_frame, background=self.colors.background)
         self.left_frame.grid(row=0, rowspan=2, column=0, sticky=tk.NSEW)
 
         self.left_frame.rowconfigure((0,2), weight=0)
@@ -128,7 +138,6 @@ class PayRoll():
 
         self.font_config = ('Roboto', 16)
 
-        self.table_frame = tk.Frame(self.left_frame, background=self.colors.background)
         self.table_frame.grid(row=1, column=0, sticky=tk.NSEW)
 
         self.table_frame.rowconfigure(1, weight=1)
@@ -138,9 +147,8 @@ class PayRoll():
         self.data_columns = []
 
         self.scroll_poll = time.time()
-        self.scrollbar = tk.Scrollbar(self.table_frame)
-        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours/sales']
-        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Hours/sales']
+        self.headers_example = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay rate', 'PTO total', 'PTO used', 'Hours/sales','Total']
+        self.values_list = ['First name', 'Last name', 'Employee number', 'Pay type', 'Pay amount', 'PTO total', 'PTO used', 'Timecard','Total']
 
         self.model_example = [
             [random.randint(25,50) for i in range(100)],
@@ -237,7 +245,6 @@ class PayRoll():
         for i in staged_data:
             if i["First name"] != '':
                 data.append(i)
-        print(data)
         Editer=Controller.Save_Payroll_Shits
         Editer(data)
         
@@ -250,32 +257,35 @@ class PayRoll():
         if value == "Search":
             return
 
-        if value == '':
+        elif value == '':
             self.set_table_data(self.people)
+        else:
+            self.set_table_data([
+                {
+                    "First name": '',
+                    "Last name": '',
+                    "Employee number": '',
+                    "Pay type": '',
+                    "Hours/sales": '',
+                    "Pay amount": '',
+                    "PTO total": '',
+                    "PTO used": ''
+                }
+            ])
+            results = []
 
-        self.set_table_data([
-            {
-                "First name": '',
-                "Last name": '',
-                "Employee number": '',
-                "Pay type": '',
-                "Hours/sales": '',
-                "Pay amount": '',
-                "PTO total": '',
-                "PTO used": ''
-            }
-        ])
-        results = []
+            search_filter = self.search_option_value.get()
 
-        search_filter = self.search_option_value.get()
+            data = self.people
 
-        data = self.people
+            for i in data:
+                if value in i[search_filter]:
+                    results.append(i)
 
-        for i in data:
-            if value in i[search_filter]:
-                results.append(i)
 
-        self.set_table_data(results)
+
+            # print(results)
+            self.set_table_data(results)
       
     def create_pay_period(self):
         self.NP=Controller.New_Pay
@@ -345,6 +355,7 @@ class PayRoll():
             data_columns_copy.pop(i)
 
             sync_check = [self.canvas_columns[i].yview() == j.yview() for j in data_columns_copy]
+            print(sync_check)
 
             if not all(sync_check):
                 for k in range(len(self.canvas_columns)):
@@ -391,7 +402,6 @@ class PayRoll():
 
     def set_table_data(self, data):
 
-        # print(data)
 
         if len(data) <= 1:
             for i in self.data_columns:
@@ -413,24 +423,36 @@ class PayRoll():
             tmp_list.append(i["Employee number"])
             tmp_list.append(i["Pay type"])
             tmp_list.append(i["Pay amount"])
-            tmp_list.append(0)
-            tmp_list.append(0)
-            tmp_list.append(i["Hours/sales"])
+            tmp_list.append("-")
+            tmp_list.append("-")
+
+            new_hours_str = i["Hours/sales"].replace("[","")
+            new_hours_str = new_hours_str.replace("]","")
+            tmp_list.append(new_hours_str)
+            tmp_list.append("-")
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
 
+
         for i in self.data_columns:
             for j in range(len(new_data[self.data_columns.index(i)])):
                 if isinstance(self.data_columns[self.data_columns.index(i)][j], tk.Entry):
+                    # print(new_data[self.data_columns.index(i)][j])
                     self.data_columns[self.data_columns.index(i)][j].delete(0, tk.END)
                     self.data_columns[self.data_columns.index(i)][j].insert(tk.END, new_data[self.data_columns.index(i)][j])
                 else:
+                    # print(new_data[self.data_columns.index(i)][j])
                     self.data_columns[self.data_columns.index(i)][j].configure(text=new_data[self.data_columns.index(i)][j])
 
 
+
+    def calculate_total_pay(self):
+        pass
+
     def create_table(self, master, lyst1, lyst2):
 
+        # print(self.people)
         desired_keys = [
              "First name",
              "Last name",
@@ -447,6 +469,9 @@ class PayRoll():
             self.actions.append(self.sort_ascending)
 
         for i in range(lyst1_size):
+
+            # if lyst1[i] == "Hours/sales":
+            #     lyst1[i] = "Timecard"
 
             master.columnconfigure(i, weight=0)
 
@@ -514,13 +539,21 @@ class PayRoll():
                         background = self.colors.background
                     else:
                         background = self.colors.a7
-                    entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
+
+                    if i == 8:
+                        new_value = 12
+                        entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), text=new_value)
+
+                    else:
+                        entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT)
+
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
 
                     self.resize_utility.register_element(entry, "body")
-                    entry.insert(tk.END, self.people[j][lyst2[i]])
-                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW)
+                    if i != 8:
+                        entry.insert(tk.END, self.people[j][lyst2[i]])
+                    canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=150)
                     data_items.append(entry)
 
                 self.data_columns.append(data_items)
@@ -530,7 +563,6 @@ class PayRoll():
 
             # column.configure(height=len(lyst2[i]))
 
-
         # self.home_frame.columnconfigure(lyst1_size + 1, weight=1)
         self.scrollbar.grid(row=0, column=lyst1_size + 1, rowspan=2, sticky=tk.N+tk.S+tk.E)
 
@@ -538,6 +570,8 @@ class PayRoll():
 
 
     def create_summary_frame(self, parent, title, content, row, column):
+
+
         summary_frame = tk.Frame(parent)
         summary_frame.configure(background=self.colors.background, border=3, relief=tk.RAISED)
         summary_frame.grid(row=row, column=column, sticky=tk.NSEW, padx=10, pady=10)
@@ -685,6 +719,7 @@ class PayRoll():
 
         self.actions[self.values_list.index(key)] = self.sort_descending
 
+
     def sort_descending(self, key):
         print(key)
 
@@ -702,6 +737,7 @@ class PayRoll():
         self.set_table_data(sorted_data)
 
         self.actions[self.values_list.index(key)] = self.sort_ascending
+
 
     def create_are_you_sure(self, message, on_success):
         top = tk.Toplevel(self.master)

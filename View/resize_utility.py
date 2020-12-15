@@ -2,9 +2,12 @@ from pynput.mouse import Listener
 
 class ResizeUtility:
 
-    def __init__(self, master):
+    def __init__(self, master, scrollbar=None, yView=None):
 
         self.master = master
+
+        self.scrollbar = scrollbar
+        self.yview = yView
 
         self.element_callbacks = []
         self.style_callbacks = []
@@ -35,8 +38,8 @@ class ResizeUtility:
     def register_style(self, style, tag, mode):
         self.style_callbacks.append([style, tag, mode])
 
-    def register_canvas(self, canvas, len):
-        self.canvas_callbacks.append([canvas, len])
+    def register_canvas(self, canvas, length):
+        self.canvas_callbacks.append([canvas, length])
 
     def on_click(self, x, y, button, pressed):
         # print('{0} at {1}'.format('Pressed' if pressed else 'Released',(x, y)))
@@ -67,7 +70,9 @@ class ResizeUtility:
                     i[0].configure(style=i[1], font=('Roboto', self.large_heading_text()))
 
             for i in self.canvas_callbacks:
-                i[0].configure(scrollregion=(i[1][0], i[1][2], self.body_text(), i[1][3]))
+                i[0].configure(scrollregion=i[0].bbox("all"))
+                if self.scrollbar is not None:
+                    self.scrollbar.configure(command=self.yview)
 
             self.can_listen = False
             self.listener.stop()
