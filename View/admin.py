@@ -356,9 +356,9 @@ class Admin():
         self.date_start_employment["day"]["value"].set(data["Start day"])
         self.date_start_employment["month"]["value"].set(self.months[int(data["Start month"]) -1])
         self.date_start_employment["year"]["value"].set(data["Start year"])
-        timewith = datetime.date.today() -  datetime.date(int(data["Start year"]), int(data["Start month"]), int(data["Start day"]))
+        self.timewith = datetime.date.today() -  datetime.date(int(data["Start year"]), int(data["Start month"]), int(data["Start day"]))
         self.info_start_employment_data.config(text=str(int(timewith.days / 31)))
-        print(datetime.date.today())
+        #print(datetime.date.today())
         #thing = list(filter(lambda person: person['Employee number'] == data['Employee number'], self.PTO))
 
         #if len(thing) == 0:

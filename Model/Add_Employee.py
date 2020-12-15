@@ -8,7 +8,7 @@ Also checks to make sure that the employee doesn't already exist.
 class add_employee:
 
     def __init__(self, eNum, first, last, type, salary, commission, hourly, address, state, city, social, phone, zip,
-                 bDay, bMonth, bYear, sDay, sMonth, sYear, role, pos, team, timecard, PTO, PTOused):
+                 bDay, bMonth, bYear, sDay, sMonth, sYear, role, pos, team, timecard = "None", PTO = "None", PTOused = "None"):
 
         self.PTO = PTO
         self.PTOused = PTOused
