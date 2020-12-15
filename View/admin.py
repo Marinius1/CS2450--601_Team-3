@@ -395,9 +395,9 @@ class Admin():
 
         pay_type = self.value_pay_type.get()
 
-        hourly = None
-        commission = None
-        salary = None
+        hourly = "None"
+        commission = "None"
+        salary = "None"
 
         if pay_type == "Hourly":
             hourly = self.field_pay_rate["entry"].get()
