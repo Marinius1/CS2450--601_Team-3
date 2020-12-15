@@ -430,7 +430,7 @@ class PayRoll():
             new_hours_str = i["Hours/sales"].replace("[","")
             new_hours_str = new_hours_str.replace("]","")
             tmp_list.append(new_hours_str)
-            tmp_list.append(self.calculate_total_pay(new_hours_str, i["Pay amount"], i["Pay type"]))
+            tmp_list.append(i["Pay total"])
             staged_data.append(tmp_list)
 
         new_data = list(zip(*staged_data))
@@ -447,17 +447,6 @@ class PayRoll():
                     self.data_columns[self.data_columns.index(i)][j].configure(text=new_data[self.data_columns.index(i)][j])
 
 
-
-    def calculate_total_pay(self, hours, pay, type):
-
-        if hours != '' and type == "Hourly":
-            total_hours = sum([float(i) for i in hours.replace(" ","").split(',')]) * float(pay)
-            return "{:.2f}".format(total_hours)
-        elif hours != '' and type == "Commission":
-            total_receipt = sum([float(i) for i in hours.replace(" ","").split(',')]) * (float(pay) / 100)
-            return "{:.2f}".format(total_receipt)
-        else:
-            return "{:.2f}".format(float(pay) / 24)
 
     def create_table(self, master, lyst1, lyst2):
 

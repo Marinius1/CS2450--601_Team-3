@@ -55,6 +55,20 @@ class Admin():
         self.style.configure(style='Recent.TLabel', font=('Roboto', self.resize_utility.body_text()))
         self.resize_utility.register_style(self.style, 'Recent.TLabel', "body")
 
+
+        self.style.map('Entry.TEntry')
+        self.style.configure(
+            'Entry.TLabel',
+            foreground=self.colors.foreground,
+            background=self.colors.background,
+            borderwidth=1,
+            bordercolor=self.colors.foreground,
+            relief=tk.SUNKEN,
+            padding=[10,1,1,1],
+            font=('Roboto', 24)
+        )
+        self.resize_utility.register_style(self.style, 'Entry.TEntry', "body")
+
         self.style.map('Header.TButton',
                        background=[('active', self.colors.a8)],
                        foreground=[('active', self.colors.background)])
@@ -487,7 +501,7 @@ class Admin():
         label.configure(background=self.colors.background)
         label.grid(row=row, column=column_start, sticky=sticky)
 
-        entry = ttk.Entry(master, style='Recent.TLabel')
+        entry = ttk.Entry(master, style='Entry.TEntry')
         entry.bind('<Key>', lambda event: self.set_changes_flag(True))
         entry.insert(0, placeholder)
         entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
