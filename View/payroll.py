@@ -452,10 +452,10 @@ class PayRoll():
             total_hours = sum([float(i) for i in hours.replace(" ","").split(',')]) * float(pay)
             return "{:.2f}".format(total_hours)
         elif hours != '' and type == "Commission":
-            total_receipt = sum([float(i) for i in hours.replace(" ","").split(',')]) * float(pay)
-            return "{:.2f}".format(total_receipt + (float(pay) * 40))
+            total_receipt = sum([float(i) for i in hours.replace(" ","").split(',')]) * (float(pay) / 100)
+            return "{:.2f}".format(total_receipt)
         else:
-            return "-"
+            return "{:.2f}".format(float(pay) / 24)
 
     def create_table(self, master, lyst1, lyst2):
 
