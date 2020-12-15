@@ -9,7 +9,7 @@ lyst = []
 
 class addToEmployeeFile:
 
-    def __init__(self, number, first, last, type, amount, address, state,
+    def __init__(self, number, first, last, type, hourly, commission, salary, address, state,
                  city, zip, bDay, bMonth, bYear, social, pNumber, sDay, sMonth, sYear,
                  hours_sales, role, pos, team, timecard, PTO, PTOused):
         self.PTO = PTO
@@ -31,7 +31,9 @@ class addToEmployeeFile:
         self.first = first
         self.last = last
         self.type = type
-        self.amount = amount
+        self.hourly = hourly
+        self.commission = commission
+        self.salary = salary
         self.address = address
         self.city = city
         self.state = state
@@ -42,7 +44,7 @@ class addToEmployeeFile:
             data1 = json.load(infile)
             data1.append(
                 {"Employee number": self.number, "First name": self.first,
-                 "Last name": self.last,"Pay type": self.type, "Pay amount": self.amount,
+                 "Last name": self.last,"Pay type": self.type, "Hourly": self.hourly, "Commission":self.commission, "Salary": self.salary,
                      "Address": self.address, "State": self.state, "City": self.city, "Zip": self.zip,
                        "Birth day": self.bDay, "Birth month": self.bMonth, "Birth year": self.bYear,
                  "Social security": self.social, "Phone": self.pNumber, "Start day": self.sDay,
@@ -135,18 +137,24 @@ class getData:
                 hourly = i[10]
                 if classification == "3":  # hourly
                     empClass = "Hourly"
-                    empClassification = (str(hourly))
+                    empClassification1 = (str(hourly))
+                    empClassification2 = None
+                    empClassification3 = None
                     hours_sales = random .randint(0, 160)
                 elif classification == "1":  # salary
                     empClass = "Salary"
-                    empClassification = (str(salary))
+                    empClassification1 = None
+                    empClassification2 = None
+                    empClassification3 = (str(salary))
                     hours_sales = None
                 elif classification == "2":  # classification
                     empClass = "Commission"
-                    empClassification = (str(commission))
+                    empClassification1 = None
+                    empClassification2 = (str(commission))
+                    empClassification3 = (str(salary))
                     hours_sales = random.randint(0, 160)
 
-                i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification),
+                i = addToEmployeeFile(str(empId), str(firstName), str(lastName), str(empClass), str(empClassification1), str(empClassification2), str(empClassification3),
                                       str(address), str(state),str(city), str(empZip), str(day1), str(month1), str(year1), str(social()),
                                       str(phone()),str(day2), str(month2), str(year2),
                                       str(hours_sales),str(role()),str(position()),str(teams()), str([]),
