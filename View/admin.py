@@ -125,7 +125,7 @@ class Admin():
         self.search_value.set("Search")
         self.search_value.trace("w", self.search)
         self.entry_search = ttk.Entry(self.frame_search, textvariable=self.search_value)
-        # self.entry_search.bind("<Key>", self.search)
+        self.entry_search.bind("<Key>", self.search)
         # self.entry_search.bind("<Button-1>", lambda x: "break")
 
         self.entry_search.grid(row=0, column=0)
@@ -579,7 +579,7 @@ class Admin():
         label.grid(row=row, column=column_start, sticky=sticky)
 
         entry = ttk.Entry(master, style='Entry.TEntry')
-        # entry.bind('<Key>', lambda event: self.set_changes_flag(True))
+        entry.bind('<Key>', lambda event: self.set_changes_flag(True))
         entry.insert(0, placeholder)
         entry.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 0), pady=5)
         return {"label": label, "entry": entry}
@@ -594,7 +594,7 @@ class Admin():
         value.set(options[0])
         menu = ttk.Combobox(master, textvariable=value, value=options[0], values=options, height=3)
         menu.grid(row=row, column=column_start + 1, sticky=tk.W, padx=(10, 10), pady=5)
-        # menu.bind('<Button>', lambda event: self.set_changes_flag(True))
+        menu.bind('<Button>', lambda event: self.set_changes_flag(True))
         return {"label": label, "menu": menu, "value": value}
 
     def create_date_selector(self, master, row):

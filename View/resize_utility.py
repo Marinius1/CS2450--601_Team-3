@@ -87,7 +87,6 @@ class ResizeUtility:
                     i[0].configure(font=('Roboto', self.body_text()))
 
             for i in self.style_callbacks:
-                print(i)
                 if i[2] == "title":
                     i[0].configure(style=i[1], font=('Roboto', self.title_text()))
                 if i[2] == "h1":
@@ -116,7 +115,7 @@ class ResizeUtility:
             if len(self.frame_callbacks) > 0:
                 new_width = (width * ratio) / len(self.canvas_callbacks)
                 for i in self.frame_callbacks:
-                    i.configure(width = new_width)
+                    i.configure(width = int(new_width))
 
 
             self.can_listen = False

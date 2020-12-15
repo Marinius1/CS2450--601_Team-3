@@ -528,6 +528,7 @@ class PayRoll():
 
                     entry = tk.Label(canvas, border=0, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), text=new_value, anchor=tk.CENTER)
 
+                    self.resize_utility.register_frame(entry)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
                     self.resize_utility.register_element(entry, "body")
                     canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
@@ -572,6 +573,7 @@ class PayRoll():
                         entry = tk.Entry(canvas, border=1, highlightthickness=0, background=background, foreground=foreground, font=('Roboto', str(self.resize_utility.body_text())), width=40, relief=tk.FLAT, justify=tk.CENTER)
                         canvas.create_window(0, ((self.resize_utility.body_text() + 6) * j), window=entry, anchor=tk.NW, width=initial_width)
 
+                    self.resize_utility.register_frame(entry)
                     entry.bind("<MouseWheel>", lambda event: self.on_mousewheel(event, canvas))
 
 
